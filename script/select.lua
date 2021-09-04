@@ -48,5 +48,5 @@ kfm.def
 room21.def
 stage0-720.def
 Botanic_Panic.def
-Stadium.def
+FNTDREAM.DEF
 ]])
