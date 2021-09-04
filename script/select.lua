@@ -32,7 +32,6 @@ tonyu
 shaq
 YOKOISAN
 Ashley
-kfmx
 ]])
 
 addStage([[
