@@ -51,7 +51,7 @@ yscale = -0.3
 intensity = 0
 
 [Music]
-bgmusic = chateau.mp3
+bgmusic = sound/chateau.mp3
 bgvolume = 255
 
 [BGdef]
