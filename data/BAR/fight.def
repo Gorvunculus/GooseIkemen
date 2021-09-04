@@ -364,8 +364,8 @@ displaytime = 90    ;Time to show text
 
 ;-----------------------------------------------------------
 [Round]
-match.wins=1
-match.maxdrawgames = 1
+match.wins=2
+match.maxdrawgames = -1
 start.waittime = 1
 ;ctrl.time=118
 
