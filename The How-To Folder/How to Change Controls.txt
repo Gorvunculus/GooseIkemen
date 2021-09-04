@@ -1,0 +1,15 @@
+------------------------------------------------
+HOW TO CHANGE CONTROLS
+------------------------------------------------
+
+Step (1) - Go to the "ssz" folder
+Step (2) - Look for the file "config" and open it with notepad
+Step (3) - To change your attack buttons, look for the key you want to replace and change it to the key you want.
+
+Ex: I want to change my "z" button and change it for "q"
+- Find where the z key is:
+ Here: (int)k_t::z,
+- Now change the letter "z" into a q, so it should look like this:
+ Here: (int)k_t::q,
+- Then you hit save 
+

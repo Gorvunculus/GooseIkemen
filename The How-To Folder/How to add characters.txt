@@ -1,0 +1,7 @@
+------------------------------------------------
+HOW TO ADD CHARACTERS
+------------------------------------------------
+
+Step (1) - Go in the "script" folder
+Step (2) - Find "select.lua" and open it with notepad
+Step (3) - Add the character/stage like you would normally do with mugen.

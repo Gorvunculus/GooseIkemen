@@ -1,0 +1,8 @@
+------------------------------------------------
+HOW TO SWITCH NUMBER OF CHARACTERS
+------------------------------------------------
+
+Step (1) - Go to any folder in the "script" folder
+Step (2) - Find one which suits your amount of characters you want
+Step (3) - Copy the file "main.szz" and paste inside the script folder where the original 
+main is (Default = 300 characters).

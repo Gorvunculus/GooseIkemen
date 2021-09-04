@@ -1,0 +1,95 @@
+----------------------------
+METHODS
+----------------------------
+1) LogmeIn Hamachi
+2) Evolve
+3) ZeroTier One 
+
+* - other methods like tunngle are possible, yet not associated specifically with Revival. 
+
+
+
+
+
+____________________________________________________________________________________________________________________________________________________________________________
+1 - LogMeIn Hamachi download site (get the Unmannaged one): https://secure.logmein.com/products/hamachi/download.aspx 
+
+____________________________________________________________________________________________________________________________________________________________________________
+INSTRUCTIONS:
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1. you will need to install Hamachi in your PC and extract the mugen folder ( /ory).
+
+2. To set up online, simply make up your own name of choice on your Hamachi and if you want, you can make a server by going to "Network" and "Create Network" 
+
+or "Join a Network."
+
+3. To make a mugen online match, its best to have a friend with the exact same mugen game as the one you're using (like this one,
+
+give it to your friend so both of you can play it).
+
+4. Now, you can either Host a mugen match, or Join one. Now to host, simply go to "Netplay" on your mugen game.
+
+-----------------------
+Host Instructions:
+-----------------------
+
+There should be a window popping up named "Input Server." For a host, simply hit OK and wait. You don't enter ANYTHING on the box!
+
+NOT A THING! THE BOX SHOULD STAY EMPTY! (Btw, you don't have to worry about the Port Change option in the game, leave that alone).
+
+Once a person joins you, the game should transition from Now Connecting 7500, to right into the character selection screen.
+
+And that's it for the host. 
+
+
+----------------------
+Join Instructions:
+----------------------
+
+There should be a window popping up named "Input Server." To join, you must go to the hamachi window and look for the person hosting the game. 
+
+Go to the host's name and right click it. Then go to where it says "Copy IPv4 Adress" and click it. Then go back to the "Input Server" window
+
+and hit paste and some numbers should pop up. Once done, hit OK and it should say "Now Connecting" and the persons IP. Then wait until it
+
+transitions to the character selection screen. 
+
+____________________________________________________________________________________________________________________________________________________________________________
+2) EVOLVE
+
+____________________________________________________________________________________________________________________________________________________________________________
+1 - Make a group or server
+2 - Get some people
+3 - Host has to host a match (to do so, please follow the host instructions above)
+4 - The person who joins has to go the opponents name in the evolve server and right click and then click "Copy IP Address."
+5 - After that, just follow the join instructions above.
+
+
+
+
+____________________________________________________________________________________________________________________________________________________________________________
+3) ZeroTier One
+
+____________________________________________________________________________________________________________________________________________________________________________
+1 - Find or make a network (NETMugen TE's Network ID is 8056c2e21cbbba21)
+2 - make sure both players are on the same server
+3 - Host must follow the host instructions
+4 - The host must send their IP from Zerotier to their opponent
+5 - To do so, go to the top right corner where it says "IP Addresses" and click on the first one
+6 - Then hit "Ctrl + C" on your keyboard and just paste it to wherever you are chatting with your opponent.
+7 - Joiner copys that IP and follows the join instructions above.
+
+
+
+
+
+
+
+More info: http://netmugente.4umotion.com/t24-new-online-program-zerotier#138
+
+YouTube: http://www.youtube.com/TheFclass97
+
+MFFA Profile: http://mugenfreeforall.com/index.php?/user/4149-prb-thefclass97
+
+
