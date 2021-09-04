@@ -36,6 +36,7 @@ kfmx
 Mickey_ddrcreations_98
 TFGAF-DISNEY-CaptainHook
 pingu
+Candyman
 ]])
 
 addStage([[
@@ -45,7 +46,7 @@ blissxphills.def
 citylightsshinelikediamonds.def
 kfm.def
 room21.def
-stage0.def
 stage0-720.def
 Botanic_Panic.def
+Stadium.def
 ]])

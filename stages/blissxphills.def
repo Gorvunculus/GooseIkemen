@@ -73,7 +73,7 @@ color 		= 0,0,0
 yscale 		= .2
 
 [Music]
-bgmusic 	= sound/title.wma
+bgmusic 	= sound\title.wma
 bgvolume 	= 255
 
 [BGdef]

@@ -1,0 +1,18 @@
+"Have a jawbreaker!" -Candyman
+
+Candyman by FourthRhyme
+---------------------------------------------------------------------------------------------------------------
+
+Thank you for downloading my character! I love Lethal Leage, and decided to make one of my favorite characters,
+Candyman, for MUGEN. He is a 2-button character (like the source) and has 3 different super moves. He is 
+completely accurate to the original game, right down to the walk speed.
+
+Whenever he is damaged, Candyman flies offscreen. He has about ten lives, indicated by his health bar.
+
+----------------------------------------------------------------------------------------------------------------
+
+
+Down, Down, X+Y
+- Suagr Rush
+             Increase your speed and attack damage for a short period of time. The more power you have saved up, the
+longer he stays in this mode.
