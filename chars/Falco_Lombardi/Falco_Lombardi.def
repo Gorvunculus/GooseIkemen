@@ -1,0 +1,51 @@
+; 
+;============================================================
+;¦¦¯¯¦ ¦¦¯¯¯¦ ¦¯¯¦    ¯¦¯ ¦¦¯¯¯¦   ¦¦¦¦¦ ¦¦¯¯¯ ¦¦¯¯¦ ¦¦¯¯¯ 
+;¦¦¦__ ¦¦¦¦¦¦ ¦¦¦¦¦   ¦¦¦ ¦¯¯¯__   ¦¦¯¯¦ ¦¦¯¯¯ ¦¦__¯ ¦¦¯¯¯ 
+;¦¦__¦ ¦¦___¦ ¦__¦    _¦_ ¦¦___¦   ¦¦¦¦¦ ¦¦___ ¦¦¦¦¦ ¦¦___ 
+;============================================================
+; Player information
+[Info]
+name         =       "FalcoLombardi_XIV"        
+displayname  =       "Falco Lombardi"
+versiondate  =       09,30,2016  
+mugenversion =       1.0          
+author       =       "MEGA_X"        
+Pal.Defaults =       1                       
+      
+;============================================================
+;¦¦¯¯¦ ¦¦¯¯¯¦ ¦¯¯¦    ¯¦¯ ¦¦¯¯¯¦   ¦¦¦¦¦ ¦¦¯¯¯ ¦¦¯¯¦ ¦¦¯¯¯ 
+;¦¦¦__ ¦¦¦¦¦¦ ¦¦¦¦¦   ¦¦¦ ¦¯¯¯__   ¦¦¯¯¦ ¦¦¯¯¯ ¦¦__¯ ¦¦¯¯¯ 
+;¦¦__¦ ¦¦___¦ ¦__¦    _¦_ ¦¦___¦   ¦¦¦¦¦ ¦¦___ ¦¦¦¦¦ ¦¦___ 
+;============================================================
+
+; Files for the player
+[Files]
+cmd      =MEGA_X.cmd           ;Command set
+cns     = MEGA_X.cns           ;Constants
+st      = MEGA_X.cns           ;States
+stcommon = common1.cns      ;Common states (from data/ or motif)
+sprite  = MEGA_X.sff           ;Sprite
+anim    = MEGA_X.air           ;Animation
+sound   = MEGA_X.snd           ;Sound
+ai      = MEGA_X.ai            ;AI hints data (not used)
+
+; Maps character selection buttons to palette numbers.
+[Palette Keymap]
+x = 1 ;Press button X to select palette 1, etc.
+y = 2
+z = 3
+a = 4
+b = 5
+c = 6
+;x2 = 7 ;Hold Start and press button X for palette 7, etc.
+;y2 = 8
+;z2 = 9
+;a2 = 10
+;b2 = 11
+;c2 = 12
+
+; Arcade mode
+[Arcade]
+intro.storyboard = intro.def
+ending.storyboard = ending.def
