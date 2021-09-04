@@ -1,0 +1,37 @@
+;***************************************************************************;
+;******************* Created in Fighter Factory Ultimate *******************;
+;*******************      http://www.virtualltek.com     *******************;
+;***************************************************************************;
+
+[Info]
+name = "Candyman"
+displayname = "Candyman"
+versiondate = 08,27,2015 (11/30/17 Winter Version)
+mugenversion = 6/14/2015
+author = "FourthRhyme"
+pal.defaults = 1,2,3,4
+
+[Files]
+sprite = Candy.sff
+anim = Candy.air
+sound = Candy.snd
+cmd = Candy.cmd
+cns = Candy.cns
+stcommon = Candy_C.cns
+st = Candy.cns
+pal1 = Pal\Candy1.act
+pal2 = Pal\Candy2.act
+pal3 = Pal\Candy3.act
+pal4 = Pal\Candy4.act
+pal5 = Pal\Candy5.act
+pal6 = Pal\Candy6.act
+pal7 = Pal\Candy7.act
+pal8 = Pal\Candy8.act
+pal9 = Pal\Candy9.act
+pal10 = Pal\Candy10.act
+pal11 = Pal\Candy11.act
+pal12 = Pal\Candy12.act
+
+[Arcade]
+;intro.storyboard = 
+;ending.storyboard = 

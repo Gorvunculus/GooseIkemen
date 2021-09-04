@@ -1,0 +1,105 @@
+[Info]
+ ;Name of the stage.
+name = "Fountain of Dreams"
+[Camera]
+startx = 0
+starty = 0
+boundleft = -300
+boundright = 300
+boundhigh = -70
+boundlow = 0
+verticalfollow = .3
+tension = 60
+
+[PlayerInfo]
+p1startx = -70          ;Starting x coordinates
+p1starty = 0            ;Starting y coordinates
+p1startz = 0            ;Starting z coordinates
+p1facing = 1            ;Direction player faces: 1=right, -1=left
+p2startx = 70
+p2starty = 0
+p2startz = 0
+p2facing = -1
+
+leftbound  = -1000 ;Left bound (x-movement)
+rightbound =  1000 ;Right bound
+topbound  =  0     ;Top bound (z-movement)
+botbound  =  0     ;Bottom bound
+
+[Scaling]
+topz     = 0       ;Top z-coordinate for scaling
+botz     = 50      ;Bottom z-coordinate for scaling
+topscale = 1       ;Scale to use at top
+botscale = 1.2     ;Scale to use at bottom
+
+[Bound]
+screenleft = 15    ;Dist from left of screen that player can move to
+screenright = 15   ;Right edge
+
+[StageInfo]
+zoffset = 205
+autoturn = 1
+resetBG = 0
+
+[Shadow]
+color = 0,0,0
+yscale = .0001
+
+[Music]
+bgmusic = sound\FTNOFDREAMS.mp3
+bgvolume = 255 
+
+[BGdef]
+spr = stages/fntdream.sff
+debugbg = 1
+
+[BG Sky]
+type = normal
+spriteno = 0,0
+mask = 0
+start = 0, 240
+delta = .45,.2
+
+;----------
+[BG Water]
+type = anim
+actionno = 0
+mask = 1
+start = 1, 241
+delta = .45,.2
+
+
+[BG Blue]
+type = normal
+spriteno = 3,0
+mask = 1
+start = -160, -70
+delta = .85, 1
+trans = add
+tile =1,0 
+
+[BG Purple]
+type = normal
+spriteno = 3,1
+mask = 1
+start = -160, -70
+delta = 1,1
+trans = add
+tile =1,0
+
+;----------
+[BG Floor]
+type = normal
+spriteno = 1,0
+mask = 1
+start = 0, 240
+delta = 1,1
+tile = 1,0
+
+[Begin Action 0]
+4,0,0,0,4,,a
+4,1,0,0,4,,a
+4,2,0,0,4,,a
+4,3,0,0,4,,a
+4,4,0,0,4,,a
+4,5,0,0,4,,a

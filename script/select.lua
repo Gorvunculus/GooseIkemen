@@ -34,6 +34,9 @@ YOKOISAN
 Ashley
 Mickey_ddrcreations_98
 TFGAF-DISNEY-CaptainHook
+pingu
+Candyman
+Falco_Lombardi
 ]])
 
 addStage([[
@@ -43,7 +46,7 @@ blissxphills.def
 citylightsshinelikediamonds.def
 kfm.def
 room21.def
-stage0.def
 stage0-720.def
 Botanic_Panic.def
+FNTDREAM.DEF
 ]])
