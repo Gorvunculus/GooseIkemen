@@ -1,0 +1,307 @@
+
+;______________________________________________________________________________
+;==============================================================================
+;-| 常時監視 |-----------------------------------------------------------------
+;==============================================================================
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[Statedef -2]
+;==============================================================================
+;-| デバッグ |-----------------------------------------------------------------
+[State -2, DisplayToClipboard]
+type     = DisplayToClipboard
+triggerall = 0
+trigger1 = 1
+text     = "AI:%d, v2:%d, v57:%d, v55:%d, p2Y:%f \n"
+params   = Var(59),var(2),var(57),var(55),fvar(37)-fvar(36) +var(50)
+IgnoreHitPause = 1
+SuperMoveTime = 9999
+PauseMoveTime = 9999
+[State -2, 距離確認デバック]
+type = AppendToClipboard
+triggerall = 0
+trigger1 = 1
+text =  "P2X:%f,P2Y:%f,Vx%f,Vy%f,Pos y%f \n"
+params = P2BodyDist x,P2BodyDist y,vel x,vel y,Pos y
+IgnoreHitPause = 1
+
+;==============================================================================
+;-| gauge |-------------------------------------------------------------------
+[State -2, PowerSet]
+type = PowerSet
+triggerall = !(TeamMode = Simul)
+trigger1 = PalNo = var(13)
+trigger1 = Power != var(2)*5
+value = var(2) *5
+
+;==============================================================================
+;-| config |-------------------------------------------------------------------
+[State -2, Helper_Config_]
+type = Helper
+trigger1 = !NumHelper(8000)
+trigger1 = RoundState = [0,1]
+trigger1 = !var(17)
+;trigger1 = RoundsExisted = 0
+helpertype = Normal
+name = "Config"
+ID = 8000
+stateno = 8000
+pos = 9999,9999
+postype = p1    ;p2,front,back,left,right
+facing = 1
+keyctrl = 0
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+
+;==============================================================================
+;-| 返し打ちエフェクト拡縮 |---------------------------------------------------
+[State -2, VarSet]
+type = VarSet
+trigger1 = StateNo = 1020
+trigger1 = Time = 1
+fv = 23
+value = 1.00 -0.15
+
+[State -2, ModifyExplod] ; 矢発生(拡大)
+type = ModifyExplod
+trigger1 = NumExplod(1022)
+trigger1 = fvar(23) := fvar(23) +0.15
+ID = 1022
+scale = fvar(23), fvar(23)
+
+[State -2, ModifyExplod] ; 矢発生(収縮)
+type = ModifyExplod
+trigger1 = NumExplod(1021)
+ID = 1021
+scale = 2.90 -fvar(23), 2.90 -fvar(23)
+
+;==============================================================================
+;-| 防御 |---------------------------------------------------------------------
+[State -2, Helper_sield_]
+type = null;Helper
+trigger1 = !NumHelper(8012)
+trigger1 = StateNo = [120,155]
+trigger1 = StateType = C
+helpertype = Normal
+name = "shield"
+ID = 8012
+stateno = 8012
+pos = 0, 0
+postype = p1    ;p2,front,back,left,right
+facing = 1
+keyctrl = 0
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+
+;==============================================================================
+
+;==============================================================================
+;-| 根性値 |-------------------------------------------------------------------
+;------------------------------------------------------------------------------
+;かたくなる
+;--------------------------------------
+;数値決定
+[State -2, VarSet]
+type = VarSet
+triggerall = Floor( var(10)/100%10 ) = 1
+trigger1 = 1
+fv = 3
+value = (Life*1000.0/LifeMax/4+750)/1000
+;--------------------------------------
+;適用
+[State -2, DefenceMulSet]
+type = DefenceMulSet
+triggerall = Floor( var(10)/100%10 ) = 1
+trigger1 = 1
+value = fvar(3)
+
+;------------------------------------------------------------------------------
+;にらみつける
+;--------------------------------------
+;数値決定
+[State -2, VarSet]
+type = VarSet
+triggerall = Floor( var(10)/10%10 ) = 1
+trigger1 = 1
+fv = 4
+value = 1 -Floor( Life *1000.0 /LifeMax /4 +750 /1000)
+;--------------------------------------
+;適用
+[State -2, AttackMulSet]
+type = AttackMulSet
+triggerall = Floor( var(10)/10%10 ) = 1
+trigger1 = 1
+value = fvar(4) +1.0
+
+;------------------------------------------------------------------------------
+;がまん
+;--------------------------------------
+;適用
+[State -2, PowerAdd]
+type = PowerAdd
+triggerall = Floor( var(10)/1%10 ) = 1
+trigger1 = Life < fvar(5)
+value = Floor( fvar(5) -Life )
+;--------------------------------------
+;過去体力
+[State -2, VarSet]
+type = VarSet
+triggerall = Floor( var(10)/1%10 ) = 1
+trigger1 = 1
+fv = 5
+value = Life
+
+;==============================================================================
+;-| 特殊効果 |-----------------------------------------------------------------
+;------------------------------------------------------------------------------
+;常に防御力2倍
+[State -2, DefenceMulSet]
+type = DefenceMulSet
+triggerall = PalNo = var(11)
+trigger1 = Floor( var(12)/10000%10 ) = 1
+value = 0.5
+
+;------------------------------------------------------------------------------
+;常に攻撃力2倍
+[State -2, AttackMulSet]
+type = AttackMulSet
+triggerall = PalNo = var(11)
+trigger1 = Floor( var(12)/1000%10 ) = 1
+value = 2.0
+
+;------------------------------------------------------------------------------
+;体力ゲージ自動回復
+[State -2, LifeAdd]
+type = LifeAdd
+triggerall = PalNo = var(11)
+trigger1 = Floor( var(12)/100%10 ) = 1
+trigger1 = MoveType != H
+value = 1
+
+;------------------------------------------------------------------------------
+;パワーゲージ自動回復
+[State -2, PowerAdd]
+type = PowerAdd
+triggerall = PalNo = var(11)
+trigger1 = Floor( var(12)/10%10 ) = 1
+value = 1
+
+[State -2, PowerAdd]
+type = null
+triggerall = PalNo = var(11)
+trigger1 = var(2) := var(2) +(Power > var(2)*5)
+
+;==============================================================================
+;-| AfterImage |---------------------------------------------------------------
+;------------------------------------------------------------------------------
+;生成
+;--------------------------------------
+;
+[State -2, AfterImage]
+type = null;AfterImage
+triggerall = Time = 1
+trigger1 = StateNo = 100 ||StateNo = 105
+Time = 99999999
+Trans = Add
+Length = 6
+TimeGap = 3
+FrameFap = 1
+Color 256
+Invertall 0
+PalBright = 4, 4, 4
+PalContrast = 128, 128, 128
+PalPostBright = 36, 24, 20
+PalAdd = 0, 0, 0
+PalMul = 1.00, 1.00, 1.00
+Trans = None
+Peresistent = 0
+;--------------------------------------
+;brue
+[State -2, AfterImage]
+type = null;AfterImage
+triggerall = Time = 1
+trigger1 = StateNo = 100 || StateNo = 105
+trigger2 = StateNo = 115
+Time = 99999999
+Trans = Add
+Length = 14
+TimeGap = 1
+FrameFap = 2
+Color 256
+Invertall 0
+PalBright = 4, 8, 24
+PalContrast = 40, 80, 120
+PalPostBright = 0, 0, 0
+PalAdd = 0, 0, 0
+PalMul = 0.62, 0.64, 0.66
+Peresistent = 1
+;--------------------------------------
+;green
+[State -2, AfterImage]
+type = AfterImage
+triggerall = Time = 1
+trigger1 = StateNo = 1000
+trigger2 = StateNo = 1010
+trigger3 = StateNo = 1020
+trigger4 = StateNo = 11000
+trigger5 = StateNo = 11010
+trigger6 = StateNo = 11020
+trigger7 = StateNo = 11030
+trigger8 = StateNo = 11040
+trigger9 = StateNo = 11050
+Time = 99999999
+Trans = Add
+Length = 12
+TimeGap = 1
+FrameFap = 1
+PalBright = 0, 0, 0
+PalContrast = 100, 200, 100
+PalAdd = 0, 0, 0
+PalMul = 0.5, 0.5, 0.5
+Peresistent = 1
+;--------------------------------------
+;red
+[State -2, AfterImage]
+type = AfterImage
+triggerall = Time = 1
+trigger1 = StateNo = 3000
+trigger2 = StateNo = 3010
+trigger3 = StateNo = 13000
+trigger4 = StateNo = 13010
+trigger5 = StateNo = 13020
+Time = 99999999
+Trans = Add
+Length = 12
+TimeGap = 1
+FrameFap = 1
+PalBright = 0, 0, 0
+PalContrast = 220, 0, 0
+PalAdd = 0, 0, 0
+PalMul = 0.5, 0.5, 0.5
+Peresistent = 1
+
+;------------------------------------------------------------------------------
+;削除
+[State -2, AfterImageTime]
+type = AfterImage
+trigger1 = MoveType = H
+trigger2 = StateNo != [50, 51]
+trigger2 = StateNo != [60, 99]
+trigger2 = StateNo != [100, 119]
+trigger2 = StateNo != [1000, 1999]
+trigger2 = StateNo != [2000, 2999]
+trigger2 = StateNo != [3000, 3999]
+trigger2 = StateNo != [11000, 13999]
+time = 0
+Trans = Add
+Length = 12
+TimeGap = 1
+FrameFap = 1
+PalBright = 0, 0, 0
+PalContrast = 220, 220, 220
+PalAdd = 0, 0, 0
+PalMul = 0.5, 0.5, 0.5
+Peresistent = 1
+

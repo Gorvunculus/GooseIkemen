@@ -1,0 +1,325 @@
+
+;==================================================================================================
+; Stand
+[Statedef 1]
+type = S
+physics = S
+sprpriority = 0
+ctrl = 1
+
+[State 1, 1]
+type = ChangeAnim
+trigger1 = P2Dist X < 0
+value = 5
+
+[State 1, Turn]
+type = Turn
+trigger1 = P2Dist X < 0
+
+[State 1, 1]
+type = ChangeAnim
+trigger1 = Anim != 0 && Anim != 5
+trigger2 = Anim = 5 && AnimTime = 0 ;Turn anim over
+value = 0
+
+[State 1, 2]
+type = VelSet
+trigger1 = Time = 0
+y = 0
+
+[State 1, 2]
+type = PosSet
+trigger1 = Time = 0
+y = 0
+
+[State 1, 3] ;Stop moving if low velocity or 4 ticks pass
+type = VelSet
+trigger1 = abs(vel x) < 2
+trigger2 = Time = 4
+x = 0
+
+[State 1, 4] ;Are you dead?
+type = ChangeState
+trigger1 = !alive
+value = 5050
+
+;==================================================================================================
+; Stand to Crouch
+[Statedef 15]
+type    = C
+physics = C
+anim = 10
+
+[State 15, 1]
+type = VelMul
+trigger1 = Time = 0
+x = .75
+
+[State 15, 2]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 16
+
+;==================================================================================================
+; Crouching
+[Statedef 16]
+type    = C
+physics = C
+anim = 11
+sprpriority = 0
+ctrl = 1
+
+[State 16, 1]
+type = ChangeAnim
+trigger1 = P2Dist X < 0
+value = 6
+
+[State 16, Turn]
+type = Turn
+trigger1 = P2Dist X < 0
+
+[State 16, 1] ;Change from turning animation
+type = ChangeAnim
+trigger1 = Anim = 6 && AnimTime = 0
+value = 11
+
+;==================================================================================================
+; Crouch to Stand
+[Statedef 17]
+type    = S
+physics = S
+anim = 12
+ctrl = 1
+
+[State 17, 1]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+
+;==================================================================================================
+; Walk_FWD
+[Statedef 25]
+type    = S
+physics = S
+sprpriority = 0
+ctrl = 1
+
+[State 25, 1]
+type = VelSet
+trigger1 = 1
+x = const(velocity.walk.fwd.x)
+
+[State 25, 3]
+type = ChangeAnim
+triggerall = vel x > 0
+trigger1 = Anim != 20 && Anim != 5
+trigger2 = Anim = 5 && AnimTime = 0
+value = 20
+
+[State 25, 4]
+type = ChangeAnim
+triggerall = vel x < 0
+trigger1 = Anim != 21 && Anim != 5
+trigger2 = Anim = 5 && AnimTime = 0
+value = 21
+
+[State 25, ChangeState]
+type = ChangeState
+triggerall = vel x < 0
+trigger1 = Anim = 21
+value = 26
+
+;==================================================================================================
+; Walk_BACK
+[Statedef 26]
+type    = S
+physics = S
+sprpriority = 0
+ctrl = 1
+
+[State 26, 2]
+type = VelSet
+trigger1 = 1
+x = const(velocity.walk.back.x)
+
+[State 26, 3]
+type = ChangeAnim
+triggerall = vel x > 0
+trigger1 = Anim != 20 && Anim != 5
+trigger2 = Anim = 5 && AnimTime = 0
+value = 20
+
+[State 26, 4]
+type = ChangeAnim
+triggerall = vel x < 0
+trigger1 = Anim != 21 && Anim != 5
+trigger2 = Anim = 5 && AnimTime = 0
+value = 21
+
+[State 26, ChangeState]
+type = ChangeState
+triggerall = vel x > 0
+trigger1 = Anim = 20
+value = 25
+
+;==================================================================================================
+; Jump Start_NEU
+[Statedef 41]
+type    = S
+physics = S
+ctrl = 0
+sprpriority = 1
+
+[State 41, 4]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = Anim != 40
+value = 40
+
+[State 41, 1]
+type = VarSet
+trigger1 = Time = 0
+sysvar(1) = 0
+
+[State 41, 4]
+type = VelSet
+trigger1 = AnimTime = 0
+x = ifelse(sysvar(1)=0, const(velocity.jump.neu.x), ifelse(sysvar(1)=1, const(velocity.jump.fwd.x), const(velocity.jump.back.x)))
+y = const(velocity.jump.y)
+
+[State 41, 6]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 50
+ctrl = 1
+
+;==================================================================================================
+; Jump Start_FWD
+[Statedef 42]
+type    = S
+physics = S
+ctrl = 0
+sprpriority = 1
+
+[State 42, 4]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = Anim != 40
+value = 40
+
+[State 42, 1]
+type = VarSet
+trigger1 = Time = 0
+sysvar(1) = 1
+
+[State 42, 4]
+type = VelSet
+trigger1 = AnimTime = 0
+x = ifelse(sysvar(1)=0, const(velocity.jump.neu.x), ifelse(sysvar(1)=1, const(velocity.jump.fwd.x), const(velocity.jump.back.x)))
+y = const(velocity.jump.y)
+
+[State 42, 5]
+type = VelSet
+trigger1 = AnimTime = 0
+trigger1 = prevstateno = 100 ;RUN_FWD
+trigger1 = sysvar(1) = 1
+x = const(velocity.runjump.fwd.x)
+
+[State 42, 6]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 50
+ctrl = 1
+
+;==================================================================================================
+; Jump Start_BACK
+[Statedef 43]
+type    = S
+physics = S
+ctrl = 0
+sprpriority = 1
+
+[State 43, 4]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = Anim != 40
+value = 40
+
+[State 43, 1]
+type = VarSet
+trigger1 = Time = 0
+sysvar(1) = -1
+
+[State 43, 4]
+type = VelSet
+trigger1 = AnimTime = 0
+x = ifelse(sysvar(1)=0, const(velocity.jump.neu.x), ifelse(sysvar(1)=1, const(velocity.jump.fwd.x), const(velocity.jump.back.x)))
+y = const(velocity.jump.y)
+
+[State 43, 5]
+type = VelSet
+trigger1 = AnimTime = 0
+trigger1 = prevstateno = 100 ;RUN_FWD
+trigger1 = sysvar(1) = 1
+x = const(velocity.runjump.fwd.x)
+
+[State 43, 6]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 50
+ctrl = 1
+
+;==================================================================================================
+; Jump Up
+[Statedef 55]
+type    = A
+physics = A
+
+[State 55, 4]
+type = ChangeState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 52
+
+[State 55, 1]
+type = VarSet
+trigger1 = Time = 0
+sysvar(1) = 0
+
+[State 55, 2]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse((vel x)=0, 41, ifelse((vel x)>0, 42, 43))
+
+[State 55, ChangeState]
+type = ChangeState
+trigger1 = Vel y > -4
+trigger1 = PrevStateNo != 51
+value = 51
+ctrl = 0
+
+[State 55, 3]
+type = ChangeAnim
+trigger1 = Vel y > -2
+trigger1 = SelfAnimExist(anim + 3)
+persistent = 0
+value = Anim+3
+
+;==================================================================================================
+; Jump Down (empty state for compatibility)
+[Statedef 56]
+type    = A
+physics = A
+anim = 10+Anim
+
+[State 56, 4]
+type = ChangeState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 52
+
+[State 56, ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 55
+ctrl = 0

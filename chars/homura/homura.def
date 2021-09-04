@@ -1,0 +1,26 @@
+; Player information
+[Info]
+name ="Akemi-Homura"
+displayname ="Homura Akemi"
+versiondate =12,18,2011
+mugenversion =04,14,2002
+author ="Cyclops beam"
+pal.defaults =1
+
+; Files for the player
+[Files]
+cmd     =homura.cmd
+cns     =homura.cns
+st      =homura.cns
+sprite  =homura.sff
+anim    =homura.air
+sound   =homura.snd
+stcommon=common1.cns
+pal1=1p.act
+pal2=mami.act
+st1=common.cns
+
+
+[Arcade]
+intro.storyboard=
+ending.storyboard=

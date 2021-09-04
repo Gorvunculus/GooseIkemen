@@ -1,0 +1,66 @@
+;---------------------------------------------------------------------------
+; States that are executed when in self's state file (use statedef -3)
+;---------------------------------------------------------------------------
+[Statedef -3]
+
+;This controller plays a sound everytime KFM lands from a jump, or
+;from his back-dash.
+[State -3, Landing Sound]
+type = PlaySnd
+triggerall = Time = 1
+trigger1 = stateno = 52 ;Jump land
+trigger2 = stateno = 106 ;Run-back land
+trigger3 = stateno = 622
+trigger4 = stateno = 1013
+value = 40, 0
+
+[State -3, VarSet]
+type = VarSet
+trigger1 = power < 1000
+v = 3
+value = 0
+
+[State -3, PlaySnd]
+type = PlaySnd
+trigger1 = stateno != 5900
+trigger1 = stateno != 190
+trigger1 = (power >= 1000) && (power < 2000) && (var(3) < 1) && (RoundState = 2)
+value = S50,0
+channel = 2
+abspan = 1
+
+[State -3, VarSet]
+type = VarSet
+trigger1 = (power >= 1000) && (power < 2000)
+v = 3
+value = 1
+
+[State -3, PlaySnd]
+type = PlaySnd
+trigger1 = stateno != 5900
+trigger1 = stateno != 190
+trigger1 = (power >= 2000) && (power < 3000) && (var(3) < 2) && (RoundState = 2)
+value = S50,0
+channel = 2
+abspan = 1
+
+[State -3, VarSet]
+type = VarSet
+trigger1 = (power >= 2000) && (power < 3000)
+v = 3
+value = 2
+
+[State -3, PlaySnd]
+type = PlaySnd
+trigger1 = stateno != 5900
+trigger1 = stateno != 190
+trigger1 = (power >= 3000) && (var(3) < 3) && (RoundState = 2)
+value = S50,1
+channel = 2
+abspan = 1
+
+[State -3, VarSet]
+type = VarSet
+trigger1 = (power >= 3000)
+v = 3
+value = 3

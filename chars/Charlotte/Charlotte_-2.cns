@@ -1,0 +1,414 @@
+;---------------------------------------------------------------------------
+; ■常時監視ステート（－２）■
+;
+[Statedef -2]
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+; Config
+;---------------------------------------------------------------------------
+[State -2, AI攻撃レベル]
+type = VarSet
+trigger1 = 1
+var(57) = 10;←ここの数字を変更(1～10)
+
+[State -2, AI防御レベル]
+type = VarSet
+trigger1 = 1
+var(58) = 10;←ここの数字を変更(1～10)
+
+[State -2, AI常時起動]
+type = null;VarSet ;←ここの「null;」を消去するとAI常時起動
+trigger1 = 1
+var(59) = 1
+
+[State -2, コンボスイッチ]
+type = VarSet
+trigger1 = 1
+fvar(39) = 0;1
+
+;---------------------------------------------------------------------------
+[State -2, 初期GSゲージ設定]
+type = varset
+trigger1 = 1
+var(37) = 0;←ここの数字を変更(0～7)
+;             変更した数字がGSゲージの初期値になります
+;             一撃技を早く使いたい時にどうぞ
+
+[State -2, GSゲージラウンド引継ぎ設定]
+type = varset
+trigger1 = 1
+var(45) = 1;←ここの数字を0にするとGSゲージがラウンドごとに初期値に戻ります
+;             GSゲージを次ラウンドに持ち越させたくない時にどうぞ
+;           ※F4キーで試合をリセットした場合も初期値に戻るので注意
+
+[State -2, GSゲージ位置調整X]
+type = varset
+trigger1 = 1
+var(46) = 0;←ここの数字を変更することでGSゲージの位置を左右に移動させることが出来ます
+;　　　　　　 お好みの位置に調節してください
+
+[State -2, GSゲージ位置調整Y]
+type = varset
+trigger1 = 1
+var(47) = 0;←ここの数字を変更することでGSゲージの位置を上下に移動させることが出来ます
+;　　　　　　 お好みの位置に調節してください
+
+[State -2, タッグ時GSゲージ位置調整X]
+type = varset
+triggerall = var(33) = 1
+trigger1 = partner,name = "Charlotte" && partner,authorname = "MRCLMNDKS"
+;　　　　　↑同タイプのゲージを持つキャラとタッグを組んで2Pだった場合、ゲージを被らないように移動させます
+;　　　　　　ゲージをずらす対象を追加したい場合はtriggerを書き加えてください
+;
+;例→　trigger○ = partner,name = "キャラ名" && partner,authorname = "作者名"
+;　　　　　　 ↑数字は必ず連番にしてください
+;　　　　　　 ※キャラ名、作者名は追加したいキャラのdefファイルに記述されている｢Name｣｢Author｣を参照してください
+;
+var(48) = 0;←ここの数字を変更することでタッグパートナー時のGSゲージの位置を左右に移動させることが出来ます
+;　　　　　　 お好みの位置に調節してください
+
+[State -2, タッグ時GSゲージ位置調整Y]
+type = varset
+triggerall = var(33) = 1
+trigger1 = partner,name = "Charlotte" && partner,authorname = "MRCLMNDKS"
+;　　　　　↑同タイプのゲージを持つキャラとタッグを組んで2Pだった場合、ゲージを被らないように移動させます
+;　　　　　　ゲージをずらす対象を追加したい場合はtriggerを追加して書き加えてください
+;
+;例→　trigger○ = partner,name = "キャラ名" && partner,authorname = "作者名"
+;　　　　　　 ↑数字は必ず連番にしてください
+;　　　　　　 ※キャラ名、作者名は追加したいキャラのdefファイルに記述されている｢Name｣｢Author｣を参照してください
+;
+var(49) = 40;←ここの数字を変更することでタッグパートナー時のGSゲージの位置を上下に移動させることが出来ます
+;　　　　　　 お好みの位置に調節してください
+
+
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+; ↓ここから先は変更しないでください
+;---------------------------------------------------------------------------
+
+;---------------------------------------------------------------------------
+; 変数の値の特定範囲をランダムで処理
+;---------------------------------------------------------------------------
+[State -2, 汎用ランダム]
+type = VarRandom
+trigger1 = 1
+v = 0
+range = 1,120
+IgnoreHitPause = 1
+
+;---------------------------------------------------------------------------
+; タッグ用
+;---------------------------------------------------------------------------
+;※0=1st 1=2nd
+[State -2, プレイヤー判定]
+type = VarSet
+triggerall = (NumPartner) && (var(33) != 1)
+trigger1 = ID < (Partner,ID) ;自分のＩＤナンバーがパートナーよりも少ない数字なら
+v = 33
+value = 0
+IgnoreHitPause = 1
+
+[State -2, プレイヤー判定]
+type = VarSet
+triggerall = (NumPartner)
+trigger1 = ID > (Partner,ID) ;自分のＩＤナンバーがパートナーよりも多い数字なら
+v = 33
+value = 1
+IgnoreHitPause = 1
+
+;---------------------------------------------------------------------------
+; タッグ時死体蹴り防止
+;---------------------------------------------------------------------------
+;※0=1st 1=2nd
+[State -2, 死体蹴り防止シングル];変数設定
+Type=varset
+triggerall=!ishelper
+Trigger1=numenemy=1
+var(32)=enemynear,ID
+
+[State -2, 死体蹴り防止タッグ];変数設定
+Type=varset
+triggerall=!ishelper
+Trigger1=numenemy=2
+var(32)=ifelse(EnemyNear(0),alive,enemynear(0),ID,enemynear(1),ID)
+
+;---------------------------------------------------------------------------
+; 崩れＫＯ用処理
+;---------------------------------------------------------------------------
+[State -2, 「立ち」か「しゃがみ」を判断]
+type = VarSet
+triggerall = (RoundState > 1)
+trigger1 = (StateNo = [120,131])
+trigger2 = (StateNo = [150,153])
+v = 34
+value = ifelse((StateType=C),1,0)
+IgnoreHitPause = 1
+
+;---------------------------------------------------------------------------
+; 空中ジャンプ回数制御
+;---------------------------------------------------------------------------
+[State -2, 空中ジャンプ残り回数セット]
+type = VarSet
+trigger1 = StateType != A
+var(13) = Const(movement.airjump.num)
+
+[State -2, 空中ジャンプ残り回数]
+type = Varadd
+trigger1 = StateNo = 45 && time = 0
+var(13) = -1
+
+;---------------------------------------------------------------------------
+; 魔法少女体力ゲージ(helperと連動)
+;---------------------------------------------------------------------------
+[State -2, ヘルパー出現]
+type = helper
+trigger1=!NumHelper(21000)
+trigger1=alive
+pos = 9999,9999
+postype = p1
+name="MS_Life"
+stateno = 21000
+ID=21000
+persistent = 0
+
+[State -2, ライフ回復]
+type = Lifeset
+triggerall = RoundState = 2
+trigger1 = alive
+trigger1 = MoveType != H
+trigger1 = var(2) >= 1
+value = life+1
+
+[State -2, ライフ回復フラグリセット]
+type = varset
+triggerall = RoundState = 2
+trigger1 = alive
+trigger1 = MoveType != H
+trigger1 = var(2) >= 1
+var(2) = 0
+
+;---------------------------------------------------------------------------
+; GSゲージ(helperと連動)
+;---------------------------------------------------------------------------
+[State -2, ヘルパー出現]
+type = helper
+trigger1=!NumHelper(25000)
+trigger1=alive
+pos = 9999,9999
+postype = p1
+name="GS_Gauge"
+stateno = 25000
+ID=25000
+pausemovetime=2147483647
+supermovetime=2147483647
+persistent = 0
+
+[State -2, 初期GSゲージセット]
+type = varset
+triggerall = RoundState = 0
+trigger1 = RoundsExisted = 0
+trigger1 = var(36) != var(37)
+var(36) = var(37)
+
+[State -2, GSゲージラウンドリセット]
+type = varset
+triggerall = RoundState = 0
+trigger1 = RoundsExisted != 0
+trigger1 = var(45) = 0
+var(36) = var(37)
+
+[State -2, GSゲージ上限固定]
+type = varset
+trigger1 = var(36) > 7
+var(36) = 7
+
+[State -2, GSゲージ下限固定]
+type = varset
+trigger1 = var(36) < 0
+var(36) = 0
+
+
+
+
+
+
+
+
+
+
+;---------------------------------------------------------------------------
+; 初期パワーゲージ
+;---------------------------------------------------------------------------
+[State -2, 初期ゲージセット]
+type = Powerset
+triggerall = RoundState = 0
+trigger1 = RoundNo = 1
+trigger1 = power < 1000
+value = 1000
+
+
+
+;---------------------------------------------------------------------------
+; コンボ補正
+;---------------------------------------------------------------------------
+;補正解除
+[State -2, 補正リセット]
+type = varset
+triggerall = alive
+triggerall = var(5) != 0
+trigger1 = NumTarget = 0
+trigger1 = enemynear,MoveType != H
+trigger1 = stateno != 1200 || stateno != 1220
+var(5) = 0
+
+;---------------------------------------------------------------------------
+;補正
+[State -2,AttackMulSet];通常
+Type = AttackMulSet
+;TriggerAll = NumEnemy
+TriggerAll = Alive
+trigger1 = var(4) = 0
+Trigger1 = var(5) < 51
+Value = 0.25+(0.75-((var(5)-1)*0.015))
+
+[State -2,AttackMulSet]
+Type = AttackMulSet
+;TriggerAll = NumEnemy
+TriggerAll = Alive
+trigger1 = var(4) = 0
+Trigger1 = var(5) >= 51
+Value = 0.25
+
+[State -2,AttackMulSet];超必
+Type = AttackMulSet
+;TriggerAll = NumEnemy
+TriggerAll = Alive
+trigger1 = var(4) = 1
+Trigger1 = var(5) < 51
+Value = 0.50+(0.50-((var(5)-1)*0.01))
+
+[State -2,AttackMulSet]
+Type = AttackMulSet
+;TriggerAll = NumEnemy
+TriggerAll = Alive
+trigger1 = var(4) = 1
+Trigger1 = var(5) >= 51
+Value = 0.50
+
+[State -2,AttackMulSet];超必2
+Type = AttackMulSet
+TriggerAll = NumEnemy
+TriggerAll = Alive
+trigger1 = var(4) = 2
+Trigger1 = var(5) < 51
+Value = 0.75+(0.25-((var(5)-1)*0.005))
+
+[State -2,AttackMulSet]
+Type = AttackMulSet
+TriggerAll = NumEnemy
+TriggerAll = Alive
+trigger1 = var(4) = 2
+Trigger1 = var(5) >= 51
+Value = 0.75
+
+;---------------------------------------------------------------------------
+; カウンターヒット制御
+;---------------------------------------------------------------------------
+[State -2, 攻撃感知]
+type = varset
+trigger1 = P2movetype = A
+fvar(5) = 1.15+(0.05*var(36))
+ignorehitpause = 1 
+
+[State -2, 字幕←]
+type = null;explod
+triggerall = movehit
+trigger1 = numexplod(8040) <= 10
+trigger1 = teamside = 1
+trigger1 = fvar(5) > 1.0
+anim = 8040
+id = 8040
+postype = left
+bindtime = -1
+ownpal = 1
+ontop = 1
+pos = 40,100
+ignorehitpause = 1 
+pausemovetime = 123456789
+supermovetime = 123456789
+
+[State -2, 字幕→]
+type = null;explod
+triggerall = movehit
+trigger1 = numexplod(8040) <= 10
+trigger1 = teamside = 2
+trigger1 = fvar(5) > 1.0
+anim = 8041
+id = 8040
+postype = right
+bindtime = -1
+ownpal = 1
+ontop = 1
+pos = -40,100
+ignorehitpause = 1 
+pausemovetime = 123456789
+supermovetime = 123456789
+
+[State -2, フラッシュ]
+type = null;BGpalfx
+triggerall = movehit = 1
+trigger1 = fvar(5) > 1.0
+add = 256,256,256
+time = 2
+ignorehitpause = 1 
+
+;---------------------------------------------------------------------------
+; カウンターヒット星取り
+[State -2, カウンター星取り]
+type = varadd
+triggerall = movehit = 1
+triggerall = fvar(5) > 1.0
+triggerall = fvar(7) = 0
+trigger1 = stateno = 442
+trigger2 = stateno = 640
+var(36) = 1
+persistent = 0
+
+;---------------------------------------------------------------------------
+[State -2, カウンター解除]
+type = varset
+triggerall = P2movetype != A
+triggerall = time = 1
+trigger1 = stateno != 442
+fvar(5) = 1.0
+ignorehitpause = 1
+
+[State -2, カウンター解除]
+type = varset
+trigger1 = time = 0
+fvar(7) = 0
+ignorehitpause = 1
+
+;---------------------------------------------------------------------------
+; 飛び道具命中判定制御
+;---------------------------------------------------------------------------
+;飛び道具発射ステート開始時にゼロにする
+[State -2, 判定解除]
+type = varset
+triggerall = time = 1
+trigger1 = stateno = 1100 || stateno = 1120
+trigger2 = stateno = 1200 || stateno = 1220
+trigger3 = stateno = 1400 || stateno = 1420
+trigger4 = stateno = 3000 || stateno = 3100
+trigger5 = stateno = 3400 || stateno = 1101
+var(7) = 0
+ignorehitpause = 1
+
+
+
+
+
+
+
+

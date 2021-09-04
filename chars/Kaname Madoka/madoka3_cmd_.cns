@@ -1,0 +1,2390 @@
+; The CMD file.
+;
+; Two parts: 1. Command definition and  2. State entry
+; (state entry is after the commands def section)
+;
+; 1. Command definition
+; ---------------------
+; Note: The commands are CASE-SENSITIVE, and so are the command names.
+; The eight directions are:
+;   B, DB, D, DF, F, UF, U, UB     (all CAPS)
+;   corresponding to back, down-back, down, downforward, etc.
+; The six buttons are:
+;   a, b, c, x, y, z               (all lower case)
+;   In default key config, abc are are the bottom, and xyz are on the
+;   top row. For 2 button characters, we recommend you use a and b.
+;   For 6 button characters, use abc for kicks and xyz for punches.
+;
+; Each [Command] section defines a command that you can use for
+; state entry, as well as in the CNS file.
+; The command section should look like:
+;
+;   [Command]
+;   name = some_name
+;   command = the_command
+;   time = time (optional)
+;   buffer.time = time (optional)
+;
+; - some_name
+;   A name to give that command. You'll use this name to refer to
+;   that command in the state entry, as well as the CNS. It is case-
+;   sensitive (QCB_a is NOT the same as Qcb_a or QCB_A).
+;
+; - command
+;   list of buttons or directions, separated by commas. Each of these
+;   buttons or directions is referred to as a "symbol".
+;   Directions and buttons can be preceded by special characters:
+;   slash (/) - means the key must be held down
+;          egs. command = /D       ;hold the down direction
+;               command = /DB, a   ;hold down-back while you press a
+;   tilde (~) - to detect key releases
+;          egs. command = ~a       ;release the a button
+;               command = ~D, F, a ;release down, press fwd, then a
+;          If you want to detect "charge moves", you can specify
+;          the time the key must be held down for (in game-ticks)
+;          egs. command = ~30a     ;hold a for at least 30 ticks, then release
+;   dollar ($) - Direction-only: detect as 4-way
+;          egs. command = $D       ;will detect if D, DB or DF is held
+;               command = $B       ;will detect if B, DB or UB is held
+;   plus (+) - Buttons only: simultaneous press
+;          egs. command = a+b      ;press a and b at the same time
+;               command = x+y+z    ;press x, y and z at the same time
+;   greater-than (>) - means there must be no other keys pressed or released
+;                      between the previous and the current symbol.
+;          egs. command = a, >~a   ;press a and release it without having hit
+;                                  ;or released any other keys in between
+;   You can combine the symbols:
+;     eg. command = ~30$D, a+b     ;hold D, DB or DF for 30 ticks, release,
+;                                  ;then press a and b together
+;
+;   Note: Successive direction symbols are always expanded in a manner similar
+;         to this example:
+;           command = F, F
+;         is expanded when MUGEN reads it, to become equivalent to:
+;           command = F, >~F, >F
+;
+;   It is recommended that for most "motion" commads, eg. quarter-circle-fwd,
+;   you start off with a "release direction". This makes the command easier
+;   to do.
+;
+; - time (optional)
+;   Time allowed to do the command, given in game-ticks. The default
+;   value for this is set in the [Defaults] section below. A typical
+;   value is 15.
+;
+; - buffer.time (optional)
+;   Time that the command will be buffered for. If the command is done
+;   successfully, then it will be valid for this time. The simplest
+;   case is to set this to 1. That means that the command is valid
+;   only in the same tick it is performed. With a higher value, such
+;   as 3 or 4, you can get a "looser" feel to the command. The result
+;   is that combos can become easier to do because you can perform
+;   the command early. Attacks just as you regain control (eg. from
+;   getting up) also become easier to do. The side effect of this is
+;   that the command is continuously asserted, so it will seem as if
+;   you had performed the move rapidly in succession during the valid
+;   time. To understand this, try setting buffer.time to 30 and hit
+;   a fast attack, such as KFM's light punch.
+;   The default value for this is set in the [Defaults] section below.
+;   This parameter does not affect hold-only commands (eg. /F). It
+;   will be assumed to be 1 for those commands.
+;
+; If you have two or more commands with the same name, all of them will
+; work. You can use it to allow multiple motions for the same move.
+;
+; Some common commands examples are given below.
+;
+; [Command] ;Quarter circle forward + x
+; name = "QCF_x"
+; command = ~D, DF, F, x
+;
+; [Command] ;Half circle back + a
+; name = "HCB_a"
+; command = ~F, DF, D, DB, B, a
+;
+; [Command] ;Two quarter circles forward + y
+; name = "2QCF_y"
+; command = ~D, DF, F, D, DF, F, y
+;
+; [Command] ;Tap b rapidly
+; name = "5b"
+; command = b, b, b, b, b
+; time = 30
+;
+; [Command] ;Charge back, then forward + z
+; name = "charge_B_F_z"
+; command = ~60$B, F, z
+; time = 10
+;
+; [Command] ;Charge down, then up + c
+; name = "charge_D_U_c"
+; command = ~60$D, U, c
+; time = 10
+
+
+;==============================================================================
+;-| Button Remapping |---------------------------------------------------------
+; This section lets you remap the player's buttons (to easily change the
+; button configuration). The format is:
+;   old_button = new_button
+; If new_button is left blank, the button cannot be pressed.
+[Remap]
+x = x	;d
+y = y	;
+z = z	;
+a = a	;a
+b = b	;b
+c = c	;c
+s = s	;Taunt
+
+;==============================================================================
+;-| Default Values |-----------------------------------------------------------
+[Defaults]
+; Default value for the "time" parameter of a Command. Minimum 1.
+command.time = 15
+
+; Default value for the "buffer.time" parameter of a Command. Minimum 1,
+; maximum 30.
+command.buffer.time = 3
+
+;The following two have the same name, but different motion.
+;Either one will be detected by a "command = TripleKFPalm" trigger.
+;Time is set to 20 (instead of default of 15) to make the move
+;easier to do.
+
+; 超必(3), 必殺技(6), 通常動作(7), recovery(6), 基礎ボタン(13), HoldDir(7),
+; AI用(60)
+; 総コマンド数(42)+60 = 102
+;==============================================================================
+;-| 3ゲージ消費技 |------------------------------------------------------------
+;==============================================================================
+;-| 2ゲージ消費技 |------------------------------------------------------------
+;==============================================================================
+;-| 1ゲージ消費技 |------------------------------------------------------------
+[Command]
+name	= "2626_d"
+command	= a+z
+Time = 24
+[Command]
+name	= "1239_c"
+command	= b+z
+Time = 24
+[Command]
+name	= "2626_c"
+command	= c+z
+Time = 24
+[Command]
+name	= "1239_z"
+command	= a+b
+Time = 24
+[Command]
+name    = "Final Vent"
+command = b+c
+time = 30
+;==============================================================================
+;-| 必殺技 |-------------------------------------------------------------------
+[Command]
+name	= "236_a"
+command	= ~D, F, a
+Time = 15
+[Command]
+name	= "214_a"
+command	= ~D, B, a
+Time = 15
+[Command]
+name	= "214_b"
+command	= ~D, B, b
+Time = 15
+[Command]
+name	= "426_b"
+command	= ~D, B, x
+Time = 15
+[Command]
+name	= "426_c"
+command	= ~D, F, b
+Time = 15
+[Command]
+name	= "236_d"
+command	= ~D, F, x
+Time = 15
+[Command]
+name	= "Strike Vent A"
+command	= ~D, F, c
+Time = 15
+[Command]
+name	= "Strike Vent B"
+command	= ~D, B, c
+Time = 15
+;==============================================================================
+;-| 通常動作 |-----------------------------------------------------------------
+[Command]
+name = "FF"     ;Required (do not remove)
+command = F, F
+Time = 15
+[Command]
+name = "BB"     ;Required (do not remove)
+command = B, B
+Time = 15
+[Command]
+Name = "LongJump"
+Command = $D, $U
+Time = 9
+[Command]
+Name = "ShortJump"
+Command = $U, D
+Time = 9
+[Command]
+Name = "JumpIn"
+Command = $U, DF
+Time = 9
+[Command]
+Name = "JumpOut"
+Command = $U, DB
+Time = 9
+[Command]
+Name = "NotHighJump"
+Command = ~9$D, $U
+Time = 2
+
+;==============================================================================
+;-| 2/3 Button Combination |---------------------------------------------------
+[Command]
+name = "recovery";Required (do not remove)
+command = a
+time = 1
+[Command]
+name = "recovery"
+command = b
+time = 1
+[Command]
+name = "recovery"
+command = c
+time = 1
+[Command]
+name = "recovery"
+command = x
+time = 1
+[Command]
+name = "recovery"
+command = y
+time = 1
+[Command]
+name = "recovery"
+command = z
+time = 1
+
+;==============================================================================
+;-| 基礎ボタン |---------------------------------------------------------------
+[Command]
+name = "a"
+command = a
+time = 1
+
+[Command]
+name = "b"
+command = b
+time = 1
+[Command]
+name = "c"
+command = c
+time = 1
+[Command]
+name = "x"
+command = x
+time = 1
+[Command]
+name = "y"
+command = y
+time = 1
+[Command]
+name = "z"
+command = z
+time = 1
+[Command]
+name = "start"
+command = s
+time = 1
+[Command]
+name = "fwd"
+command = F
+time = 1
+[Command]
+name = "back"
+command = B
+time = 1
+[Command]
+name = "up"
+command = U
+time = 1
+[Command]
+name = "down"
+command = D
+time = 1
+[Command]
+Name = "fwdup"
+Command = UF
+Time = 1
+[Command]
+Name = "backup"
+Command = UB
+Time = 1
+
+;==============================================================================
+;-| Hold Dir |-----------------------------------------------------------------
+[Command]
+name = "holdb"
+command = /B
+time = 1
+[Command]
+name = "holdf"
+command = /F
+time = 1
+[Command]
+name = "holdz"
+command = /z
+time = 1
+[Command]
+name = "holdfwd";Required (do not remove)
+command = /$F
+time = 1
+[Command]
+name = "holdback";Required (do not remove)
+command = /$B
+time = 1
+[Command]
+name = "holdup" ;Required (do not remove)
+command = /$U
+time = 1
+[Command]
+name = "holddown";Required (do not remove)
+command = /$D
+time = 1
+
+;==============================================================================
+;-| AI起動用コマンド集 |-------------------------------------------------------
+[Command]
+Name = "AI00"
+Command = D, DF, F, s
+Time = 9
+[Command]
+Name = "AI01"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI02"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI03"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI04"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI05"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI06"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI07"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI08"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI09"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI10"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI11"
+Command = U , U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI12"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI13"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI14"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI15"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI16"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI17"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI18"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI19"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI20"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI21"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI22"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI23"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI24"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI25"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI26"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI27"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI28"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI29"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI30"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI31"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI32"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI33"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI34"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI35"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI36"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI37"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI38"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI39"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI40"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI41"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI42"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI43"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI44"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI45"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI46"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI47"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI48"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI49"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI50"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI51"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI52"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI53"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI54"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI55"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI56"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI57"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI58"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+[Command]
+Name = "AI59"
+Command = U, U, D, D, F, B, F, B, a+b+c+x+y+z
+Time = 0
+
+;==============================================================================
+;------------------------------------------------------------------------------
+; 2. State entry
+; --------------
+; This is where you define what commands bring you to what states.
+;
+; Each state entry block looks like:
+;   [State -1, Label]           ;Change Label to any name you want to use to
+;                               ;identify the state with.
+;   type = ChangeState          ;Don't change this
+;   value = new_state_number
+;   trigger1 = command = command_name
+;   . . .  (any additional triggers)
+;
+; - new_state_number is the number of the state to change to
+; - command_name is the name of the command (from the section above)
+; - Useful triggers to know:
+;   - statetype
+;       S, C or A : current state-type of player (stand, crouch, air)
+;   - ctrl
+;       0 or 1 : 1 if player has control. Unless "interrupting" another
+;                move, you'll want ctrl = 1
+;   - stateno
+;       number of state player is in - useful for "move interrupts"
+;   - movecontact
+;       0 or 1 : 1 if player's last attack touched the opponent
+;                useful for "move interrupts"
+;
+; Note: The order of state entry is important.
+;   State entry with a certain command must come before another state
+;   entry with a command that is the subset of the first.
+;   For example, command "fwd_a" must be listed before "a", and
+;   "fwd_ab" should come before both of the others.
+;
+; For reference on triggers, see CNS documentation.
+;
+; Just for your information (skip if you're not interested):
+; This part is an extension of the CNS. "State -1" is a special state
+; that is executed once every game-tick, regardless of what other state
+; you are in.
+
+
+; Don't remove the following line. It's required by the CMD standard.
+[Statedef -1]
+;==============================================================================
+;-| 超必殺技(3ゲージ) |--------------------------------------------------------
+;==============================================================================
+;-| 超必殺技(2ゲージ) |--------------------------------------------------------
+;==============================================================================
+;-| 超必殺技(1ゲージ) |--------------------------------------------------------
+;------------------------------------------------------------------------------
+;内緒
+[State -1, 内緒]
+type = ChangeState
+value = 3000
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = Command = "2626_d"
+triggerall = Power > 1000
+trigger1 = Ctrl
+trigger2 = (Stateno = [200,229]) && MoveContact
+trigger3 = (Stateno = [300,329]) && MoveContact
+trigger4 = (Stateno = [400,429]) && MoveContact
+trigger5 = (Stateno = [500,529]) && MoveContact
+trigger6 = (Stateno = [600,629]) && MoveContact
+trigger7 = (Stateno = [700,729]) && MoveContact
+trigger8 = StateNo = 230 && (AnimElemTime(6) = [1, 6])
+trigger9 = StateNo = 430 && (AnimElemTime(3) = [1, 6])
+trigger10 = StateNo = 630 && (AnimElemTime(3) = [1, 6])
+trigger11 = StateNo = 1000 && (AnimElemTime(3) = [1, 6])
+trigger12 = StateNo = 1010 && (AnimElemTime(5) = [1, 6])
+trigger13 = StateNo = 1030 && (AnimElemTime(3) = [1, 6])
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;やめ
+[State -1, やめ]
+type = ChangeState
+value = 3010
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = Command = "1239_c"
+triggerall = Power > 1000
+trigger1 = Ctrl || StateNo = 40
+trigger2 = (Stateno = [200,229]) && MoveContact
+trigger3 = (Stateno = [300,329]) && MoveContact
+trigger4 = (Stateno = [400,429]) && MoveContact
+trigger5 = (Stateno = [500,529]) && MoveContact
+trigger6 = (Stateno = [600,629]) && MoveContact
+trigger7 = (Stateno = [700,729]) && MoveContact
+trigger8 = StateNo = 230 && (AnimElemTime(6) = [1, 6])
+trigger9 = StateNo = 430 && (AnimElemTime(3) = [1, 6])
+trigger10 = StateNo = 630 && (AnimElemTime(3) = [1, 6])
+trigger11 = StateNo = 1000 && (AnimElemTime(3) = [1, 6])
+trigger12 = StateNo = 1010 && (AnimElemTime(5) = [1, 6])
+trigger13 = StateNo = 1030 && (AnimElemTime(3) = [1, 6])
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;力弓
+[State -1, 剛弓]
+type = ChangeState
+value = 13010
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType = A
+triggerall = MoveType != H
+triggerall = Command = "2626_c"
+triggerall = Power > 1000
+trigger1 = Ctrl
+trigger2 = (Stateno = [200,229]) && MoveContact
+trigger3 = (Stateno = [300,329]) && MoveContact
+trigger4 = (Stateno = [400,429]) && MoveContact
+trigger5 = (Stateno = [500,529]) && MoveContact
+trigger6 = (Stateno = [600,629]) && MoveContact
+trigger7 = (Stateno = [700,729]) && MoveContact
+trigger8 = StateNo = 230 && (AnimElemTime(6) = [1, 6])
+trigger9 = StateNo = 430 && (AnimElemTime(3) = [1, 6])
+trigger10 = StateNo = 630 && (AnimElemTime(3) = [1, 6])
+trigger11 = StateNo = 1000 && (AnimElemTime(3) = [1, 6])
+trigger12 = StateNo = 1010 && (AnimElemTime(5) = [1, 6])
+trigger13 = StateNo = 1030 && (AnimElemTime(3) = [1, 6])
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;まどかゲイザー
+[State -1, 間欠泉]
+type = ChangeState
+value = 13020
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = Command = "1239_z"
+triggerall = Power > 1000
+trigger1 = Ctrl
+trigger2 = (Stateno = [200,229]) && MoveContact
+trigger3 = (Stateno = [300,329]) && MoveContact
+trigger4 = (Stateno = [400,429]) && MoveContact
+trigger5 = (Stateno = [500,529]) && MoveContact
+trigger6 = (Stateno = [600,629]) && MoveContact
+trigger7 = (Stateno = [700,729]) && MoveContact
+trigger8 = StateNo = 230 && (AnimElemTime(6) = [1, 6])
+trigger9 = StateNo = 430 && (AnimElemTime(3) = [1, 6])
+trigger10 = StateNo = 630 && (AnimElemTime(3) = [1, 6])
+trigger11 = StateNo = 1000 && (AnimElemTime(3) = [1, 6])
+trigger12 = StateNo = 1010 && (AnimElemTime(5) = [1, 6])
+trigger13 = StateNo = 1030 && (AnimElemTime(3) = [1, 6])
+IgnoreHitPause = 0
+
+
+;------------------------------------------------------------------------------
+;まどかゲイザー
+[State -1, 間欠泉]
+type = ChangeState
+value = 13000
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = Command = "2626_c"
+triggerall = Power > 1000
+trigger1 = Ctrl
+trigger2 = (Stateno = [200,229]) && MoveContact
+trigger3 = (Stateno = [300,329]) && MoveContact
+trigger4 = (Stateno = [400,429]) && MoveContact
+trigger5 = (Stateno = [500,529]) && MoveContact
+trigger6 = (Stateno = [600,629]) && MoveContact
+trigger7 = (Stateno = [700,729]) && MoveContact
+trigger8 = StateNo = 230 && (AnimElemTime(6) = [1, 6])
+trigger9 = StateNo = 430 && (AnimElemTime(3) = [1, 6])
+trigger10 = StateNo = 630 && (AnimElemTime(3) = [1, 6])
+trigger11 = StateNo = 1000 && (AnimElemTime(3) = [1, 6])
+trigger12 = StateNo = 1010 && (AnimElemTime(5) = [1, 6])
+trigger13 = StateNo = 1030 && (AnimElemTime(3) = [1, 6])
+IgnoreHitPause = 0
+;-----------------------------------------------------------------------------
+[State -1, Doragon Rider Kick]
+type = ChangeState
+value = 3300
+triggerall = command = "Final Vent"
+triggerall = power >= 1000
+trigger1 = statetype = S
+trigger1 = ctrl
+trigger2 = statetype != A
+trigger2 = hitdefattr = SC, NA, SA
+trigger2 = movecontact
+;---------------------------------------------------------------------------
+;昇竜突破・1
+[State -1, Shyoryu Toppa_a]
+type = ChangeState
+value = 1444
+triggerall = command = "Strike Vent A"
+trigger1 = statetype != A
+trigger1 = ctrl
+trigger2 = (stateno = [200,299]) || (stateno = [400,499])
+trigger2 = stateno != 440 ;Except for sweep kick
+trigger2 = movecontact
+
+;---------------------------------------------------------------------------
+;昇竜突破・2
+[State -1, Shyoryu Toppa_c]
+type = ChangeState
+value = 1445
+triggerall = command = "Strike Vent B"
+trigger1 = statetype != A
+trigger1 = ctrl
+trigger2 = (stateno = [200,299]) || (stateno = [400,499])
+trigger2 = stateno != 440 ;Except for sweep kick
+trigger2 = movecontact
+;==============================================================================
+;-| EX必殺技 |-----------------------------------------------------------------
+;==============================================================================
+;-| 必殺技 |-------------------------------------------------------------------
+;------------------------------------------------------------------------------
+;マジ弓
+[State -1, マジ弓]
+type = ChangeState
+value = 1000
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = Command = "236_a"
+trigger1 = Ctrl
+trigger2 = (Stateno = [200,229]) && MoveContact
+trigger3 = (Stateno = [300,329]) && MoveContact
+trigger4 = (Stateno = [400,429]) && MoveContact
+trigger5 = (Stateno = [500,529]) && MoveContact
+trigger6 = (Stateno = [600,629]) && MoveContact
+trigger7 = (Stateno = [700,729]) && MoveContact
+trigger8 = StateNo = 230 && (AnimElemTime(6) = [1, 6])
+trigger9 = StateNo = 430 && (AnimElemTime(3) = [1, 6])
+trigger10 = StateNo = 630 && (AnimElemTime(3) = [1, 6])
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;退き打ち
+[State -1, 退き撃ち]
+type = ChangeState
+value = 1010
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType != L
+triggerall = MoveType != H
+triggerall = Command = "214_b"
+trigger1 = Ctrl
+trigger2 = (Stateno = [200,229]) && MoveContact
+trigger3 = (Stateno = [300,329]) && MoveContact
+trigger4 = (Stateno = [400,429]) && MoveContact
+trigger5 = (Stateno = [500,529]) && MoveContact
+trigger6 = (Stateno = [600,629]) && MoveContact
+trigger7 = (Stateno = [700,729]) && MoveContact
+trigger8 = StateNo = 230 && (AnimElemTime(6) = [1, 6])
+trigger9 = StateNo = 430 && (AnimElemTime(3) = [1, 6])
+trigger10 = StateNo = 630 && (AnimElemTime(3) = [1, 6])
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;返し打ち
+[State -1, 返し打ち]
+type = ChangeState
+value = 1020
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType != L
+triggerall = MoveType != H
+triggerall = Command = "426_c"
+trigger1 = Ctrl
+trigger2 = (Stateno = [200,229]) && MoveContact
+trigger3 = (Stateno = [300,329]) && MoveContact
+trigger4 = (Stateno = [400,429]) && MoveContact
+trigger5 = (Stateno = [500,529]) && MoveContact
+trigger6 = (Stateno = [600,629]) && MoveContact
+trigger7 = (Stateno = [700,729]) && MoveContact
+trigger8 = StateNo = 230 && (AnimElemTime(6) = [1, 6])
+trigger9 = StateNo = 430 && (AnimElemTime(3) = [1, 6])
+trigger10 = StateNo = 630 && (AnimElemTime(3) = [1, 6])
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;三針弓
+[State -1, 3矢]
+type = ChangeState
+value = 1030
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = Command = "236_d"
+trigger1 = Ctrl
+trigger2 = (Stateno = [200,229]) && MoveContact
+trigger3 = (Stateno = [300,329]) && MoveContact
+trigger4 = (Stateno = [400,429]) && MoveContact
+trigger5 = (Stateno = [500,529]) && MoveContact
+trigger6 = (Stateno = [600,629]) && MoveContact
+trigger7 = (Stateno = [700,729]) && MoveContact
+trigger8 = StateNo = 230 && (AnimElemTime(6) = [1, 6])
+trigger9 = StateNo = 430 && (AnimElemTime(3) = [1, 6])
+trigger10 = StateNo = 630 && (AnimElemTime(3) = [1, 6])
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;目覚ましウェーブ
+[State -1, 目覚ましウェーブ]
+type = ChangeState
+value = 11000
+triggerall = !var(59)
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = Command = "236_a"
+trigger1 = Ctrl
+trigger2 = (Stateno = [10200,10219]) && MoveContact
+trigger3 = (Stateno = [10400,10419]) && MoveContact
+trigger4 = (Stateno = [10600,10619]) && MoveContact
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;大P
+[State -1, 大P]
+type = ChangeState
+value = 11020
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = Command = "214_a"
+trigger1 = Ctrl
+trigger2 = (Stateno = [200,229]) && MoveContact
+trigger3 = (Stateno = [300,329]) && MoveContact
+trigger4 = (Stateno = [400,429]) && MoveContact
+trigger5 = (Stateno = [500,529]) && MoveContact
+trigger6 = (Stateno = [600,629]) && MoveContact
+trigger7 = (Stateno = [700,729]) && MoveContact
+trigger8 = StateNo = 230 && (AnimElemTime(6) = [1, 6])
+trigger9 = StateNo = 430 && (AnimElemTime(3) = [1, 6])
+trigger10 = StateNo = 630 && (AnimElemTime(3) = [1, 6])
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;顔面
+[State -1, セーフ]
+type = ChangeState
+value = 11040
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = Command = "426_b"
+trigger1 = Ctrl
+trigger2 = (Stateno = [200,229]) && MoveContact
+trigger3 = (Stateno = [300,329]) && MoveContact
+trigger4 = (Stateno = [400,429]) && MoveContact
+trigger5 = (Stateno = [500,529]) && MoveContact
+trigger6 = (Stateno = [600,629]) && MoveContact
+trigger7 = (Stateno = [700,729]) && MoveContact
+trigger8 = StateNo = 230 && (AnimElemTime(6) = [1, 6])
+trigger9 = StateNo = 430 && (AnimElemTime(3) = [1, 6])
+trigger10 = StateNo = 630 && (AnimElemTime(3) = [1, 6])
+IgnoreHitPause = 0
+
+
+;==============================================================================
+;-| 特殊 |---------------------------------------------------------------------
+;------------------------------------------------------------------------------
+;Air_d
+[State -1, Air_d]
+type = ChangeState
+value = 630
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType = A
+triggerall = MoveType != H
+triggerall = Command = "x"
+trigger1 = Ctrl
+trigger2 = (Stateno = [200,229]) && MoveContact
+trigger3 = (Stateno = [300,329]) && MoveContact
+trigger4 = (Stateno = [400,429]) && MoveContact
+trigger5 = (Stateno = [500,529]) && MoveContact
+trigger6 = (Stateno = [600,629]) && MoveContact
+trigger7 = (Stateno = [700,729]) && MoveContact
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;Crouch_d
+[State -1, Crouch_d]
+type = ChangeState
+value = 430
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = Command = "x"
+triggerall = Command = "holddown"
+trigger1 = Ctrl
+trigger2 = (Stateno = [200,229]) && MoveContact
+trigger3 = (Stateno = [300,329]) && MoveContact
+trigger4 = (Stateno = [400,429]) && MoveContact
+trigger5 = (Stateno = [500,529]) && MoveContact
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;Stand_d
+[State -1, Stand_d]
+type = ChangeState
+value = 230
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = Command = "x"
+trigger1 = Ctrl
+trigger2 = (Stateno = [200,229]) && MoveContact
+trigger3 = (Stateno = [300,329]) && MoveContact
+trigger4 = (Stateno = [400,429]) && MoveContact
+trigger5 = (Stateno = [500,529]) && MoveContact
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;Air_c
+[State -1, Air_c]
+type = ChangeState
+value = 10620
+triggerall = !var(59)
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = A
+triggerall = MoveType != H
+triggerall = Command = "c"
+trigger1 = Ctrl
+IgnoreHitPause = 0
+;------------------------------------------------------------------------------
+;Crouch_c
+[State -1, Crouch_c]
+type = ChangeState
+value = 10420
+triggerall = !var(59)
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = Command = "c"
+triggerall = Command = "holddown"
+trigger1 = Ctrl
+IgnoreHitPause = 0
+;------------------------------------------------------------------------------
+;Stand_c
+[State -1, Stand_c]
+type = ChangeState
+value = 10220
+triggerall = !var(59)
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = Command = "c"
+trigger1 = Ctrl
+IgnoreHitPause = 0
+
+;==============================================================================
+;-| 通常攻撃 |-----------------------------------------------------------------
+;------------------------------------------------------------------------------
+;Air_c
+[State -1, Air_c]
+type = ChangeState
+value = 620
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType = A
+triggerall = MoveType != H
+triggerall = Command = "c"
+trigger1 = Ctrl
+trigger2 = (Stateno = [600,619]) && MoveContact
+IgnoreHitPause = 0
+;------------------------------------------------------------------------------
+;Air_b
+[State -1, Air_b]
+type = ChangeState
+value = 610
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType = A
+triggerall = MoveType != H
+triggerall = Command = "b"
+trigger1 = Ctrl
+trigger2 = Stateno = 600 && MoveContact
+IgnoreHitPause = 0
+;------------------------------------------------------------------------------
+;Air_a
+[State -1, Air_a]
+type = ChangeState
+value = 600
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType = A
+triggerall = MoveType != H
+triggerall = Command = "a"
+trigger1 = Ctrl
+IgnoreHitPause = 0
+;------------------------------------------------------------------------------
+;Air_b
+[State -1, Air_b]
+type = ChangeState
+value = 10610
+triggerall = !var(59)
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = A
+triggerall = MoveType != H
+triggerall = Command = "b"
+trigger1 = Ctrl
+trigger2 = (Stateno = [10600,10609]) && MoveContact
+IgnoreHitPause = 0
+;------------------------------------------------------------------------------
+;Air_a
+[State -1, Air_a]
+type = ChangeState
+value = 10600
+triggerall = !var(59)
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = A
+triggerall = MoveType != H
+triggerall = Command = "a"
+trigger1 = Ctrl
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;Crouch_c
+[State -1, Crouch_c]
+type = ChangeState
+value = 420
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType = C
+triggerall = MoveType != H
+triggerall = Command = "c"
+triggerall = Command = "holddown"
+trigger1 = Ctrl
+trigger2 = (Stateno = [200,229]) && MoveContact
+trigger3 = (Stateno = [400,419]) && MoveContact
+IgnoreHitPause = 0
+;------------------------------------------------------------------------------
+;Crouch_b
+[State -1, Crouch_b]
+type = ChangeState
+value = 410
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType = C
+triggerall = MoveType != H
+triggerall = Command = "b"
+triggerall = Command = "holddown"
+trigger1 = Ctrl
+trigger2 = (Stateno = [200,209]) && MoveContact
+trigger3 = (Stateno = [400,409]) && MoveContact
+IgnoreHitPause = 0
+;------------------------------------------------------------------------------
+;Crouch_a
+[State -1, Crouch_a]
+type = ChangeState
+value = 400
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType = C
+triggerall = MoveType != H
+triggerall = Command = "a"
+triggerall = Command = "holddown"
+trigger1 = Ctrl
+trigger2 = (Stateno = [400,409]) && AnimElemNo(0) > 4
+IgnoreHitPause = 0
+;------------------------------------------------------------------------------
+;Crouch_b
+[State -1, Crouch_b]
+type = ChangeState
+value = 10410
+triggerall = !var(59)
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = C
+triggerall = MoveType != H
+triggerall = Command = "b"
+triggerall = Command = "holddown"
+trigger1 = Ctrl
+trigger2 = (Stateno = [10400,10409]) && MoveContact
+IgnoreHitPause = 0
+;------------------------------------------------------------------------------
+;Crouch_a
+[State -1, Crouch_a]
+type = ChangeState
+value = 10400
+triggerall = !var(59)
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = C
+triggerall = MoveType != H
+triggerall = Command = "a"
+triggerall = Command = "holddown"
+trigger1 = Ctrl
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;Stand_c
+[State -1, Stand_c]
+type = ChangeState
+value = 220
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType = S
+triggerall = MoveType != H
+triggerall = Command = "c"
+triggerall = Command != "holddown"
+trigger1 = Ctrl
+trigger2 = (Stateno = [200,219]) && MoveContact
+trigger3 = (Stateno = [400,429]) && MoveContact
+IgnoreHitPause = 0
+;------------------------------------------------------------------------------
+;Stand_b
+[State -1, Stand_b]
+type = ChangeState
+value = 210
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType = S
+triggerall = MoveType != H
+triggerall = Command = "b"
+trigger1 = Ctrl
+trigger2 = (Stateno = [200,209]) && MoveContact
+trigger3 = (Stateno = [400,409]) && MoveContact
+IgnoreHitPause = 0
+;------------------------------------------------------------------------------
+;Stand_a
+[State -1, Stand_a]
+type = ChangeState
+value = 200
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = PalNo != var(13)
+triggerall = Alive
+triggerall = StateType = S
+triggerall = MoveType != H
+triggerall = Command = "a"
+trigger1 = Ctrl
+IgnoreHitPause = 0
+;------------------------------------------------------------------------------
+;Stand_b
+[State -1, Stand_b]
+type = ChangeState
+value = 10210
+triggerall = !var(59)
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = S
+triggerall = MoveType != H
+triggerall = Command = "b"
+trigger1 = Ctrl
+trigger2 = (Stateno = [10200,10209]) && MoveContact
+IgnoreHitPause = 0
+;------------------------------------------------------------------------------
+;Stand_a
+[State -1, Stand_a]
+type = ChangeState
+value = 10200
+triggerall = !var(59)
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = S
+triggerall = MoveType != H
+triggerall = Command = "a"
+trigger1 = Ctrl
+IgnoreHitPause = 0
+
+;==============================================================================
+;-| 通常動作 |-----------------------------------------------------------------
+;------------------------------------------------------------------------------
+;ダッシュ
+[State -1, Dash]
+type = ChangeState
+value = 100
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = Alive
+triggerall = MoveType != H
+triggerall = Command = "FF"
+triggerall = StateType != L && StateType != A
+trigger1 = Ctrl
+;------------------------------------------------------------------------------
+;バックステップ
+[State -1, BackStep]
+type = ChangeState
+value = 105
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = Alive
+triggerall = MoveType != H
+triggerall = Command = "BB"
+triggerall = StateType != L && StateType != A
+trigger1 = Ctrl
+;------------------------------------------------------------------------------
+;ジャンプ
+[State -1, Jump]
+type = null;ChangeState
+value = 40
+triggerall = !var(59) || (var(59)>0 && (var(16) = [1,4]))
+triggerall = Alive
+triggerall = MoveType != H
+triggerall = (Command="up")||(Command="fwdup")||(Command="backup")
+triggerall = StateType != L && StateType != A
+trigger1 = Ctrl
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;______________________________________________________________________________
+;==============================================================================
+;-| 人工知能 |-----------------------------------------------------------------
+;==============================================================================
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+;==============================================================================
+;-| ガード |-------------------------------------------------------------------
+;------------------------------------------
+;投げ避けバックステップ
+[State -1, Dash]
+type = ChangeState
+value = 105
+triggerall = PalNo = var(13)
+triggerall = var(59) > 0
+triggerall = Random < var(17) *1.250
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = var(58)%2 = 1
+triggerall = P2BodyDist X < 40
+trigger1 = EnemyNear,HitDefAttr = SC,AT
+;------------------------------------------
+;打撃ガード
+[State -3, GoToGuardState]
+type = ChangeState
+value = 120
+triggerall = PalNo = var(13)
+TriggerAll = Var(59) > 0
+triggerall = Random < var(17) *1.250
+triggerall = StateType != L
+triggerall = MoveType != H
+triggerall = var(58)%2 = 1
+triggerall = StateNo != [120, 155]
+trigger1 = InGuardDist
+trigger1 = EnemyNear,HitDefAttr != SCA, NT, ST, HT
+[State -3, Hi->Lo]
+type = StateTypeSet
+triggerall = PalNo = var(13)
+triggerall = Var(59) > 0
+triggerall = Random < (var(17)+var(59)) *1.250
+triggerall = MoveType != H || (StateNo = [120,155])
+triggerall = StateType != L && StateType != A
+triggerall = StateType = S
+trigger1 = EnemyNear,HitDefAttr = C, NA, SA, HA, NP, SP, HP
+trigger2 = EnemyNear,HitDefAttr = S, NA, SA, HA, NP, SP, HP
+trigger2 = GameTime%60 = 59
+trigger2 = Random < 100
+statetype = C
+physics = C
+[State -3, Lo->Hi]
+type = StateTypeSet
+triggerall = PalNo = var(13)
+triggerall = Var(59) > 0
+triggerall = Random < (var(17)+var(59)) *1.250
+triggerall = MoveType != H || (StateNo = [120,155])
+triggerall = StateType != L && StateType != A
+triggerall = StateType = C
+trigger1 = EnemyNear,HitDefAttr = A, NA, SA, HA, NP, SP, HP
+trigger2 = EnemyNear,HitDefAttr = S, NA, SA, HA, NP, SP, HP
+trigger2 = GameTime%60 = 59
+trigger2 = Random < 100
+statetype = S
+physics = S
+
+;==============================================================================
+;-| コンボ_選択 |--------------------------------------------------------------
+;------------------------------------------------------------------------------
+; 汎用コンボ (v58 = 2, 3
+[State -3, v58=2]
+type = VarSet
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = MoveHit = 1 || ProjHitTime(0) = 1
+trigger1 = var(58) < 2
+v = 58
+value = 2
+IgnoreHitPause = 1
+
+;------------------------------------------------------------------------------
+; 道選択
+;[10]_6a>a->b>236a->a>236a->2a>2b>bCb->bCa
+;[08]_6a>a->b>236a->a>bCb->bCa
+;[06]_cThrough->6a>b>bCb->bCa
+;[04]_c->jumpfw->ja->ja->b>bCb->bCa
+[State -3, start]   ; 公開時はnull指定
+type = null;VarSet
+trigger1 = !var(58)
+v = 58
+value = 4
+IgnoreHitPause = 1
+
+[State -3, start]   ; 公開時はnull指定
+type = null;VarSet
+trigger1 = var(59) = 0
+v = 50
+value = Command = "holds"
+IgnoreHitPause = 1
+
+;==============================================================================
+;-| 移動関係 |-----------------------------------------------------------------
+;基準位置->42
+;------------------------------------------------------------------------------
+;立ち移行
+[State -1, 12]
+type = ChangeState
+value = 17
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = C
+triggerall = MoveType != H
+triggerall = StateNo = 16
+;座ったら立てる
+trigger1 = GameTime%300 = 299
+trigger1 = var(58) = 1
+trigger1 = Random < var(59) *(0.200 +(0)*-0.900)
+;遠いから立てる
+trigger2 = var(58) = 1
+trigger2 = Random < var(59) *(0.200 +(0)*-0.900)
+trigger2 = P2BodyDist X -EnemyNear,Vel X *var(55) > 100
+
+;------------------------------------------------------------------------------
+;しゃがみ移行
+[State -1, 11]
+type = ChangeState
+value = 15
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = S
+triggerall = MoveType != H
+triggerall = var(58)%2 = 1
+triggerall = StateNo != 15
+;近いなら座っときゃいいんや、空中は無しで
+trigger1 = GameTime%30 = 15
+trigger1 = var(58) = 1
+trigger1 = Random < var(59) *(0.500 +(P2StateType=A)*-0.900)
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 50
+;近い、空中は無しで
+trigger2 = var(58) = 1
+trigger2 = Random < var(59) *(0.400 +(P2StateType=A)*-0.900)
+trigger2 = P2BodyDist X -EnemyNear,Vel X *var(55) < 20
+
+;------------------------------------------------------------------------------
+;ジャンプ_fwd
+[State -1, Jump_fwd]
+type = ChangeState
+value = 42
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = var(58)%2 = 1
+;当身成功時、ゲージあるときに限る
+trigger1 = var(58) = 3
+trigger1 = var(56) = 11040
+trigger1 = Random < var(59) *(0.000 +(var(2)>999)*0.500)
+trigger1 = 1 || var(55) := 5
+trigger1 = 1 || fvar(36) := Pos Y +(Const(Velocity.Jump.Y) +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+trigger1 = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+trigger1 = fvar(37)-fvar(36) > -60
+;小波hit時、ゲージあるときに限る
+trigger2 = var(58) = 3
+trigger2 = var(56) = 11000
+trigger2 = Random < var(59) *(0.000 +(var(2)>999)*0.250)
+trigger2 = 1 || var(55) := 5
+trigger2 = 1 || fvar(36) := Pos Y +(Const(Velocity.Jump.Y) +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+trigger2 = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+trigger2 = fvar(37)-fvar(36) > -60
+;hit時 && jaが当たりそう、ゲージあるときに限る
+trigger3 = var(58) = 3
+trigger3 = Random < var(59) *(0.000 +(var(2)>929)*0.500)
+trigger3 = StateNo != 101
+trigger3 = 1 || var(55) := 4
+trigger3 = 1 || fvar(36) := Pos Y +(Const(Velocity.Jump.Y) +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+trigger3 = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+trigger3 = fvar(37)-fvar(36) > -74
+trigger3 = P2BodyDist X -EnemyNear,Vel X *var(55) < 37 +Const(Velocity.Jump.Fwd.X) *var(55)
+trigger3 = EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *var(55) > 0
+;hit時 && jaが当たりそう、ゲージあるときに限る && ダッシュ中
+trigger4 = var(58) = 3
+trigger4 = Random < var(59) *(0.000 +(var(2)>929)*0.500)
+trigger4 = StateNo = 101
+trigger4 = 1 || var(55) := 4
+trigger4 = 1 || fvar(36) := Pos Y +(Const(Velocity.Jump.Y) +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+trigger4 = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+trigger4 = fvar(37)-fvar(36) > -74
+trigger4 = P2BodyDist X -EnemyNear,Vel X *var(55) < 37 +Const(Velocity.RunJump.Fwd.X) *var(55)
+trigger4 = EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *var(55) > 0
+
+;------------------------------------------------------------------------------
+;ジャンプ_back
+[State -1, Jump_back]
+type = ChangeState
+value = 43
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = var(58)%2 = 1
+;相手ダウン中
+trigger1 = EnemyNear,StateNo = [5100, 5119]
+trigger1 = Random < var(59) *(0.005 +(var(2)>999)*0.050)
+trigger1 = 1 || var(55) := 5
+trigger1 = 1 || fvar(36) := Pos Y +(Const(Velocity.Jump.Y) +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+trigger1 = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+trigger1 = fvar(37)-fvar(36) > -60
+
+;------------------------------------------------------------------------------
+;run_fwd
+[State -1, run_fwd]
+type = ChangeState
+value = 101
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = var(58)%2 = 1
+triggerall = StateNo != 101
+;dmが出たらとりあえず走る、c当てたときは別
+trigger1 = var(58) = 3
+trigger1 = Random < var(59) *1.000
+trigger1 = P2BodyDist X > 42
+trigger1 = var(56) >= 11000
+;走り当身用、体力に余裕(3割以上)
+trigger2 = Random < var(59) *(0.500 +(0)*-0.450)
+trigger2 = StateNo = [100, 104]
+trigger2 = P2BodyDist X > 100
+trigger2 = P2StateType != C
+trigger2 = (EnemyNear,Life *1000.0 /EnemyNear,LifeMax) -(Life *1000.0 /LifeMax) < -300
+;基準位置から遠すぎ
+trigger3 = GameTime%30 = 10
+trigger3 = Random < var(59) *(0.190 +(0)*0.500)
+trigger3 = P2BodyDist X > 42 +50
+;たまには走るかね
+trigger4 = GameTime%30 = 10
+trigger4 = Random < var(59) *(0.190 +(0)*0.500)
+trigger4 = StateNo = 25
+
+;------------------------------------------------------------------------------
+;run_back
+[State -1, run_back]
+type = ChangeState
+value = 106
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = var(58)%2 = 1
+triggerall = BackEdgeBodyDist > 40
+;華麗に避け・・・たかった。。。
+trigger1 = Random < var(59) *(0.050+(0)*0.500)
+trigger1 = P2MoveType = A
+trigger1 = P2BodyDist X < 60
+trigger1 = P2BodyDist X > 0
+;近すぎ注意
+trigger2 = GameTime%30 = 13
+trigger2 = Random < var(59) *0.200
+trigger2 = P2BodyDist X < 5
+
+;------------------------------------------------------------------------------
+;walk_fwd
+[State -1, walk_fwd]
+type = ChangeState
+value = 25
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = StateNo != [100, 109]
+triggerall = StateNo != 25
+;b>236aが繋がる位置(42)付近に調整
+trigger1 = GameTime%30 = 1
+trigger1 = var(58) = 1
+trigger1 = Random < var(59) *0.350
+trigger1 = P2BodyDist X > 42
+;たまには外れるのもいいかな
+trigger2 = GameTime%30 = 7
+trigger2 = var(58) = 1
+trigger2 = Random < var(59) *0.350
+trigger2 = P2BodyDist X < 42
+
+;------------------------------------------------------------------------------
+;walk_back
+[State -1, walk_back]
+type = ChangeState
+value = 26
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = var(58) = 1
+triggerall = StateNo != [100, 109]
+triggerall = StateNo != 26
+;b>236aが繋がる位置(42)付近に調整
+trigger1 = GameTime%30 = 4
+trigger1 = Random < var(59) *0.350
+trigger1 = P2BodyDist X < 22
+;たまには外れるのもいいかな
+trigger1 = GameTime%30 = 10
+trigger1 = Random < var(59) *0.350
+trigger1 = P2BodyDist X > 22
+
+;------------------------------------------------------------------------------
+;walk_stop
+[State -1, walk_stop]
+type = ChangeState
+value = 0
+ctrl = 1
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = StateNo = [25, 26]
+;b>236aが繋がる位置(42)付近に調整
+trigger1 = Time > 90
+trigger1 = Random < var(59) *0.100
+trigger1 = P2BodyDist X = [22, 42]
+;外れすぎには注意(近すぎ
+trigger2 = Random < var(59) *0.900
+trigger2 = Time > 120
+trigger2 = P2BodyDist X < 5
+;外れすぎには注意(遠すぎ
+trigger3 = Random < var(59) *0.900
+trigger3 = Time > 120
+trigger3 = P2BodyDist X > 200
+
+;------------------------------------------------------------------------------
+;run_stop
+[State -1, run_stop]
+type = ChangeState
+value = 0
+ctrl = 1
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = StateNo = [100, 101]
+;近いと止まる
+trigger1 = Random < var(59) *0.900
+trigger1 = P2BodyDist X < 20
+
+;------------------------------------------------------------------------------
+;受身
+[State -3, recaver]
+Type = ChangeState
+Value = 5210 -(Pos Y >= -20)*10
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateNo = 5050
+trigger1 = CanRecover
+trigger1 = Random < 400 +Random%200
+
+;==============================================================================
+;-| コンボ_規定 |--------------------------------------------------------------
+;==============================================================================
+;-| コンボ_汎用 |--------------------------------------------------------------
+;------------------------------------------------------------------------------
+;力弓
+[State -1, 剛弓]
+type = ChangeState
+value = 13010
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = A
+triggerall = MoveType != H
+triggerall = var(2) > 999
+triggerall = var(58) = [2, 3]
+triggerall = 1 || var(55) := 5
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+triggerall = var(57) >= var(55) || ifelse(!(EnemyNear,CanRecover), 1, Random<var(59) *0.100)
+triggerall = P2BodyDist X -EnemyNear,Vel X *var(55) < 452
+;目押し
+trigger1 = var(58) = 3
+trigger1 = Random < var(59) *0.200
+trigger1 = fvar(37)-fvar(36) +var(50) > -60 +20
+;ja
+trigger2 = Stateno = 10600 && MoveContact
+trigger2 = Random < var(59) *0.150
+trigger2 = fvar(37)-fvar(36) +var(50) > -60 +20
+;jb
+trigger3 = Stateno = 10610 && MoveContact
+trigger3 = Random < var(59) *0.500
+trigger3 = fvar(37)-fvar(36) +var(50) > -60 +20
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;まどかゲイザー
+[State -1, 間欠泉]
+type = ChangeState
+value = 13020
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = var(2) > 999
+triggerall = var(58) = [2, 3]
+triggerall = 1 || var(55) := 14
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+triggerall = var(57) >= var(55) || ifelse(!(EnemyNear,CanRecover), 1, Random<var(59) *0.100)
+triggerall = fvar(37)-fvar(36) +var(50) > -517
+;目押し
+trigger1 = var(58) = 3
+trigger1 = Random < var(59) *0.200
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) > -(fvar(37)-fvar(36)) *0.25
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < -(fvar(37)-fvar(36)) *0.25 +77 -22
+;a
+trigger2 = Stateno = 10200 && MoveContact
+trigger2 = Random < var(59) *(0.060 +(P2StateType=A)*0.040)
+trigger2 = P2BodyDist X -EnemyNear,Vel X *var(55) > -(fvar(37)-fvar(36)) *0.25
+trigger2 = P2BodyDist X -EnemyNear,Vel X *var(55) < -(fvar(37)-fvar(36)) *0.25 +77 -42
+;b
+trigger3 = Stateno = 10210 && MoveContact
+trigger3 = Random < var(59) *0.100
+trigger3 = P2BodyDist X -EnemyNear,Vel X *var(55) > -(fvar(37)-fvar(36)) *0.25
+trigger3 = P2BodyDist X -EnemyNear,Vel X *var(55) < -(fvar(37)-fvar(36)) *0.25 +77 -47
+;2a
+trigger4 = Stateno = 10400 && MoveContact
+trigger4 = Random < var(59) *(0.060 +(P2StateType=A)*0.040)
+trigger4 = P2BodyDist X -EnemyNear,Vel X *var(55) > -(fvar(37)-fvar(36)) *0.25
+trigger4 = P2BodyDist X -EnemyNear,Vel X *var(55) < -(fvar(37)-fvar(36)) *0.25 +77 -37
+;2b、めっちゃ近いなら別
+trigger5 = Stateno = 10410 && MoveContact
+trigger5 = Random < var(59) *(0.090 +(P2BodyDist X<20)*0.110)
+trigger5 = P2BodyDist X -EnemyNear,Vel X *var(55) > -(fvar(37)-fvar(36)) *0.25
+trigger5 = P2BodyDist X -EnemyNear,Vel X *var(55) < -(fvar(37)-fvar(36)) *0.25 +77 -27
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;大P
+[State -1, 大P]
+type = ChangeState
+value = 11020
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = var(58) = [2, 3]
+triggerall = 1 || var(55) := 12
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+triggerall = var(57) >= var(55) || ifelse(!(EnemyNear,CanRecover), 1, Random<var(59) *0.100)
+triggerall = fvar(37)-fvar(36) +var(50) > -100 +20
+;目押し、大P連打はちょっと遠慮
+trigger1 = var(58) = 3
+trigger1 = Random < var(59) *(0.400 +(var(56)>=11020)*-0.340)
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 60 -20
+;a
+trigger2 = Stateno = 10200 && MoveContact
+trigger2 = Random < var(59) *0.400
+trigger2 = P2BodyDist X -EnemyNear,Vel X *var(55) < 60 -20
+;b
+trigger3 = Stateno = 10210 && MoveContact
+trigger3 = Random < var(59) *0.400
+trigger3 = P2BodyDist X -EnemyNear,Vel X *var(55) < 60 -17
+;2a
+trigger4 = Stateno = 10400 && MoveContact
+trigger4 = Random < var(59) *0.400
+trigger4 = P2BodyDist X -EnemyNear,Vel X *var(55) < 60 -16
+;2b
+trigger5 = Stateno = 10410 && MoveContact
+trigger5 = Random < var(59) *0.400
+trigger5 = P2BodyDist X -EnemyNear,Vel X *var(55) < 60 -33
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;目覚ましウェーブ
+[State -1, 目覚ましウェーブ]
+type = ChangeState
+value = 11000
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = var(58) = [2, 3]
+triggerall = 1 || var(55) := 10
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+triggerall = var(57) >= var(55) || ifelse(!(EnemyNear,CanRecover), 1, Random<var(59) *0.100)
+triggerall = fvar(37)-fvar(36) +var(50) > -90 +15
+;目押し、必殺以上はちょっと遠慮
+trigger1 = var(58) = 3
+trigger1 = Random < var(59) *(0.500 +(var(56)>=11000)*-0.400)
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 58
+;a
+trigger2 = Stateno = 10200 && MoveContact
+trigger2 = Random < var(59) *0.400
+trigger2 = P2BodyDist X -EnemyNear,Vel X *var(55) < 58 -14
+;b
+trigger3 = Stateno = 10210 && MoveContact
+trigger3 = Random < var(59) *0.600
+trigger3 = P2BodyDist X -EnemyNear,Vel X *var(55) < 58 -16
+;2a
+trigger4 = Stateno = 10400 && MoveContact
+trigger4 = Random < var(59) *0.400
+trigger4 = P2BodyDist X -EnemyNear,Vel X *var(55) < 58 -14
+;2b
+trigger5 = Stateno = 10410 && MoveContact
+trigger5 = Random < var(59) *0.400
+trigger5 = P2BodyDist X -EnemyNear,Vel X *var(55) < 58 -28
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;顔面
+[State -1, セーフ]
+type = ChangeState
+value = 11040
+triggerall = 0
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = var(58) = [2, 3]
+triggerall = 1 || var(55) := 12 -4
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+triggerall = var(57) <= var(55)
+triggerall = fvar(37)-fvar(36) +var(50) > -90
+;目押し
+trigger1 = var(58) = 3
+trigger1 = Random < var(59) *0.100
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 4 +40
+;a
+trigger2 = Stateno = 10200 && MoveContact
+trigger2 = Random < var(59) *0.050
+trigger2 = P2BodyDist X -EnemyNear,Vel X *var(55) < 4 +40
+;b
+trigger3 = Stateno = 10210 && MoveContact
+trigger3 = Random < var(59) *0.010
+trigger3 = P2BodyDist X -EnemyNear,Vel X *var(55) < 4 +40
+;2a
+trigger4 = Stateno = 10400 && MoveContact
+trigger4 = Random < var(59) *0.100
+trigger4 = P2BodyDist X -EnemyNear,Vel X *var(55) < 4 +40
+;2b
+trigger5 = Stateno = 10410 && MoveContact
+trigger5 = Random < var(59) *0.010
+trigger5 = P2BodyDist X -EnemyNear,Vel X *var(55) < 4 +40
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;Air_c
+[State -1, Air_c]
+type = ChangeState
+value = 10620
+triggerall = !var(59)
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = A
+triggerall = MoveType != H
+triggerall = var(58) = [2, 3]
+triggerall = 1 || var(55) := 11
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+triggerall = var(57) >= var(55) || ifelse(!(EnemyNear,CanRecover), 1, Random<var(59) *0.100)
+triggerall = fvar(37)-fvar(36) +var(50) > -74
+;目押し
+trigger1 = var(58) = 3
+trigger1 = Random < var(59) *0.500
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 67
+IgnoreHitPause = 0
+;------------------------------------------------------------------------------
+;Crouch_c
+[State -1, Crouch_c]
+type = ChangeState
+value = 10420
+triggerall = !var(59)
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = var(58) = [2, 3]
+triggerall = 1 || var(55) := 11
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+triggerall = var(57) >= var(55) || ifelse(!(EnemyNear,CanRecover), 1, Random<var(59) *0.100)
+triggerall = fvar(37)-fvar(36) +var(50) > -71
+;目押し
+trigger1 = var(58) = 3
+trigger1 = Random < var(59) *0.500
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 68
+IgnoreHitPause = 0
+;------------------------------------------------------------------------------
+;Stand_c
+[State -1, Stand_c]
+type = ChangeState
+value = 10220
+triggerall = !var(59)
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = var(58) = [2, 3]
+triggerall = 1 || var(55) := 11
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+triggerall = var(57) >= var(55) || ifelse(!(EnemyNear,CanRecover), 1, Random<var(59) *0.100)
+triggerall = fvar(37)-fvar(36) +var(50) > -100
+;目押し
+trigger1 = var(58) = 3
+trigger1 = Random < var(59) *0.500
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 89
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;Air_a
+[State -1, Air_a]
+type = ChangeState
+value = 10600
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = A
+triggerall = MoveType != H
+triggerall = var(58) = [2, 3]
+triggerall = 1 || var(55) := 4
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+triggerall = var(57) >= var(55) || ifelse(!(EnemyNear,CanRecover), 1, Random<var(59) *0.100)
+triggerall = fvar(37)-fvar(36) +var(50) > -74
+;目押し
+trigger1 = var(58) = 3
+trigger1 = Random < var(59) *(0.500 +(0)*-0.450)
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) -Vel X *var(55) < 37
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;Air_b
+[State -1, Air_b]
+type = ChangeState
+value = 10610
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = A
+triggerall = MoveType != H
+triggerall = var(58) = [2, 3]
+triggerall = 1 || var(55) := 8
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+triggerall = var(57) >= var(55) || ifelse(!(EnemyNear,CanRecover), 1, Random<var(59) *0.100)
+triggerall = fvar(37)-fvar(36) +var(50) > -70
+;目押し
+trigger1 = var(58) = 3
+trigger1 = Random < var(59) *(0.500 +(0)*-0.450)
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) -Vel X *var(55) < 39
+;a
+trigger2 = Stateno = 10600 && MoveContact
+trigger2 = Random < var(59) *0.500
+trigger2 = P2BodyDist X -EnemyNear,Vel X *var(55) -Vel X *var(55) < 39 -36
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;Crouch_a
+[State -1, Crouch_a]
+type = ChangeState
+value = 10400
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = C
+triggerall = MoveType != H
+triggerall = var(58) = [2, 3]
+triggerall = 1 || var(55) := 4
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+triggerall = var(57) >= var(55) || ifelse(!(EnemyNear,CanRecover), 1, Random<var(59) *0.100)
+triggerall = fvar(37)-fvar(36) +var(50) > -34
+;目押し
+trigger1 = var(58) = 3
+trigger1 = Random < var(59) *0.500
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 56 -(var(56)=11020)*16
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;Crouch_b
+[State -1, Crouch_b]
+type = ChangeState
+value = 10410
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = C
+triggerall = MoveType != H
+triggerall = var(58) = [2, 3]
+triggerall = 1 || var(55) := 6
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+triggerall = var(57) >= var(55) || ifelse(!(EnemyNear,CanRecover), 1, Random<var(59) *0.100)
+triggerall = fvar(37)-fvar(36) +var(50) > -13
+;目押し
+trigger1 = var(58) = 3
+trigger1 = Random < var(59) *0.500
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 118 -(var(56)=11020)*88
+;2a
+trigger2 = Stateno = 10400 && MoveContact
+trigger2 = Random < var(59) *0.500
+trigger2 = P2BodyDist X -EnemyNear,Vel X *var(55) < 118
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;Stand_a
+[State -1, Stand_a]
+type = ChangeState
+value = 10200
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = S
+triggerall = MoveType != H
+triggerall = var(58) = [2, 3]
+triggerall = 1 || var(55) := 8
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+triggerall = var(57) >= var(55) || ifelse(!(EnemyNear,CanRecover), 1, Random<var(59) *0.100)
+triggerall = fvar(37)-fvar(36) +var(50) > -79
+;目押し
+trigger1 = var(58) = 3
+trigger1 = Random < var(59) *0.500
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 57 -(var(56)=11020)*27
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;Stand_b
+[State -1, Stand_b]
+type = ChangeState
+value = 10210
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = S
+triggerall = MoveType != H
+triggerall = var(58) = [2, 3]
+triggerall = 1 || var(55) := 10
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+triggerall = var(57) >= var(55) || ifelse(!(EnemyNear,CanRecover), 1, Random<var(59) *0.100)
+triggerall = fvar(37)-fvar(36) +var(50) > -87
+;目押し
+trigger1 = var(58) = 3
+trigger1 = Random < var(59) *0.500
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 56 -(var(56)=11020)*16
+;a
+trigger2 = Stateno = 10200 && MoveContact
+trigger2 = Random < var(59) *0.500
+trigger2 = P2BodyDist X -EnemyNear,Vel X *var(55) < 56 -25
+IgnoreHitPause = 0
+
+;==============================================================================
+;-| 超必殺技(3ゲージ) |--------------------------------------------------------
+;==============================================================================
+;-| 超必殺技(2ゲージ) |--------------------------------------------------------
+;==============================================================================
+;-| 超必殺技(1ゲージ) |--------------------------------------------------------
+;------------------------------------------------------------------------------
+;飛ぶ鳥落とす
+[State -1, 間欠泉]
+type = ChangeState
+value = 13020
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = var(2) > 999
+triggerall = var(58) = 1
+triggerall = 1 || var(55) := 14
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+;対空、体力差2割以下
+trigger1 = Random < var(59) *(0.100 +(0)*-0.450)
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) > -(fvar(37)-fvar(36)) *0.25
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < -(fvar(37)-fvar(36)) *0.25 +77 -17
+trigger1 = fvar(37)-fvar(36) < 0
+trigger1 = P2StateType = A
+trigger1 = Abs( (EnemyNear,Life *1000.0 /EnemyNear,LifeMax) -(Life *1000.0 /LifeMax) ) < 200
+;対空、体力に余裕(2割以上)
+trigger2 = Random < var(59) *(0.200 +(0)*-0.450)
+trigger2 = P2BodyDist X -EnemyNear,Vel X *var(55) > -(fvar(37)-fvar(36)) *0.25
+trigger2 = P2BodyDist X -EnemyNear,Vel X *var(55) < -(fvar(37)-fvar(36)) *0.25 +77 -17
+trigger2 = fvar(37)-fvar(36) < 0
+trigger2 = P2StateType = A
+trigger2 = (EnemyNear,Life *1000.0 /EnemyNear,LifeMax) -(Life *1000.0 /LifeMax) < -200
+IgnoreHitPause = 0
+
+;==============================================================================
+;-| EX必殺技 |-----------------------------------------------------------------
+;==============================================================================
+;-| 必殺技 |-------------------------------------------------------------------
+;------------------------------------------------------------------------------
+;目覚ましウェーブ
+[State -1, 目覚ましウェーブ]
+type = ChangeState
+value = 11000
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = var(58) = 1
+triggerall = 1 || var(55) := 10
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+;当ればよし
+trigger1 = GameTime%30 = 0
+trigger1 = Random < var(59) *(0.090 +(0)*-0.450)
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 58
+trigger1 = fvar(37)-fvar(36) > -87
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;顔面
+[State -1, セーフ]
+type = ChangeState
+value = 11040
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType != L && StateType != A
+triggerall = MoveType != H
+triggerall = var(58) = 1
+triggerall = 1 || var(55) := 12
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+;対空
+trigger1 = Random < var(59) *0.090
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 4 +76
+trigger1 = fvar(37)-fvar(36) > -90 -70
+trigger1 = EnemyNear,StateNo != [5000, 5999]
+trigger1 = EnemyNear,HitDefAttr != SCA, NP, SP, HP, NT, ST, HT
+trigger1 = EnemyNear,HitDefAttr != C, NA, SA, HA
+trigger1 = P2StateType = A
+trigger1 = P2MoveType != H
+;走り当身、体力に余裕(3割以上)
+trigger2 = Random < var(59) *(0.500 +(0)*-0.450)
+trigger2 = StateNo = [100, 104]
+trigger2 = P2BodyDist X -EnemyNear,Vel X *var(55) < 4 +Vel X *var(55)
+trigger2 = fvar(37)-fvar(36) > -90 -70
+trigger2 = EnemyNear,StateNo != [5000, 5999]
+trigger2 = EnemyNear,HitDefAttr != SCA, NP, SP, HP, NT, ST, HT
+trigger2 = EnemyNear,HitDefAttr != C, NA, SA, HA
+trigger2 = P2StateType != C
+trigger2 = P2MoveType != H
+trigger2 = (EnemyNear,Life *1000.0 /EnemyNear,LifeMax) -(Life *1000.0 /LifeMax) < -300
+;あまりよろしくない感じの当身
+trigger3 = GameTime%30 = 11
+trigger3 = Random < var(59) *(0.100 +(P2StateType=C)*-0.090)
+trigger3 = EnemyNear,StateNo != [5000, 5999]
+trigger3 = P2BodyDist X -EnemyNear,Vel X *var(55) < 4 +76
+trigger3 = fvar(37)-fvar(36) > -90 -70
+;あまりよろしくない感じの対空
+trigger4 = GameTime%30 = 14
+trigger4 = Random < var(59) *(0.000 +(P2StateType=A)*0.150)
+trigger4 = EnemyNear,StateNo != [5000, 5999]
+trigger4 = P2BodyDist X -EnemyNear,Vel X *var(55) < 4 +76
+trigger4 = fvar(37)-fvar(36) > -90 -70
+IgnoreHitPause = 0
+
+;==============================================================================
+;-| 特殊 |---------------------------------------------------------------------
+;==============================================================================
+;-| 通常攻撃 |-----------------------------------------------------------------
+;------------------------------------------------------------------------------
+;Air_a
+[State -1, Air_a]
+type = ChangeState
+value = 10600
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = A
+triggerall = MoveType != H
+triggerall = var(58) = 1
+triggerall = 1 || var(55) := 3
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+;空中でばったり、ゲージがないときはしない
+trigger1 = Random < var(59) *(0.500 +(var(2)<1000)*-0.500)
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 37 +Vel X *var(55)
+trigger1 = fvar(37)-fvar(36) > -74
+trigger1 = P2StateType = A
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;Air_b
+[State -1, Air_b]
+type = ChangeState
+value = 10610
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = A
+triggerall = MoveType != H
+triggerall = var(58) = 1
+triggerall = 1 || var(55) := 8
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+;着地間際に判定
+trigger1 = Random < var(59) *(0.500 +(0)*-0.500)
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 39 -9 +Vel X *var(55)
+trigger1 = fvar(37)-fvar(36) > -70
+trigger1 = Pos Y +(Vel Y +Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55) = [5, -15]
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;Crouch_a
+[State -1, Crouch_a]
+type = ChangeState
+value = 10400
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = C
+triggerall = MoveType != H
+triggerall = var(58) = 1
+triggerall = 1 || var(55) := 4
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+;とりあえず叩く、空中なら遠慮
+trigger1 = GameTime%30 = 0
+trigger1 = Random < var(59) *(0.500 +(P2StateType=A)*-0.400)
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 56
+trigger1 = fvar(37)-fvar(36) > -34
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;Crouch_b
+[State -1, Crouch_b]
+type = ChangeState
+value = 10410
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = C
+triggerall = MoveType != H
+triggerall = var(58) = 1
+triggerall = 1 || var(55) := 6
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+;ぎりぎり2b、空中なら出さない
+trigger1 = GameTime%30 = 3
+trigger1 = Random < var(59) *(0.500 +(P2StateType=A)*-0.500)
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 67 +58
+trigger1 = fvar(37)-fvar(36) > -13
+;立ちガに2b、空中なら出さない
+trigger2 = EnemyNear,StateNo = [120, 159]
+trigger2 = P2StateType = A
+trigger2 = Random < var(59) *(0.200 +(P2StateType=A)*-0.500)
+trigger2 = P2BodyDist X -EnemyNear,Vel X *var(55) < 67 +58
+trigger2 = fvar(37)-fvar(36) > -13
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;Stand_a
+[State -1, Stand_a]
+type = ChangeState
+value = 10200
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = S
+triggerall = MoveType != H
+triggerall = var(58) = 1
+triggerall = 1 || var(55) := 8
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+;当ればよし、VSしゃがみ用
+trigger1 = GameTime%30 = 0
+trigger1 = Random < var(59) *(0.050 +(P2StateType=C)*0.750)
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 56
+trigger1 = fvar(37)-fvar(36) > -87
+IgnoreHitPause = 0
+
+;------------------------------------------------------------------------------
+;Stand_b
+[State -1, Stand_b]
+type = ChangeState
+value = 10210
+triggerall = var(59) > 0
+triggerall = PalNo = var(13)
+triggerall = Alive
+triggerall = StateType = S
+triggerall = MoveType != H
+triggerall = var(58) = 1
+triggerall = 1 || var(55) := 10
+triggerall = 1 || fvar(36) := Pos Y +(Vel Y +(StateType=A)*Const(Movement.YAccel) *(var(55)-1) *0.5) *var(55)
+triggerall = 1 || fvar(37) := EnemyNear,Pos Y +(EnemyNear,Vel Y +(P2StateType=A)*fvar(39) *0.5 *(var(55)-1)) *var(55)
+;当ればよし、しゃがみは低確率
+trigger1 = GameTime%30 = 3
+trigger1 = Random < var(59) *(0.900 +(P2StateType=C)*-0.450)
+trigger1 = P2BodyDist X -EnemyNear,Vel X *var(55) < 56
+trigger1 = fvar(37)-fvar(36) > -87
+IgnoreHitPause = 0

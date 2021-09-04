@@ -1,0 +1,43 @@
+;===========================================================================
+;õõõMIKI SAYAKA DEFAULTSõõõ
+;===========================================================================
+
+[Info]
+name = "miki sayaka"
+displayname = "miki sayaka"
+versiondate = 07,14,2019
+mugenversion = 04,14,2002
+author = "otz-kai"
+pal.defaults = 4,1,10,7
+
+[Files]
+cns	= const.c
+cmd	= -1.c
+st	= -2.c
+st1	= -3.c
+st2	= hyper.c
+st3	= special.c
+st4	= normal.c
+st5	= override.c
+st6	= hlp.c
+st7	= dip-switch.ini
+stcommon= common1.cns
+sprite	= sayaka.sff
+anim	= sayaka.air
+sound	= sayaka.snd
+pal1	= pal/sayaka1.act
+pal2	= pal/sayaka2.act
+pal3	= pal/sayaka3.act
+pal4	= pal/sayaka1.act;default
+pal5	= pal/sayaka2.act;blue hawaii
+pal6	= pal/sayaka3.act;mix berry
+pal7	= pal/sayaka7.act;jam
+pal8	= pal/sayaka8.act;sweet potato
+pal9	= pal/sayaka9.act;rainbow
+pal10	= pal/sayaka4.act;green apple
+pal11	= pal/sayaka5.act;tea
+pal12	= pal/sayaka6.act;angel
+
+[Arcade]
+intro.storyboard  = ;arcade/intro.c
+ending.storyboard = arcade/end.c

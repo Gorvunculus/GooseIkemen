@@ -1,0 +1,105 @@
+;The Matrix code. By Erradicator.
+;Downloaded from: http://www.presstart.cjb.net
+
+[Info]
+NAME = "Inside the Matrix"
+
+[Camera]
+startx = 0
+starty = -400
+boundleft = -150
+boundright = 554
+boundhigh = -144
+boundlow = 0
+verticalfollow = .56
+tension = 50
+
+[PlayerInfo]
+p1startx = -70
+p1starty = 0
+p1startz = 0
+p1facing = 1
+
+p2startx = 70
+p2starty = 0
+p2startz = 0
+p2facing = -1
+
+leftbound  = -1000
+rightbound =  1000
+topbound  =  0
+botbound  =  0
+
+[Scaling]
+topz     = 0
+botz     = 50
+topscale = 1
+botscale = 1.2
+
+[Bound]
+screenleft = 5
+screenright = 5
+
+[StageInfo]
+zoffset = 230
+autoturn = 1
+resetBG = 1
+
+[Shadow]
+color = 28,28,28
+yscale = -0.3
+intensity = 0
+
+[Music]
+bgmusic = chateau.mp3
+bgvolume = 255
+
+[BGdef]
+spr = matrix.sff
+debugbg = 0
+
+[BG Matrix]
+type = anim
+actionno = 0
+start = -310,-144
+delta = 1,1
+mask = 0
+
+[BG Matrix2]
+type = anim
+actionno = 0
+start = 202,-144
+delta = 1,1
+mask = 0
+
+[Begin Action 0]
+0,0, 0,0, 11
+0,1, 0,0, 11
+0,2, 0,0, 11
+0,3, 0,0, 11
+0,4, 0,0, 11
+0,5, 0,0, 11
+0,6, 0,0, 11
+0,7, 0,0, 11
+0,8, 0,0, 11
+0,9, 0,0, 11
+0,10, 0,0, 11
+0,11, 0,0, 11
+0,12, 0,0, 11
+0,13, 0,0, 11
+0,14, 0,0, 11
+0,15, 0,0, 11
+0,16, 0,0, 11
+0,17, 0,0, 11
+0,18, 0,0, 11
+0,19, 0,0, 11
+0,20, 0,0, 11
+0,21, 0,0, 11
+0,22, 0,0, 11
+0,23, 0,0, 11
+0,24, 0,0, 11
+0,25, 0,0, 11
+0,26, 0,0, 11
+0,27, 0,0, 11
+0,28, 0,0, 11
+0,29, 0,0, 11

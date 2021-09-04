@@ -1,0 +1,43 @@
+;===========================================================================
+;ÅıÅıÅıTOMOE MAMI DEFAULTSÅıÅıÅı
+;===========================================================================
+
+[Info]
+name = "tomoe mami"
+displayname = "tomoe mami"
+versiondate = 03,13,2017
+mugenversion = 04,14,2002
+author = "otz-kai"
+pal.defaults = 4,1,10,7
+
+[Files]
+cns	= const.c
+cmd	= -1.c
+st	= -2.c
+st1	= -3.c
+st2	= hyper.c
+st3	= special.c
+st4	= normal.c
+st5	= override.c
+st6	= hlp.c
+st7	= dip-switch.ini
+stcommon= common1.cns
+sprite	= mami.sff
+anim	= mami.air
+sound	= mami.snd
+pal1	= pal/mami1.act
+pal2	= pal/mami2.act
+pal3	= pal/mami3.act
+pal4	= pal/mami1.act;default
+pal5	= pal/mami2.act;moon light
+pal6	= pal/mami3.act;morning grow
+pal7	= pal/mami7.act;dt killer1
+pal8	= pal/mami8.act;dt killer2
+pal9	= pal/mami9.act;dt killer3
+pal10	= pal/mami4.act;rose wine
+pal11	= pal/mami5.act;mint
+pal12	= pal/mami6.act;platinum
+
+[Arcade]
+intro.storyboard  = arcade/intro.c
+ending.storyboard = arcade/end.c

@@ -1,0 +1,288 @@
+;---------------------------------------------------------------------------
+;FATAL MOVE: Poniko & Uboa
+[StateDef 3400]
+type = S
+movetype = A
+physics = N
+juggle = 0
+anim = 3400
+poweradd = -3000
+velset = 0,0
+ctrl = 0
+
+[State 3400, EnvColor]
+type = EnvColor
+trigger1 = animelem = 1
+add = 256,256,256
+time = 5
+
+[State 3000, SuperPause]
+type = SuperPause
+trigger1 = AnimElem = 1
+anim = S11111
+time = 110
+movetime = 110
+sound = S3000,0
+pos = -5,-30
+darken = 0
+p2defmul = 0
+unhittable = 1
+
+[State 2103, PosSet]
+type = PosSet
+trigger1 = animelem = 1
+x = 0.0
+y = -200
+
+[State 240, VelSet]
+type = VelSet
+trigger1 = animelem = 2
+x = 0
+y = 10
+
+[State 0, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 0
+
+[State 3400, PlaySnd]
+type = PlaySnd
+trigger1 = Animelem = 1
+value = S3400,0
+channel = 1
+
+[State 3400, AssertSpecial2]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+
+[State 3401, 1]
+type = ChangeState
+trigger1 = pos y >= 0 && vel y >= 0
+value = 3401
+ctrl = 1
+
+;---------------------------------------------------------------------------
+[Statedef 3401]
+type    = U
+movetype= A
+physics = N
+juggle  = 4
+ctrl = 0
+velset = 0,0
+
+[State 3400, EnvColor]
+type = EnvColor
+trigger1 = animelem = 3
+trigger2 = animelem = 5
+add = 256,256,256
+time = 5
+
+[State 3400, PlaySnd]
+type = PlaySnd
+trigger1 = Animelem = 3
+value = S3400,1
+channel = 2
+
+[State 452, EnvShake]
+type = EnvShake
+trigger1 = Animelem = 3
+time = 500
+ampl = 5
+
+[State 3401, PalFXWiz]
+type = BGPalFX
+trigger1 = animelem = 3
+time = 500
+add = -150,-150,-150
+mul = 256,256,256
+sinadd = 0,0,0,1
+invertall = 0
+color = 256
+
+[State 3401, Hitdef]
+type = Hitdef
+trigger1 = !movecontact
+attr = S, HT
+hitflag = MAF
+hitsound = S5, 10
+p1stateno = 3402
+p2stateno = 3403
+sparkno = -1
+numhits = 0
+priority = 1, miss
+
+[State 0, StopSnd]
+type = StopSnd
+trigger1 = animelem = 3
+channel = 1
+
+[State 0, StopSnd]
+type = StopSnd
+trigger1 = animtime = 0
+channel = 2
+
+[State 3401, AssertSpecial2]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+
+[State 3400, End]
+type = ChangeState
+trigger1 = animtime = 0
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+[Statedef 3402]
+type = S
+movetype = I
+physics = S
+anim = 3401
+ctrl = 0
+sprpriority = 2
+
+[State 3401, PalFXWiz]
+type = BGPalFX
+trigger1 = animelem = 1
+time = 3
+add = -150,-150,-150
+mul = 256,256,256
+sinadd = 0,0,0,1
+invertall = 0
+color = 256
+
+[State 452, EnvShake]
+type = EnvShake
+trigger1 = Animelem = 1
+time = 3
+ampl = 0
+
+[State 0, StopSnd]
+type = StopSnd
+trigger1 = time = 0
+channel = 2
+
+[State 3403, TargetLifeAdd]
+type = TargetLifeAdd
+trigger1 = animelem = 1
+value = -999999999
+kill = 1
+
+[State 3402, Black Background]
+type = explod
+trigger1 = animelem = 2
+anim = 1303
+pos = ifelse(facing = 1,0,320),0
+facing = ifelse(facing = 1,1,-1)
+id = 20002
+vfacing = 1
+bindtime = -1
+postype = back
+scale = 1,1
+sprpriority = 12
+removetime = 153
+ownpal = 1
+ontop = 1
+supermove = 1
+removeongethit = 1
+
+[State 3402, TargetState]
+type = TargetState
+trigger1 = AnimElem = 2
+value = 3404
+ID = -1
+
+[State 3400, EnvColor]
+type = EnvColor
+trigger1 = animelem = 3
+add = 256,256,256
+time = 5
+
+[State 3402, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = nobardisplay
+flag2 = nokoslow
+flag3 = nomusic
+
+[State 3400, End]
+type = ChangeState
+trigger1 = animtime = 0
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+[Statedef 3403]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+
+[State 3403, 1]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 3402
+
+;-------------------------------------------------------------------------------
+[Statedef 3404]
+type = A
+movetype= H
+physics = N
+velset = 0,0
+
+[State 3404, 0]
+type = ChangeAnim
+trigger1 = 1
+value = 5010
+
+[State 3404, DestroySelf]
+type = DestroySelf
+trigger1 = ishelper
+
+[State 3404, 1]
+type = VelSet
+trigger1 = 1
+x = 0
+y = 0
+
+[State 3404, 2]
+type = PosSet
+trigger1 = time = 0
+y = 999
+
+[State 3404, 2]
+type = LifeSet
+trigger1 = 1
+value = 0
+
+[State 3404, 3]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3404, 4]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 0, SelfState]
+type = SelfState
+trigger1 = life>0
+trigger1 = time = 0
+value = 5110
+
+[State 3404, 6]
+type = ChangeState
+trigger1 = lose
+trigger2 = win
+trigger3 = drawgame
+value = 5150
+
+[State 3404, 2]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+

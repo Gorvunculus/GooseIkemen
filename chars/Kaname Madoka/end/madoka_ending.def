@@ -1,0 +1,170 @@
+
+[SceneDef]
+spr = madoka_ending.sff
+startscene = 0         ;Starting scene number (for debugging)
+
+;------------------------------------------------------------------------
+;------------------------------------------------------------------------
+[Scene 0]
+; Fade
+fadein.time = 0        ;現れるまでの時間（layer0.starttime　の時間、含む）
+fadein.col = 0,0,0    ;フェイドイン時のカラー設定Use 255,255,255 for white-fade
+bg.name = BG0
+; Screen color
+clearcolor = 0,0,0
+fadeout.time = 300
+fadeout.col = 255,255,255
+
+; Music
+bgm =
+bgm.loop = 0    ;ループするか否か…
+volume = 255
+
+
+; Total time       ;このシーンをトータルで表示させておく時間の設定
+end.time = 6800     ;全体での終了する時間
+
+[BG0Def]
+
+[BG0 Credits];ED画像
+id = 6
+type = anim
+actionno = 0
+start = -130,25;30,25;位置の指定
+
+[BG0CtrlDef]
+CtrlID = 6
+looptime = -1
+
+[BG0Ctrl]
+type = VelSet
+time >= 0
+y = 0
+
+[BG0 Credits];ED画像の上のフェードイン画像
+id = 5
+type = anim
+actionno = 1
+start = -130,25;30,25
+
+[BG0CtrlDef]
+CtrlID = 5
+looptime = -1
+
+[BG0Ctrl]
+type = VelSet
+time >= 0
+y = 0
+
+[BG0 Credits];スタッフロール_下（反転&乗算 処理）
+id = 4
+type = anim
+actionno = 8
+start = -120,260;40,260
+
+[BG0CtrlDef]
+CtrlID = 4
+looptime = -1
+
+[BG0Ctrl]
+type = VelSet
+time >= 0
+y = -0.5
+
+[BG0 Credits];スタッフロール_上（スクリーン処理）01
+id = 3
+type = anim
+actionno = 7
+start = -120,260;40,260
+
+[BG0CtrlDef]
+CtrlID = 3
+looptime = -1
+
+[BG0Ctrl]
+type = VelSet
+time >= 0
+y = -0.5
+
+[BG0 Credits];スタッフロール_上（スクリーン処理）02
+id = 2
+type = anim
+actionno = 7
+start = -120,260;40,260
+
+[BG0CtrlDef]
+CtrlID = 2
+looptime = -1
+
+[BG0Ctrl]
+type = VelSet
+time >= 0
+y = -0.5
+
+[BG0 Credits];END_上（スクリーン処理）
+id = 1
+type = anim
+actionno = 4
+start = 100,215;260,215
+
+[BG0CtrlDef]
+CtrlID = 1
+looptime = -1
+
+[BG0Ctrl]
+type = VelSet
+time >= 0
+y = 0
+
+;------------------------------------------------------------------------
+[Scene 1]
+; Fade
+fadein.time = 1        ;現れるまでの時間（layer0.starttime　の時間、含む）
+fadein.col = 0,0,0    ;フェイドイン時のカラー設定Use 255,255,255 for white-fade
+clearcolor = 0,0,0
+fadeout.time = 1
+fadeout.col = 0,0,0
+end.time = 3
+
+;------------------------------------------------------------------------
+;------------------------------------------------------------------------
+;ED画像
+[Begin Action 0]
+5,0, 0,0, -1
+
+;ED画像の上のフェードイン画像
+[Begin Action 1]
+;loopstart
+100,8, 0,0, 1860,,S1
+100,8, 0,0, 6,,S1
+100,7, 0,0, 6,,S1
+100,6, 0,0, 6,,S1
+100,5, 0,0, 6,,S1
+100,4, 0,0, 6,,S1
+100,3, 0,0, 6,,S1
+100,2, 0,0, 6,,S1
+100,1, 0,0, 6,,S1
+100,0, 0,0, 6,,S1
+100,9, 0,0, -1,,S1
+
+;スタッフロール_上（スクリーン処理）
+[Begin Action 7]
+;loopstart
+1,0, 0, 0, 2,,A
+
+;スタッフロール_下（反転&乗算 処理）
+[Begin Action 8]
+;loopstart
+0,0, 0, 0, 2,,S
+
+;END_上（スクリーン処理）
+[Begin Action 4]
+;loopstart
+50,-1, 0,0, 6400;,,A
+50,0, 0,0, -1;,,A
+
+;END_下（反転&乗算 処理）
+[Begin Action 5]
+;loopstart
+60,0, 0,0, -1,,S
+

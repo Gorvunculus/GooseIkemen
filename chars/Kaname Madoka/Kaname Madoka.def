@@ -1,0 +1,36 @@
+[Info]
+name = "Madoka Kaname"			        ;Name of character
+displayname = "Madoka Kaname"	         	;Name of character to display
+versiondate = 11, 16, 2011	                ;Version date of character (MM-DD-YYYY)
+mugenversion = 04, 14, 2002	                ;Version of M.U.G.E.N character works on
+author = "Waribashi"   ;edited by nipa3008  	;Character author name
+pal.defaults = 1	                ;Default palettes in order of preference
+
+; Files for the player
+[Files]
+sprite   = madoka3.sff		;Sprite
+anim     = madoka3.air		;Animation
+sound    = madoka3.snd		;Sound
+cmd      = madoka3_cmd_.cns	;Command set
+cns      = madoka3.cns		;Constants
+stcommon = common1.cns		;Common states
+st       = madoka3.cns		;States
+st1      = madoka3_H_.cns
+st2      = madoka3_A_.cns
+st3      = madoka3_B_.cns
+st4      = madoka3_C_.cns
+st5      = madoka3_D_.cns
+st6      = madoka3_-2_.cns
+st7      = madoka3_-3_.cns
+st8      = madoka3_P2_.cns
+st9      = Config.cns
+
+Palettes (can have up to 12)
+pal1      = act/pal1.act
+pal2      = act/pal2.act
+
+
+
+[Arcade]
+;intro.storyboard = intro\madoka_intro.def
+;ending.storyboard = end\madoka_ending.def

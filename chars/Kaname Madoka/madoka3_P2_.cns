@@ -1,0 +1,1316 @@
+
+;==============================================================================
+;-| 奪ステ後の相手動作 |-------------------------------------------------------
+;------------------------------------------------------------------------------
+;壁やられ
+;--------------------------------------
+;バウンド
+;------------------ - shaking from the hit
+[Statedef 7000]
+type = A
+movetype = H
+physics = N
+velset = 0,0
+
+[State -2, Anim] ;Custom animation
+type = ChangeAnim
+trigger1 = SelfAnimExist(5900)
+value = 5900
+
+[State -2, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = !SelfAnimExist(5900)
+value = 7000
+
+[State -2, State]
+type = ChangeState
+trigger1 = HitShakeOver = 1
+value = StateNo +1
+;------------------ - flying through the air
+[Statedef 7001]
+type = A
+movetype = H
+physics = N
+
+[State -2, VelSet]
+type = VelSet
+trigger1 = Time = 0
+x = GetHitVar(xvel) *Facing
+y = GetHitVar(yvel)
+
+[State -2, No scroll]
+type = ScreenBound
+;triggerall = Pos y < -15
+trigger1 = BackEdgeBodyDist < 65
+trigger2 = FrontEdgeBodyDist < 65
+value = 1
+movecamera = 0,1
+
+[State -2, Hit wall]
+type = ChangeState
+;triggerall = Pos y < 1
+trigger1 = BackEdgeBodyDist <= 20
+trigger2 = FrontEdgeBodyDist <= 20
+value = 7006
+
+[State 7001, Hit ground]
+type = SelfState
+trigger1 = (Vel y > 0) && (Pos y >= 0)
+value = 5100
+;--------------------------------------
+;ビターンルート
+;------------------ - shaking from the hit
+[Statedef 7002]
+type = A
+movetype = H
+physics = N
+velset = 0, 0
+
+[State 7002, Anim] ;Custom animation
+type = ChangeAnim
+trigger1 = SelfAnimExist(5900)
+value = 5900
+
+[State 7002, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = !SelfAnimExist(5900)
+value = 7000
+
+[State 7002, State]
+type = ChangeState
+trigger1 = HitShakeOver = 1
+value = 7003
+;------------------ - flying through the air
+[Statedef 7003]
+type = A
+movetype = H
+physics = N
+
+[State 7003, Velocity]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+y = 1
+
+[State 7003, Gravity]
+type = null;VelAdd
+trigger1 = 1
+y = GetHitVar(yaccel);.45
+
+[State 7003, No scroll]
+type = ScreenBound
+;triggerall = Pos y < -15
+trigger1 = BackEdgeBodyDist < 65
+trigger2 = FrontEdgeBodyDist < 65
+value = 1
+movecamera = 0,1
+
+[State 7003, Hit wall]
+type = ChangeState
+;triggerall = Pos y < -15
+trigger1 = BackEdgeBodyDist <= 20
+trigger2 = FrontEdgeBodyDist <= 20
+value = 7006
+
+[State 7003, Hit ground]
+type = SelfState
+trigger1 = (Vel y > 0) && (Pos y >= 0)
+value = 5100
+;--------------------------------------
+;回転バウンド
+;------------------ - shaking from the hit
+[Statedef 7004]
+type = A
+movetype = H
+physics = N
+velset = 0, 0
+
+[State -2, Anim] ;Custom animation
+type = ChangeAnim
+trigger1 = SelfAnimExist(5900)
+value = 5900
+
+[State -2, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = !SelfAnimExist(5900)
+value = 7000
+
+[State -2, State]
+type = ChangeState
+trigger1 = HitShakeOver = 1
+value = StateNo +1
+;------------------ - flying through the air
+[Statedef 7005]
+type = A
+movetype = H
+physics = N
+
+[State -2, VelSet]
+type = VelSet
+trigger1 = Time = 0
+x = GetHitVar(xvel)
+y = GetHitVar(yvel)
+
+[State -2, No scroll]
+type = ScreenBound
+;triggerall = Pos y < -15
+trigger1 = BackEdgeBodyDist < 65
+trigger2 = FrontEdgeBodyDist < 65
+value = 1
+movecamera = 0,1
+
+[State -2, Hit wall]
+type = ChangeState
+;triggerall = Pos y < 1
+trigger1 = BackEdgeBodyDist <= 20
+trigger2 = FrontEdgeBodyDist <= 20
+value = 7006
+
+[State -2, Hit ground]
+type = SelfState
+trigger1 = (Vel y > 0) && (Pos y >= 0)
+value = 5100
+;--------------------------------------
+;共通
+;------------------ - hit wall
+[Statedef 7006]
+type = A
+movetype = H
+physics = N
+
+[State -2, Turn] ; 壁に背を向ける
+type = Turn
+trigger1 = (Time = 0) && (FrontEdgeBodyDist <= 30)
+
+[State -2, Pos] ; 位置調整
+type = PosAdd
+trigger1 = Time = 0
+x = -BackEdgeBodyDist;15 - BackEdgeBodyDist
+
+[State -2, Stop moving]
+type = PosFreeze
+trigger1 = 1
+
+[State -2, No scroll]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 0,1
+
+[State -2, Spark]
+type = Explod
+trigger1 = Time = 0
+anim = F72
+pos = 0, floor (screenpos y) - 50
+postype = back
+sprpriority = 3
+
+[State -2, Anim]
+type = ChangeAnim2
+trigger1 = Time = 0
+value = 7001
+
+[State -2, Sound]
+type = PlaySnd
+trigger1 = Time = 0
+value = F7,0
+
+[State -2, バウンド]
+type = ChangeState
+trigger1 = PrevStateNo = 7001
+trigger1 = AnimTime = 0
+value = 7007
+
+[State -2, 張り付き]
+type = ChangeState
+trigger1 = PrevStateNo = 7003
+trigger1 = Time = 60
+value = 7008
+
+[State -2, 回転]
+type = ChangeState
+trigger1 = PrevStateNo = 7005
+trigger1 = GetHitVar(hittime) < 0
+value = 7009
+;--------------------------------------
+;バウンドルート
+;------------------ - bounce off wall
+[Statedef 7007]
+type = A
+movetype = H
+physics = N
+
+[State -2, 1]
+type = null;NotHitBy
+trigger1 = 1
+value = , NA, NP
+
+[State -2, VelSet]
+type = VelSet
+trigger1 = Time = 0
+x = 2.1;1.6;-0.5*Vel X;
+y = GetHitVar(yvel);-4
+
+[State -2, Turn]
+type = Turn
+trigger1 = (Time = 0) && (BackEdgeDist < 30)
+
+[State -2, VelAdd]
+type = VelAdd
+trigger1 = GetHitVar(yaccel)
+y = GetHitVar(yaccel)
+
+[State -2, Gravity]
+type = Gravity
+trigger1 = !GetHitVar(yaccel)
+
+[State -2, Anim 5050] ;Self falling animation
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5052)
+value = 5050
+
+[State -2, Anim 5052] ;Self falling animation (diagup type)
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5052)
+value = 5052
+
+[State -2, Anim 5060] ;Coming down - normal
+type = ChangeAnim
+trigger1 = Vel Y > -2
+trigger1 = Anim = 5050
+trigger1 = SelfAnimExist(5060)
+persistent = 0
+value = 5060
+
+[State -2, Anim 5062] ;Coming down - diagup type
+type = ChangeAnim
+trigger1 = Vel Y > -2
+trigger1 = Anim = 5052
+trigger1 = SelfAnimExist(5062)
+persistent = 0
+value = 5062
+
+[State -2, SelfState5100]
+type = SelfState
+triggerall = GetHitVar(fall)
+triggerall = GetHitVar(fall.recover)
+triggerall = GetHitVar(fall.recovertime) < 0
+trigger1 = Command = "recovery"
+trigger2 = Command = "a"
+trigger3 = Command = "b"
+trigger4 = Command = "c"
+trigger5 = Command = "x"
+trigger6 = Command = "y"
+trigger7 = Command = "z"
+trigger8 = Command = "start"
+value = 5210
+
+[State -2, Hit ground]
+type = SelfState
+trigger1 = (Vel y > 0) && (Pos y >= 0)
+value = 5100
+;--------------------------------------
+;ビターンルート
+;------------------ - bounce off wall
+[Statedef 7008]
+type = A
+movetype = H
+physics = N
+
+[State -2, Turn]
+type = Turn
+trigger1 = (Time = 0) && (BackEdgeDist < 30)
+
+[State -2, VelSet]
+type = VelSet
+trigger1 = Time = 0
+x = -1.6
+y = 0
+
+[State -2, Gravity]
+type = Gravity
+trigger1 = 1
+
+[State -2, Anim 5050] ;Self falling animation
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5052)
+value = 5050
+
+[State -2, Anim 5052] ;Self falling animation (diagup type)
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5052)
+value = 5052
+
+[State -2, Anim 5060] ;Coming down - normal
+type = ChangeAnim
+trigger1 = Vel Y > -2
+trigger1 = Anim = 5050
+trigger1 = SelfAnimExist(5060)
+persistent = 0
+value = 5060
+
+[State -2, Anim 5062] ;Coming down - diagup type
+type = ChangeAnim
+trigger1 = Vel Y > -2
+trigger1 = Anim = 5052
+trigger1 = SelfAnimExist(5062)
+persistent = 0
+value = 5062
+
+[State -2, Hit ground]
+type = SelfState
+trigger1 = (Vel y > 0) && (Pos y >= 0)
+value = 5100
+;--------------------------------------
+;回転バウンド
+;------------------ - bounce off wall
+[Statedef 7009]
+type = A
+movetype = H
+physics = N
+
+[State -2, Turn]
+type = Turn
+trigger1 = (Time = 0) && (BackEdgeDist < 30)
+
+[State -2, VelSet]
+type = VelSet
+trigger1 = Time = 0
+x = -1.0
+y = -7.5
+
+[State -2, VelAdd]
+type = VelAdd
+trigger1 = GetHitVar(yaccel)
+y = GetHitVar(yaccel)
+
+[State -2, Gravity]
+type = Gravity
+trigger1 = !GetHitVar(yaccel)
+
+[State -2, Anim 5050] ;Self falling animation
+type = ChangeAnim2
+trigger1 = Time = 0
+value = 7002
+
+[State -2, AngleSet]
+type = AngleSet
+trigger1 = time = 0
+value = 0
+
+[State -2, AngleAdd]
+type = AngleAdd
+trigger1 = 1
+value = 45
+
+[State -2, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+
+[State -2, SelfState5100]
+type = SelfState
+triggerall = GetHitVar(fall)
+triggerall = GetHitVar(fall.recover)
+triggerall = GetHitVar(fall.recovertime) < 0
+trigger1 = Command = "recovery"
+trigger2 = Command = "a"
+trigger3 = Command = "b"
+trigger4 = Command = "c"
+trigger5 = Command = "x"
+trigger6 = Command = "y"
+trigger7 = Command = "z"
+trigger8 = Command = "start"
+value = 5210
+
+[State -2, Hit ground]
+type = SelfState
+trigger1 = (Vel y > 0) && (Pos y >= 0)
+value = 5100
+
+;------------------------------------------------------------------------------
+;叩き落とし
+;--------------------------------------
+;バウンドルート
+;------------------ - shaking from the hit
+[Statedef 7010]
+type = A
+movetype = H
+physics = N
+velset = 0, 0
+
+[State 7010, Pos]
+type = PosAdd
+trigger1 = Pos Y = 0
+trigger1 = Time = 0
+value = -1
+
+[State 7010, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = 1
+value = 7003
+
+[State 7010, State]
+type = ChangeState
+trigger1 = HitShakeOver = 1
+value = 7011
+;------------------ - flying through the air
+[Statedef 7011]
+type = A
+movetype = H
+physics = N
+
+[State 7011, Velocity]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+y = 1
+
+[State 7011, Gravity]
+type = Gravity
+trigger1 = 1
+
+[State 7011, Hit ground]
+type = ChangeState
+trigger1 = (Vel y > 0) && (Pos y >= 0)
+value = 7016
+;--------------------------------------
+;ダウンルート
+;------------------ - shaking from the hit
+[Statedef 7012]
+type = A
+movetype = H
+physics = N
+velset = 0, 0
+
+[State 7012, Pos]
+type = PosAdd
+trigger1 = Pos Y = 0
+trigger1 = Time = 0
+value = -1
+
+[State 7012, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = 1
+value = 7003
+
+[State 7012, State]
+type = ChangeState
+trigger1 = HitShakeOver = 1
+value = 7013
+;------------------ - flying through the air
+[Statedef 7013]
+type = A
+movetype = H
+physics = N
+
+[State 7013, Velocity]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+y = 1
+
+[State 7013, Gravity]
+type = Gravity
+trigger1 = 1
+
+[State 7013, Hit ground]
+type = ChangeState
+trigger1 = (Vel y > 0) && (Pos y >= 0)
+value = 7016
+;--------------------------------------
+;回転バウンド
+;------------------ - shaking from the hit
+[Statedef 7014]
+type = A
+movetype = H
+physics = N
+velset = 0, 0
+
+[State 7014, Pos]
+type = PosAdd
+trigger1 = Pos Y = 0
+trigger1 = Time = 0
+value = -1
+
+[State 7014, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = 1
+value = 7003
+
+[State 7014, State]
+type = ChangeState
+trigger1 = HitShakeOver = 1
+value = 7015
+;------------------ - flying through the air
+[Statedef 7015]
+type = A
+movetype = H
+physics = N
+
+[State 7015, Velocity]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+y = 1
+
+[State 7015, Gravity]
+type = Gravity
+trigger1 = 1
+
+[State 7015, Hit ground]
+type = ChangeState
+trigger1 = (Vel y > 0) && (Pos y >= 0)
+value = 7016
+;--------------------------------------
+;共通
+;------------------ - hit ground
+[Statedef 7016]
+type = L
+movetype = H
+physics = N
+
+[State 7016, Pos]
+type = PosSet
+trigger1 = Time = 0
+y = 0
+
+[State 7016, HitFallDamage]
+type = HitFallDamage
+trigger1 = Time = 0
+
+[State 7016, Spark]
+type = Explod
+trigger1 = Time = 0
+anim = F61
+pos = 0, 0
+postype = p1
+sprpriority = 3
+
+[State 7016, PosFreeze]
+type = PosFreeze
+trigger1 = 1
+
+[State 7016, Anim]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5100
+
+[State 7016, Sound]
+type = PlaySnd
+trigger1 = Time = 0
+value = F7,0
+volume = 255
+
+[State 7016, State] ; bounce
+type = ChangeState
+trigger1 = PrevStateNo = 7011
+trigger1 = AnimTime = 0
+value = 7017
+
+[State 7016, State] ; down
+type = ChangeState
+trigger1 = PrevStateNo = 7013
+trigger1 = AnimTime = 0
+value = 7018
+
+[State 7016, State] ; bounce
+type = ChangeState
+trigger1 = PrevStateNo = 7015
+trigger1 = AnimTime = 0
+trigger2 = PrevStateNo = 7052
+trigger2 = AnimTime = 0
+value = 7019
+;--------------------------------------
+;バウンドルート
+;------------------ - bounce off ground
+[Statedef 7017]
+type = A
+movetype = H
+physics = N
+
+[State 7017, VelSet]
+type = VelSet
+trigger1 = Time = 0
+x = Vel X
+y = -GetHitVar(yvel);-7.5
+
+[State 7017, Gravity]
+type = Gravity
+trigger1 = 1
+
+[State 7017, Anim 5160]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5160
+
+[State -2, SelfState5100]
+type = SelfState
+triggerall = GetHitVar(fall)
+triggerall = GetHitVar(fall.recover)
+triggerall = GetHitVar(fall.recovertime) < 0
+trigger1 = Command = "recovery"
+trigger2 = Command = "a"
+trigger3 = Command = "b"
+trigger4 = Command = "c"
+trigger5 = Command = "x"
+trigger6 = Command = "y"
+trigger7 = Command = "z"
+trigger8 = Command = "start"
+value = 5210
+
+[State -2, Hit ground]
+type = SelfState
+trigger1 = (Vel y > 0) && (Pos y >= 0)
+value = 5110
+
+;--------------------------------------
+;ダウンルート
+;------------------ - bounce off ground
+[Statedef 7018]
+type = L
+movetype = H
+physics = N
+
+[State 7018, VelSet]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 7018, Anim 5170]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5170
+
+[State 7018, Anim 5110]
+type = ChangeAnim
+trigger1 = Anim = 5170
+trigger1 = AnimTime = 0
+value = 5110
+
+[State 7018, State]
+type = SelfState
+triggerall = Time > 12
+trigger1 = Time = 50
+trigger2 = Command = "recovery"
+trigger3 = Command = "a"
+trigger4 = Command = "b"
+trigger5 = Command = "c"
+trigger6 = Command = "x"
+trigger7 = Command = "y"
+trigger8 = Command = "z"
+trigger9 = Command = "start"
+value = 5201
+;--------------------------------------
+;回転バウンド
+;------------------ - bounce off ground
+[Statedef 7019]
+type = A
+movetype = H
+physics = N
+
+[State -2, VelSet]
+type = VelSet
+trigger1 = Time = 0
+x = -2.0
+y = -10.0
+
+[State -2, VelAdd]
+type = VelAdd
+trigger1 = GetHitVar(yaccel)
+y = GetHitVar(yaccel)
+
+[State -2, Gravity]
+type = Gravity
+trigger1 = !GetHitVar(yaccel)
+
+[State -2, Anim 7003]
+type = ChangeAnim2
+trigger1 = Time = 0
+value = 7004
+
+[State -2, AngleSet]
+type = AngleSet
+trigger1 = time = 0
+value = 0
+
+[State -2, AngleAdd]
+type = AngleAdd
+trigger1 = 1
+value = 45
+
+[State -2, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+
+[State -2, SelfState5100]
+type = SelfState
+triggerall = GetHitVar(fall)
+triggerall = GetHitVar(fall.recover)
+triggerall = GetHitVar(fall.recovertime) < 0
+trigger1 = Command = "recovery"
+trigger2 = Command = "a"
+trigger3 = Command = "b"
+trigger4 = Command = "c"
+trigger5 = Command = "x"
+trigger6 = Command = "y"
+trigger7 = Command = "z"
+trigger8 = Command = "start"
+value = 5210
+
+[State -2, Hit ground]
+type = SelfState
+trigger1 = (Vel y > 0) && (Pos y > -2)
+value = 5110
+
+;------------------------------------------------------------------------------
+;崩れ落ち
+;--------------------------------------
+;崩れ落ち_ヒット硬直
+;------------------ - shaking from the hit
+[Statedef 7020]
+type = S
+movetype = H
+physics = S
+velset = 0,0
+
+[State -2, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = 1
+value = 7005
+
+[State -2, State]
+type = ChangeState
+trigger1 = HitShakeOver = 1
+value = StateNo +1
+
+;--------------------------------------
+;崩れ落ち_スライド
+;------------------
+[Statedef 7021]
+type = S
+movetype = H
+physics = N
+
+[State -2, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = 1
+value = 7005
+
+[State -2, VelSet]
+type = VelSet
+trigger1 = Time = 0
+x = GetHitVar(xvel)
+
+[State -2, Friction]
+type = VelMul
+trigger1 = Time <= GetHitVar(slidetime)
+x = GetHitVar(yaccel)
+
+[State -2, State]
+type = ChangeState
+trigger1 = Time >= GetHitVar(hittime)
+value = StateNo +1
+
+;--------------------------------------
+;崩れ落ち→ダウン
+;------------------
+[Statedef 7022]
+type = S
+movetype = H
+physics = S
+velset = 0,0
+
+[State 7021, SelfState]
+type = SelfState
+trigger1 = AnimTime = 0
+value = 5120
+
+;------------------------------------------------------------------------------
+;回転吹っ飛び
+;--------------------------------------
+;硬直
+[Statedef 7030]
+type = A
+movetype = H
+physics = N
+velset = 0,0
+
+[State -2, Anim] ;Custom animation
+type = ChangeAnim
+trigger1 = SelfAnimExist(5030)
+value = 5030
+
+[State -2, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = !SelfAnimExist(5030)
+value = 5030
+
+[State -2, State]
+type = ChangeState
+trigger1 = HitShakeOver = 1
+value = StateNo +1
+;--------------------------------------
+;空中
+[Statedef 7031]
+type = A
+movetype = H
+physics = N
+
+[State -2, VelSet]
+type = VelSet
+trigger1 = Time = 0
+x = GetHitVar(xvel) *Facing
+y = GetHitVar(yvel)
+
+[State -2, VelAdd]
+type = VelAdd
+trigger1 = GetHitVar(yaccel)
+y = GetHitVar(yaccel)
+
+[State -2, Gravity]
+type = Gravity
+trigger1 = !GetHitVar(yaccel)
+
+[State -2, Anim 5050] ;Self falling animation
+type = ChangeAnim2
+trigger1 = Time = 0
+value = 7002
+
+[State -2, AngleSet]
+type = AngleSet
+trigger1 = time = 0
+value = 0
+
+[State -2, AngleAdd]
+type = AngleAdd
+trigger1 = 1
+value = 45
+
+[State -2, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+
+[State -2, Hit ground]
+type = SelfState
+trigger1 = Vel y > 0 && Pos y > -5
+value = 5100
+
+[State -2, SelfState5100]
+type = SelfState
+triggerall = GetHitVar(fall)
+triggerall = GetHitVar(fall.recover)
+triggerall = GetHitVar(fall.recovertime) < 0
+trigger1 = Command = "recovery"
+trigger2 = Command = "a"
+trigger3 = Command = "b"
+trigger4 = Command = "c"
+trigger5 = Command = "x"
+trigger6 = Command = "y"
+trigger7 = Command = "z"
+trigger8 = Command = "start"
+value = 5210
+
+;------------------------------------------------------------------------------
+;パワフル用壁やられ
+;--------------------------------------
+;バウンド
+;------------------ - shaking from the hit
+[Statedef 7040]
+type = A
+movetype = H
+physics = N
+velset = 0,0
+
+[State -2, Anim] ;Custom animation
+type = ChangeAnim
+trigger1 = SelfAnimExist(5900)
+value = 5900
+
+[State -2, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = !SelfAnimExist(5900)
+value = 7000
+
+[State -2, State]
+type = ChangeState
+trigger1 = HitShakeOver = 1
+value = StateNo +1
+;------------------ - flying through the air
+[Statedef 7041]
+type = A
+movetype = H
+physics = N
+
+[State -2, VelSet]
+type = VelSet
+trigger1 = Time = 0
+x = GetHitVar(xvel) *Facing
+y = GetHitVar(yvel)
+
+[State -2, No scroll]
+type = ScreenBound
+;triggerall = Pos y < -15
+trigger1 = BackEdgeBodyDist < 65
+trigger2 = FrontEdgeBodyDist < 65
+value = 1
+movecamera = 0,1
+
+[State -2, Hit wall]
+type = ChangeState
+;triggerall = Pos y < 1
+trigger1 = BackEdgeBodyDist <= 20
+trigger2 = FrontEdgeBodyDist <= 20
+value = 7046
+
+[State 7001, Hit ground]
+type = SelfState
+trigger1 = (Vel y > 0) && (Pos y >= 0)
+value = 5100
+
+;--------------------------------------
+;張り付き
+;------------------ - shaking from the hit
+[Statedef 7042]
+type = A
+movetype = H
+physics = N
+velset = 0,0
+
+[State -2, PosAdd]
+type = PosAdd
+trigger1 = Time = 0
+y = -1
+
+[State -2, Anim] ;Custom animation
+type = ChangeAnim
+trigger1 = SelfAnimExist(5900)
+value = 5900
+
+[State -2, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = !SelfAnimExist(5900)
+value = 7000
+
+[State -2, State]
+type = ChangeState
+trigger1 = HitShakeOver = 1
+value = StateNo +1
+;------------------ - flying through the air
+[Statedef 7043]
+type = A
+movetype = H
+physics = N
+
+[State -2, VelSet]
+type = VelSet
+trigger1 = Time = 0
+x = GetHitVar(xvel) *Facing
+y = GetHitVar(yvel)
+
+[State -2, No scroll]
+type = ScreenBound
+;triggerall = Pos y < -15
+trigger1 = BackEdgeBodyDist < 65
+trigger2 = FrontEdgeBodyDist < 65
+value = 1
+movecamera = 0,1
+
+[State -2, Hit wall]
+type = ChangeState
+;triggerall = Pos y < 1
+trigger1 = BackEdgeBodyDist <= 20
+trigger2 = FrontEdgeBodyDist <= 20
+value = 7046
+
+[State 7001, Hit ground]
+type = SelfState
+trigger1 = (Vel y > 0) && (Pos y >= 0)
+value = 5100
+;--------------------------------------
+;共通
+;------------------ - hit wall
+[Statedef 7046]
+type = A
+movetype = H
+physics = N
+
+[State -2, Turn] ; 壁に背を向ける
+type = Turn
+trigger1 = (Time = 0) && (FrontEdgeBodyDist <= 30)
+
+[State -2, Pos] ; 位置調整
+type = PosAdd
+trigger1 = Time = 0
+x = -BackEdgeBodyDist
+
+[State -2, Stop moving]
+type = PosFreeze
+trigger1 = 1
+
+[State -2, No scroll]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 0,1
+
+[State -2, Spark]
+type = Explod
+trigger1 = Time = 0
+anim = F72
+pos = 0, floor (screenpos y) - 50
+postype = back
+sprpriority = 3
+
+[State -2, Anim]
+type = ChangeAnim2
+trigger1 = Time = 0
+value = 7001
+
+[State -2, Sound]
+type = PlaySnd
+trigger1 = Time = 0
+value = F7,0
+
+[State -2, バウンド]
+type = ChangeState
+trigger1 = PrevStateNo = 7041
+trigger1 = GetHitVar(hittime) < 0
+value = 7047
+
+[State -2, 張り付き]
+type = ChangeState
+trigger1 = PrevStateNo = 7043
+trigger1 = GetHitVar(hittime) < 0
+value = 7048
+
+;--------------------------------------
+;バウンド落下
+;------------------ - bounce off wall
+[Statedef 7047]
+type = A
+movetype = H
+physics = N
+
+[State -2, VelSet]
+type = VelSet
+trigger1 = Time = 0
+x = 2.1
+y = -10.50
+
+[State -2, Turn]
+type = Turn
+trigger1 = (Time = 0) && (BackEdgeDist < 30)
+
+[State -2, VelAdd]
+type = VelAdd
+trigger1 = GetHitVar(yaccel)
+y = GetHitVar(yaccel)
+
+[State -2, Gravity]
+type = Gravity
+trigger1 = !GetHitVar(yaccel)
+
+[State -2, Anim 5050] ;Self falling animation
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5052)
+value = 5050
+
+[State -2, Anim 5052] ;Self falling animation (diagup type)
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5052)
+value = 5052
+
+[State -2, Anim 5060] ;Coming down - normal
+type = ChangeAnim
+trigger1 = Vel Y > -2
+trigger1 = Anim = 5050
+trigger1 = SelfAnimExist(5060)
+persistent = 0
+value = 5060
+
+[State -2, Anim 5062] ;Coming down - diagup type
+type = ChangeAnim
+trigger1 = Vel Y > -2
+trigger1 = Anim = 5052
+trigger1 = SelfAnimExist(5062)
+persistent = 0
+value = 5062
+
+[State -2, SelfState5100]
+type = SelfState
+triggerall = GetHitVar(fall)
+triggerall = GetHitVar(fall.recover)
+triggerall = GetHitVar(fall.recovertime) < 0
+trigger1 = Command = "recovery"
+trigger2 = Command = "a"
+trigger3 = Command = "b"
+trigger4 = Command = "c"
+trigger5 = Command = "x"
+trigger6 = Command = "y"
+trigger7 = Command = "z"
+trigger8 = Command = "start"
+value = 5210
+
+[State -2, Hit ground]
+type = SelfState
+trigger1 = (Vel y > 0) && (Pos y >= 0)
+value = 5100
+
+;--------------------------------------
+;張り付き落下
+;------------------ - bounce off wall
+[Statedef 7048]
+type = A
+movetype = H
+physics = N
+
+[State -2, 1]
+type = null;NotHitBy
+trigger1 = 1
+value = , NA, NP
+
+[State -2, VelSet]
+type = VelSet
+trigger1 = Time = 0
+x = 1.6
+y = -0.5
+
+[State -2, Turn]
+type = Turn
+trigger1 = (Time = 0) && (BackEdgeDist < 30)
+
+[State -2, VelAdd]
+type = VelAdd
+trigger1 = GetHitVar(yaccel)
+y = GetHitVar(yaccel)
+
+[State -2, Gravity]
+type = Gravity
+trigger1 = !GetHitVar(yaccel)
+
+[State -2, Anim 5050] ;Self falling animation
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !SelfAnimExist(5052)
+value = 5050
+
+[State -2, Anim 5052] ;Self falling animation (diagup type)
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5052)
+value = 5052
+
+[State -2, Anim 5060] ;Coming down - normal
+type = ChangeAnim
+trigger1 = Vel Y > -2
+trigger1 = Anim = 5050
+trigger1 = SelfAnimExist(5060)
+persistent = 0
+value = 5060
+
+[State -2, Anim 5062] ;Coming down - diagup type
+type = ChangeAnim
+trigger1 = Vel Y > -2
+trigger1 = Anim = 5052
+trigger1 = SelfAnimExist(5062)
+persistent = 0
+value = 5062
+
+[State -2, SelfState5100]
+type = SelfState
+triggerall = GetHitVar(fall)
+triggerall = GetHitVar(fall.recover)
+triggerall = GetHitVar(fall.recovertime) < 0
+trigger1 = Command = "recovery"
+trigger2 = Command = "a"
+trigger3 = Command = "b"
+trigger4 = Command = "c"
+trigger5 = Command = "x"
+trigger6 = Command = "y"
+trigger7 = Command = "z"
+trigger8 = Command = "start"
+value = 5210
+
+[State -2, Hit ground]
+type = SelfState
+trigger1 = (Vel y > 0) && (Pos y >= 0)
+value = 5100
+
+;------------------------------------------------------------------------------
+;投げられ
+;--------------------------------------
+;1枚目
+[Statedef 7050]
+type = A
+movetype = H
+physics = N
+velset = 0,0
+
+[State -2, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = 1
+value = StateNo
+
+[State -2, SelfState]
+type = SelfState
+trigger1 = Time = 60
+value = 5210
+
+;--------------------------------------
+;2枚目
+[Statedef 7051]
+type = A
+movetype = H
+physics = N
+
+[State -2, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = 1
+value = StateNo
+
+[State -2, SelfState]
+type = SelfState
+trigger1 = Time = 60
+value = 5210
+
+;--------------------------------------
+;3枚目
+[Statedef 7052]
+type = A
+movetype = H
+physics = N
+
+[State -2, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = 1
+value = StateNo
+
+[State -2, VelSet]
+type = VelSet
+trigger1 = Time = 0
+x = GetHitVar(xvel) *Facing
+y = GetHitVar(yvel)
+
+[State -2, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+value = 45.00		; angle
+
+[State -2, AngleSet]
+type = AngleSet
+trigger1 = (Vel y > 0) && (Pos y > -2)
+value = 0
+
+[State -2, Hit ground]
+type = ChangeState
+trigger1 = (Vel y > 0) && (Pos y > -2)
+value = 7016
+
+

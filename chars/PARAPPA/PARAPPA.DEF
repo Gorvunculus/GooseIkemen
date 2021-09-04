@@ -1,0 +1,18 @@
+; Definition file for Wolverine
+; Contains all the filenames needed for the character
+
+; Player information
+[Info]
+name = "PARAPPA"
+displayname = "PaRappa the Rapper"
+
+; Files for the player
+[Files]
+cmd     = parappa.cmd   ;Command set
+cns     = parappa.cns   ;Constants
+st      = parappa.cns   ;States
+stcommon = common1.cns     ;Common states
+sprite  = parappa.sff   ;Sprite
+anim    = parappa.air   ;Animation
+sound  = parappa.snd
+pal1     = parappa1.act 
