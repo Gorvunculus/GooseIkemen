@@ -5,14 +5,14 @@ ASH
 C.Falcon
 Bowser
 Kirby
-Little Mac
-Lucario
+LittleMac
+Lucario_M
 Dedede
 Bandannadee
 pikachu
 starfy
 tom_st
-Fred Flintstone
+FredFlintstone
 Colonel Sanders
 Donald
 Kaname Madoka
