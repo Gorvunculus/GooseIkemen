@@ -1,0 +1,37 @@
+;***************************************************************************;
+;******************* Created in Fighter Factory Ultimate *******************;
+;*******************      http://www.virtualltek.com     *******************;
+;***************************************************************************;
+
+[Info]
+name = "Fred Flintstone"
+displayname = "Fred Flintstone"
+versiondate = 04,14,2002
+mugenversion = 04,14,2002
+author = "Warner and aperson98"
+pal.defaults = 1,3,4,2
+
+[Files]
+sprite = pedro.sff
+anim = pedro.air
+sound = pedro.snd
+cmd = pedro.cmd
+cns = pedro.cns
+stcommon = common1.cns
+st = pedro.cns
+pal1 = Fred.act
+pal2 = pedro2.act
+pal3 = pedro3.act
+pal4 = pedro10.act
+pal5 = pedro5.act
+pal6 = pedro6.act
+pal7 = pedro7.act
+pal8 = pedro8.act
+pal9 = pedro9.act
+pal10 = pedro4.act
+pal11 = Barney.act
+pal12 = Barney.act
+
+[Arcade]
+;intro.storyboard = 
+;ending.storyboard = 

@@ -1,0 +1,311 @@
+==========================================================================================
+Kirby
+From Kirby's Dreamland / Super Smash Bros.
+Version 1.11
+For M.U.G.E.N 1.0 and above
+==========================================================================================
+
+==========================================================================================
+Note
+==========================================================================================
+This character was made with only single and turns mode in mind, so using this in simul mode is probably not a good idea.
+==========================================================================================
+
+==========================================================================================
+Change log
+==========================================================================================
+06/21/2020 - 1.11
+- Fixed an error where the Back Dash's Palfx would override the Rapid Cancel's Palfx
+- Changed layering for Burst Icon
+- Fixed a few errors and Typos in the Copy Ability compatibility list
+
+06/20/2021 - 1.1
+-New Mechanic: Not Over Yet
+  -Upon reaching 35% health or below and not being in a hurt state, you will receive the following benefits for the rest of the round:
+   +All Distortion Drives deal 20% more damage (Stacks with Ultra Burst's damage buff)
+   +Immediately Gain 500 Meter
+   +Slowly gain meter overtime
+   +Gain a defense buff that scales up to 35% according to how much health you currently have (Less health means more defense)
+  -Only triggers once per round
+-New Mechanic: Ultra Dead Angle (Burst while Guarding)
+  -Using this will cancel your guard stun and make you invulnerable for ten frames after the super pause. This also puts you into the Ultra Burst state, but it will only last a third of the time it would if you were to Ultra Burst normally.
+-Ground throw now has 5 frames of startup, Dash Grab now has 3 frames of startup
+-Stationary, Forward, and air dodges now have less invul time against physical attacks
+-Invul time upon air recovery lasts a little longer and control is regained a little sooner
+-Directional inputs now have more influence over air recovery
+-Distortion Drives can now be triggered with any combination of A, B, and C rather than just A+B (Example: QCF B+C, QCB A+C)
+-Changed default Liedown time to 15 frames
+-A red X now appears over the Burst Icon when in a situation where it is not usable
+-Added an Invalid Combo Indicator
+-General Aesthetic Changes
+-Added more characters and variants to the Copy Ability list and corrected a few typos
+
+04/05/2021 - 1.09
+- Adjusted the last hit of Running Grab and Vacuum Grab's launch trajectory
+- Increased cornerpush on the last hit of Running Grab and Vacuum Grab
+- Lengthened cooldown period after a successful Running Grab or Vacuum Grab
+- The last hit of Running Grab and Vacuum Grab can now be canceled into Megaphone or Wish Upon a Galaxy
+- When charging Force Break, Kirby will continue to flash while fully charged
+- All aerial specials and supers can now be Tiger Knee'd
+- After using the air version of Hammer Bash, Kirby now regains control 10 frames sooner
+- Added more characters and variants to the Copy Ability list and corrected a few typos
+
+04/04/2021 - 1.081
+- Fixed "sound does not exist" debug errors in IKEMEN GO
+- Fixed visual bugs that occur during Ultra Burst in IKEMEN GO
+
+01/10/2021 - 1.08
+- Added more characters and variants to the Copy Ability list and rearranged some triggers
+- When charging Spear Throw, Kirby will continue to flash while fully charged
+- Fixed an error where the air version of wave beam won't come out while landing exactly when Kirby is supposed to fire
+
+01/04/2021 - 1.079
+- Changed, realigned, and relayered the shockwave effect produced by Hammer Nail's custom state
+- Fixed an error where the grounded version of Beam Wave shared the Palfx
+- Added more characters and variants to the Copy Ability list
+
+12/30/2020 - 1.0785
+- Fixed some typos in some of the Copy Ability triggers and made some triggers account for more p2name variants.
+
+12/29/2020 - 1.078
+- Fixed an error where certain triggers for the Sword and Fire abilities were mis-numbered, causing character within the triggers below to give the fighter ability instead
+
+12/19/2020 - 1.077
+- Fixed an error where plasma's effects were still sharing the palfx
+
+12/15/2020 - 1.076
+- Fixed an error where certain helpers and effects shared the Palfx
+- Fixed some misaligned hitsparks
+- Increased frame disadvantage for Burning Attack on block
+
+12/14/2020 - 1.075
+- Holding up since the first jump will no longer trigger an air jump
+- Fixed an error where certain effects shared the Palfx
+- Fixed an error where the freeze effect wouldn't appear upon consecutively freezing the opponent with Blizzard Hammer
+
+11/07/2020 - 1.07
+- Fixed all Hitdefs so they may properly interact with reversal defs
+- Fixed turn to face behavior during normal burst
+
+09/27/2020 - 1.06
+- Reduced Startup frames on Bomb Set
+- Smash Kick is now airdash cancelable on hit
+- All of Yo-yo's attacks are now jump/airdash cancelable on contact
+- Ninja Kick is now jump/airdash cancelable on contact
+- Kirby will now go into Ninja Kick's bounce back state on block
+- Hammer Nail can now ground bounce the opponent on normal hit
+- Hammer Nail is now dash cancelable on contact
+- Adjusted Launch Trajectory on Hammer Flip
+- Reduced active frames and adjusted hitbox on air throw attempt
+- Fixed an error where air dodge's remaining invul frames would linger upon landing
+- Additional effect for Ultra Sword
+- Added compatibility for Faust's "This Is... Me?"
+- Added Special Intro against Shantae
+
+04/26/2020 - 1.05
+- All Helper Based attacks can now put the opponent into the custom fall states
+- Fixed an error in the incremental cornerpush code
+- Adjustments to Frame Data and Damage Scaling
+- It is now much easier to rapid cancel upon connecting with helper based attacks
+- Fixed an error where the Ice effect wouldn't show up after consecutively freezing the opponent
+- Ice Breath and Ice sprinkle are no longer flagged as projectiles and can no longer hit the opponent when they are in an air recovery state (States 5200 through 5210)
+- Cloning Technique can no longer counter throws
+- Air Bullet can now break projectiles
+- Super Inhale, Dash Grab, and Vacuum Grab are now immune to throws up until the last active frame
+- Both follow ups to Megaphone can now be pulled off by holding C
+- After hitting the opponent with hammer bash a second time in the same combo, the opponent will now be able to immediately recover after wall bouncing instead of right after getting hit
+- Made more characters compatible with Kirby's Copy Abilities
+- Ultra Burst's aura will no longer show up during custom states
+- Added special intro against Blitztank
+
+08/31/2019 - 1.04
+- New system mechanic: Ultra Burst. Burst can now be used in a neutral state, and doing so will put Kirby in a powered up state that gives the following benefits:
+  +Health and Meter will gradually recover overtime (Unless you're taking damage)
+ +Damage output will be increased by 20%
+ +Timer will be frozen
+ +Hitting the opponent with the Ultra Burst will launch them upward and will be unable to recover from it
+ +Hitting the opponent with the ultra burst will also grant 500 meter instantly
+The time that the Ultra Burst state will last is proportionate to the amount of health lost prior to activating, Attempting an astral heat will immediately end the Ultra Burst state
+- Implemented throw escape system, the opponent can now escape Kirby's normal throws by inputting A+B, B+C, X+Y, or Z within 14 frames after being grabbed. However, throws are inescapable on counterhit
+- Fixed an error where the counter message doesn't show up when countering with helper based attacks
+- New Burst icon
+- New cut in portrait for astral heat
+- New astral heat BG
+- Using Megaphone, Microphone, and Fatal Chorus while Ultra Burst is active will play his voice clips from Kirby Super Star.
+- Made more characters compatible with Kirby's Copy Abilities
+
+07/17/2019 - 1.035
+- Revised Burst System
+- Helper Based Supers can now make Kirby lose his Copy Ability, regardless of damage
+- Kirby now makes use of custom fall states, bypassing fall.defence_up
+
+07/15/2019 - 1.03
+- Added special intro against Es
+- Revised cornerpush and hitstun decay systems
+- Made more characters compatible with Kirby's Copy Abilities (Mostly characters from Nitroplus Blasterz)
+- Ninja: Quad Shock's waves will no longer move past the corner
+
+05/30/2019 - 1.02
+- After a successful Burst, none of Kirby's attacks will connect until the opponent has recovered
+- Fixed an error where Kirby could Rapid Cancel his Burst
+- The air version of Ultra Sword is now air blockable
+
+05/13/2019 - 1.015
+- Mirror's Reflect Force now puts the opponent in a fall state regardless of whether they are grounded or in the air
+- Fixed an issue where certain compatible characters didn't give their assigned copy ability
+- Made more characters compatible with Kirby's Copy Abilities
+
+05/12/2019 - 1.01
+- Fixed an issue where Kirby did not have hitboxes during his crouch turn animation
+- Fixed an issue where the ice would not appear on a frozen opponent
+- Made some shadow and reflection fixes for bombs, drill, and wave beam
+
+05/12/2019 - 1.00
+- First Release
+==========================================================================================
+
+==========================================================================================
+To do list
+==========================================================================================
+- Fix bugs and errors that I might have missed
+==========================================================================================
+
+==========================================================================================
+Introduction
+==========================================================================================
+This Kirby uses a custom gameplay style. He is based on a hypothetical moveset for what Kirby would be like if he were a playable character in Blazblue Cross Tag Battle. This read me will explain how this gameplay style works. His move list can be found in the .pngs included in this folder. 
+==========================================================================================
+
+==========================================================================================
+Default Button Layout
+==========================================================================================
+A, B, and C: Attack Buttons
+
+X: Rapid Cancel
+
+Y: Dodge
+
+Z: Grab
+==========================================================================================
+
+==========================================================================================
+Gameplay Mechanics
+==========================================================================================
+------------------------------------------------------------------------------------------
+Double Jump (Tap Up in the air)
+------------------------------------------------------------------------------------------
+Pretty self explanatory, allows you to jump a second time in the air. Can be canceled into after connecting any of your air normals. Can only be used once in the air, can't be used if you have already air dashed. Kirby can air jump twice before touching the ground
+
+------------------------------------------------------------------------------------------
+Air Dash (Double Tap Forward/Back while in the air)
+------------------------------------------------------------------------------------------
+Sends you flying forward or back for a set distance. Can be canceled into after connecting any of your air normals. Can only be used once in the air, can't be used if you have already used both air jumps.
+
+------------------------------------------------------------------------------------------
+Dodge (Y)
+------------------------------------------------------------------------------------------
+For a very short amount of time, you'll become invulnerable and can pass through the opponent and their projectiles. Just pressing Y will keep you stationary, pressing Y and forward at the same time will have you move forward a short distance, and pressing Y and back will have you back dash. The stationary dodge can also be done in the air. You will become vulnerable again near the end of the dodge animation, so be carful about how you time it.
+
+------------------------------------------------------------------------------------------
+Grab (Z)
+------------------------------------------------------------------------------------------
+Once again, pretty self explanatory. Overrides the opponent's guard, but only works if they're not in the air and not in a hit state
+
+------------------------------------------------------------------------------------------
+Air Grab (Z in the air)
+------------------------------------------------------------------------------------------
+Inversely, only works on airborne opponents and can work even when they're in a hit state. Can be used as a combo ender.
+
+------------------------------------------------------------------------------------------
+Running Grab (Z While Running)
+------------------------------------------------------------------------------------------
+Works on airborne opponents and standing opponents even when they're in a hit state. However, it won't work on crouching opponents.
+
+------------------------------------------------------------------------------------------
+Rapid Cancel (X When your attack has made contact with the opponent) (Costs 1000 meter) (Costs 500 meter if used during a Distortion Drive)
+------------------------------------------------------------------------------------------
+Using this will immediately put you in a neutral state, this can be used to extend combos, make otherwise unsafe moves safe, or make you more unpredictable to your opponent. Holding Forward or back while inputing the command will immediately have you run or back dash respectively (Air Dash Forward/Back when in the air), Holding up will immediately make you jump, and holding down while in the air will quickly bring you back to the ground.
+
+------------------------------------------------------------------------------------------
+Dead Angle Attack (Press Forward and X or Forward and B+C While guarding) (Costs 1000 meter)
+------------------------------------------------------------------------------------------
+Cancels your guard animation into an invulnerable attack animation that sends the opponent flying backward. Deals damage, but doesn't kill.
+
+------------------------------------------------------------------------------------------
+Burst (y+z while getting hit) (Can only be used once per round) (Doesn't work if you're being thrown or being hit by a super)
+------------------------------------------------------------------------------------------
+Deploys a non damaging blast around your character that sends you opponent flying away from you. A poorly timed burst can leave open for even more damage, so be carful.
+
+------------------------------------------------------------------------------------------
+Wake up Action
+------------------------------------------------------------------------------------------
+The wake up animation can be canceled into a forward dodge or a back dash. In Kirby's case, he can also cancel into Final Cutter.
+
+------------------------------------------------------------------------------------------
+Counter hit bonus
+------------------------------------------------------------------------------------------
+All attacks will deal bonus damage and increased hit stun in some cases if they hit the opponent while they're attacking
+
+==========================================================================================
+
+==========================================================================================
+Character Specific Mechanics
+==========================================================================================
+------------------------------------------------------------------------------------------
+Copy Abilities
+------------------------------------------------------------------------------------------
+If Kirby uses inhale or super inhale on the opponent, He will gain a different set of moves mapped to the B button depending on who he inhaled. However, if Kirby gets hit by a super move or an attack that deals at least 130 damage, he will lose his copy ability. You can check CopyAbilities.png to see what each Copy Ability can do. If you want to make a certain character compatible with this feature, see Copy Compatibility How To.txt.
+
+------------------------------------------------------------------------------------------
+Mix
+------------------------------------------------------------------------------------------
+This force break will start a roulette that will give a specified copy ability once it stops. While it may seem completely random at first, the roulette will always roll in the same order starting from the current copy ability. If you can get the timing down, it's possible to get the exact copy ability that you want.
+
+------------------------------------------------------------------------------------------
+Guard Break
+------------------------------------------------------------------------------------------
+Hammer Flip is capable of breaking the opponent's guard, causing them to stagger.
+
+------------------------------------------------------------------------------------------
+Auto Guard
+------------------------------------------------------------------------------------------
+As long as Kirby stays in his stone form after using 5C or jC, he will auto guard against all attacks. He will still be vulnerable to grabs though.
+
+==========================================================================================
+Copy Ability Specific Mechanics
+==========================================================================================
+------------------------------------------------------------------------------------------
+Ice: Freeze
+------------------------------------------------------------------------------------------
+Using Ice Breath or Ice Sprinkle on a projectile will freeze it. All that Kirby has to do is move into the frozen projectile, and it will be pushed towards the opponent.
+
+------------------------------------------------------------------------------------------
+Plasma: Charge
+------------------------------------------------------------------------------------------
+Depending on how much charge Kirby has (indicated by the electricity surrounding him), Plasma Shot will become more powerful. Kirby can use kinetic charge (Mashing directional inputs at any given time) or static charge to increase his charge, the charge will slowly decrease if Kirby isn't doing either of these. Both static and kinetic charge can be used at the same time for faster charging.
+
+------------------------------------------------------------------------------------------
+Hammer: Counter Hit Properties
+------------------------------------------------------------------------------------------
+Hammer Nail and Giant Swing will bounce the opponent into the air on counter hit.
+
+------------------------------------------------------------------------------------------
+Spear: Tipper
+------------------------------------------------------------------------------------------
+Spear Thrust will deal more damage and hit stun if it hits the opponent at the tip of the spear.
+
+==========================================================================================
+
+==========================================================================================
+Thanks to:
+- CozySquirtle, for teaching me how to make small ports
+- seku for making Kirby's sprites
+- Chaofanatic, Reserved, and Random Talking Bush, for ripping Kirby's voice clips from Return to Dreamland, Triple Deluxe, and Smash Ultimate respectively
+- Mr. Fael, Nep Heart, ZolidSone, and Takehaya Susanoo for testing
+- Ricepigeon for the damage scaling system
+- Nep Heart for the reflect code and the code that allows bursting during custom states
+- Elecbyte and Mugen Guild, for their very helpful references and documentation on how the Mugen code works
+- Mugen Guild again for providing feedback for my characters
+- You, for checking this character out, Have fun
+==========================================================================================
+

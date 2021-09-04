@@ -1,0 +1,30 @@
+; Definition file for Tom
+; Contains all the filenames needed for the character
+
+; Player information
+[Info]
+name = "Tom"        ;Name of character
+displayname = "Tom" ;Name of character to display
+versiondate = 14,10,2009    ;Version date of character
+mugenversion = 04,14,2002   ;Version of M.U.G.E.N character works on
+author = "Hannah Montana"         ;Character author name
+pal.defaults = 1,2,3,4      ;Default palettes in order of preference
+
+; Files for the player
+[Files]
+cmd     = tom.cmd   ;Command set
+cns     = tom.cns   ;Constants
+st      = tom.cns   ;States
+stcommon = common1.cns ;Common states
+sprite  = tom.sff   ;Sprite
+anim    = tom.air   ;Animation
+sound   = tom.snd   ;Sound
+pal1    = tom.act  ;Palettes (can have up to 12)
+pal2    = bluecat.act
+pal3    = redcat.act
+pal4    = blackcat01.act
+pal5    = blackcat02.act
+pal6    = blackcat03.act
+pal7    = whitecat.act
+pal8    = unpocoraro.act
+
