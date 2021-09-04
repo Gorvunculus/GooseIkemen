@@ -1,0 +1,35 @@
+[Info]
+name = "Disney - Captain Hook"        				
+displayname = "Captain Hook" 
+versiondate = 11,22,2000    
+mugenversion = 11,22,2000
+author = "Joey Faust"         				
+pal.defaults = 3,1,2,4,5,6,7,8,9,10,11,12      
+	
+; Files for the player
+[Files]
+cmd     = CaptainHook.cmd
+stcommon= CaptainHookcommon1.cns 
+cns     = CaptainHook.st
+st	= CaptainHook.st 
+st1      = CaptainHookspecial.cns
+st2      =CaptainHooksuper.cns
+st3 	= CaptainHook2.st 
+sprite  = CaptainHook.sff 
+anim    = CaptainHook.air 
+sound   = act&sound/CaptainHook.snd 
+pal1    = act&sound/CAPTAINHOOK.act  
+pal2    = act&sound/Color2.act  
+pal3    = act&sound/Color3.act  
+pal4    = act&sound/Color4.act  
+pal5    = act&sound/Color5.act  
+pal6    = act&sound/Color6.act  
+pal7    = act&sound/Color7.act  
+pal8    = act&sound/Color8.act  
+pal9    = act&sound/Color9.act  
+pal10    = act&sound/Color10.act  
+pal11    = act&sound/Color11.act  
+pal12    = act&sound/Color12.act  
+
+;You can edit my characters, if you want.
+; - Joey Faust ( TeamFaustGames (DeviantART) / FistMan Is Back (Wikia) / TFGGerman (YouTube) )

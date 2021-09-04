@@ -1,0 +1,968 @@
+Underdog Temp. intro 90%
+
+[SceneDef]
+spr = end.sff
+startscene = 0         ;Starting scene number (for debugging)
+;
+[BG0Def]
+
+[BG0 Mountain]
+type = normal
+spriteno = 0,98
+start = 0,0
+velocity = 2,0
+tile = 1,1
+mask = 1
+;spr = 5
+
+;------------------------------
+
+[BG1Def]
+
+[BG1 Duck]
+id = 2
+type = normal
+spriteno = 0,113
+start = 0,340
+window = 40,-20, 280,300
+mask = 1
+tile = 1,1
+
+[BG1CtrlDef Credits]
+CtrlID = 2
+looptime = -1
+
+[BG1Ctrl Start scrolling]
+type = VelSet
+time = 0
+y = 11
+
+;------------------------------
+;Duck
+[BG2Def]
+
+[BG2 fat]
+id = 3
+type = normal
+spriteno = 0,69;114
+start = 0,-340
+;window = 0,24, 319,215
+mask = 1
+tile = 1,1
+
+;BG controller to stop text from scrolling
+[BG2CtrlDef Credits]
+CtrlID = 3
+looptime = -1
+
+[BG2Ctrl Start scrolling]
+type = VelSet
+time = 0
+y = 0
+
+;------------------------------
+;Brutus
+[BG3Def]
+
+[BG3 fat]
+id = 2
+type = normal
+spriteno = 0,110
+start = 840,195
+;window = 0,24, 319,215
+mask = 1
+
+;BG controller to stop text from scrolling
+[BG3CtrlDef Credits]
+CtrlID = 2
+looptime = -1
+
+[BG3Ctrl Start scrolling]
+type = VelSet
+time = 40
+x = -8
+
+[BG3Ctrl Stop scrolling]
+type = VelSet
+time = 135
+x = 0
+
+;[BG4Ctrl Start scrolling]
+;type = VelSet
+;time = 200
+;y = -3
+
+;------------------------------
+;Bluto
+[BG4Def]
+
+[BG4 fat]
+id = 2
+type = normal
+spriteno = 0,109
+start = -340,250
+;window = 0,24, 319,215
+mask = 1
+
+;BG controller to stop text from scrolling
+[BG4CtrlDef Credits]
+CtrlID = 2
+looptime = -1
+
+[BG4Ctrl Start scrolling]
+type = VelSet
+time = 0
+x = 4
+
+[BG4Ctrl Stop scrolling]
+type = VelSet
+time = 7
+x = 0
+
+;[BG3Ctrl Start scrolling]
+;type = VelSet
+;time = 250
+;y = -3
+
+;------------------------------
+;Popeye
+[BG5Def]
+
+[BG5 fat]
+id = 3
+type = normal
+spriteno = 0,111
+start = 0,1540
+;window = 0,24, 319,215
+mask = 1
+
+;BG controller to stop text from scrolling
+[BG5CtrlDef Credits]
+CtrlID = 3
+looptime = -1
+
+[BG5Ctrl Start scrolling]
+type = VelSet
+time = 80
+y = -4
+
+[BG5Ctrl Stop scrolling]
+type = VelSet
+time = 120
+y = 0
+
+;[BG5Ctrl Start scrolling]
+;type = VelSet
+;time = 200
+;y = -3
+
+;------------------------------
+;Popeye
+[BG6Def]
+
+[BG6 fat]
+id = 5
+type = normal
+spriteno = 0,70
+start = 0,310
+;window = 0,24, 319,215
+mask = 1
+;tile =  1,0
+
+;BG controller to stop text from scrolling
+[BG6CtrlDef Credits]
+CtrlID = 5
+looptime = -1
+
+[BG6Ctrl Start scrolling]
+type = VelSet
+time = 218
+y = -7
+
+[BG6Ctrl Start scrolling]
+type = VelSet
+time = 245
+y = 0
+
+;-------------------------------
+
+[BG7Def]
+
+[BG7 Mountain]
+type = normal
+spriteno = 0,98
+start = 0,0
+velocity = 2,0
+tile = 1,1
+mask = 1
+;spr = 5
+
+;BG controller to stop text from scrolling
+[BG6CtrlDef Credits]
+CtrlID = 6
+looptime = -1
+
+;------------------------------
+;Marvin
+[BG8Def]
+
+[BG8 fat]
+id = 8
+type = normal
+spriteno = 0,70
+start = 0,310
+;window = 0,24, 319,215
+mask = 1
+;tile =  1,0
+
+;BG controller to stop text from scrolling
+[BG8CtrlDef Credits]
+CtrlID = 8
+looptime = -1
+
+[BG8Ctrl Start scrolling]
+type = VelSet
+time = 218
+y = -7
+
+[BG8Ctrl Start scrolling]
+type = VelSet
+time = 245
+y = 0
+
+;------------------------------
+;Mom
+[BG9Def]
+
+[BG9 fat]
+id = 9
+type = normal
+spriteno = 0,168
+start = 210,0
+;window = 0,24, 319,215
+mask = 1
+tile =  1,0
+
+;BG controller to stop text from scrolling
+[BG9CtrlDef Credits]
+CtrlID = 9
+looptime = -1
+
+[BG9Ctrl Start scrolling]
+type = VelSet
+time = 0
+x = 15
+
+;[BG8Ctrl Start scrolling]
+;type = VelSet
+;time = 245
+;y = 0
+
+;------------------------------
+;Mom
+[BG11Def]
+
+[BG11 fat]
+id = 11
+type = normal
+spriteno = 0,168
+start = 210,0
+;window = 0,24, 319,215
+mask = 1
+tile =  1,0
+
+;BG controller to stop text from scrolling
+[BG11CtrlDef Credits]
+CtrlID = 11
+looptime = -1
+
+[BG11Ctrl Start scrolling]
+type = VelSet
+time = 0
+x = 15
+
+;[BG8Ctrl Start scrolling]
+;type = VelSet
+;time = 245
+;y = 0
+
+;------------------------------
+;Mom
+[BG13Def]
+
+[BG13 fat]
+id = 13
+type = normal
+spriteno = 0,168
+start = 210,0
+;window = 0,24, 319,215
+mask = 1
+tile =  1,0
+
+;BG controller to stop text from scrolling
+[BG13CtrlDef Credits]
+CtrlID = 13
+looptime = -1
+
+[BG13Ctrl Start scrolling]
+type = VelSet
+time = 0
+x = -25
+
+;[BG8Ctrl Start scrolling]
+;type = VelSet
+;time = 245
+;y = 0
+
+;------------------------------
+;Mom
+[BG14Def]
+
+[BG14 fat]
+id = 14
+type = normal
+spriteno = 0,97
+start = 210,0
+;window = 0,24, 319,215
+mask = 1
+tile =  1,0
+
+;BG controller to stop text from scrolling
+[BG14CtrlDef Credits]
+CtrlID = 14
+looptime = -1
+
+[BG14Ctrl Start scrolling]
+type = VelSet
+time = 0
+x = -7
+
+;[BG8Ctrl Start scrolling]
+;type = VelSet
+;time = 245
+;y = 0
+
+;------------------------------
+;Mom
+[BG16Def]
+
+[BG16 fat]
+id = 16
+type = normal
+spriteno = 0,124
+start = 210,0
+;window = 0,24, 319,215
+mask = 1
+;tile =  1,0
+
+;BG controller to stop text from scrolling
+[BG16CtrlDef Credits]
+CtrlID = 16
+looptime = -1
+
+[BG16Ctrl Start scrolling]
+type = VelSet
+time = 0
+x = -1.75
+
+;[BG8Ctrl Start scrolling]
+;type = VelSet
+;time = 245
+;y = 0
+;------------------------------------
+;Fat
+[Scene 0]
+; Fade
+fadein.time = 70      ;Time to take for fading in
+fadein.col = 0,0,0     ;Use 255,255,255 for white-fade
+fadeout.time = 90
+fadeout.col = 0,0,0
+; Screen color
+clearcolor = 0,0,0
+; Overlay Anims (from 0 to 9)
+layerall.pos = 160,0   ;Default position for all layers
+;layer0.anim =  11 ;Anim action number
+;layer0.offset = -20,113   ;Position offset
+;layer0.starttime = 0   ;Time to start displa
+layer1.anim =  171 ;Anim action number
+layer1.offset = 0,35   ;Position offset
+layer1.starttime = 0   ;Time to start display
+;layer2.anim =  7
+;layer2.offset = 10,220   ;Position offset
+;layer2.starttime = 0
+end.time = 270
+bgm = laa.mid;yumm4.mid;;DDRIntro.mid
+;bgm.loop = 0
+; BG
+;bg.name = BG2          ;Name of BG to show (no spaces allowed)
+; Total time
+;end.time = 740
+
+
+
+;------------------------------------
+;Fat
+[Scene 1]
+; Fade
+fadein.time = 30      ;Time to take for fading in
+fadein.col = 0,0,0     ;Use 255,255,255 for white-fade
+fadeout.time = 130
+fadeout.col = 0,0,0
+; Screen color
+clearcolor = 0,0,0
+; Overlay Anims (from 0 to 9)
+layerall.pos = 160,0   ;Default position for all layers
+;layer0.anim =  11 ;Anim action number
+;layer0.offset = -20,113   ;Position offset
+;layer0.starttime = 0   ;Time to start displa
+layer1.anim =  6 ;Anim action number
+layer1.offset = 0,35   ;Position offset
+layer1.starttime = 250   ;Time to start display
+;layer2.anim =  7
+;layer2.offset = 10,220   ;Position offset
+;layer2.starttime = 0
+end.time = 670
+;bgm = laa.mid;yumm4.mid;;DDRIntro.mid
+;bgm.loop = 0
+; BG
+bg.name = BG2          ;Name of BG to show (no spaces allowed)
+; Total time
+;end.time = 740
+
+
+[BG2 fat]
+id = 117
+type = anim
+actionno = 136
+;spriteno = 0,106
+;type = normal
+;spriteno = 0,107
+start = 60,50
+;window = 0,24, 319,215
+mask = 1
+
+
+[BG2 fat]
+id = 116
+type = normal
+spriteno = 0,128
+start = 0,400
+;window = 0,24, 319,215
+mask = 1
+;tile =  1,0
+
+;BG controller to stop text from scrolling
+[BG2CtrlDef Credits]
+CtrlID = 116
+looptime = -1
+
+[BG2Ctrl Start scrolling]
+type = VelSet
+time = 0
+y = -2
+
+[BG2Ctrl Stop scrolling]
+type = VelSet
+time = 140
+y = 0
+
+;[BG2Ctrl Start scrolling]
+;type = VelSet
+;time = 270
+;y = 3
+
+
+
+
+[BG2 fat]
+id = 2
+type = normal
+spriteno = 0,107
+;type = anim
+;actionno = 126
+;spriteno = 0,106
+;type = normal
+;spriteno = 0,107
+start = 0,440
+;window = 0,24, 319,215
+mask = 1
+
+;BG controller to stop text from scrolling
+[BG2CtrlDef Credits]
+CtrlID = 2
+looptime = -1
+
+[BG2Ctrl Start scrolling]
+type = VelSet
+time = 0
+y = -2
+
+[BG2Ctrl Stop scrolling]
+type = VelSet
+time = 140
+y = 0
+
+;[BG2Ctrl Start scrolling]
+;type = VelSet
+;time = 270
+;y = 3
+
+
+
+
+
+
+
+[Begin Action 0]
+0,11, 0,0, 90
+
+;Underdog
+[Begin Action 1]
+0,12, 0,0, 90
+
+[Begin Action 2]
+0,0, 0,0, 28
+0,1, 0,0, 3
+0,2, 0,0, 3
+0,3, 0,0, 3
+0,4, 0,0, 3
+0,5, 0,0, 3
+0,6, 0,0, 3
+0,7, 0,0, 2
+0,6, 0,0, 3
+0,5, 0,0, 3
+0,4, 0,0, 3
+0,3, 0,0, 3
+0,2, 0,0, 3
+0,1, 0,0, 3
+0,0, 0,0, 4
+0,1, 0,0, 4
+0,2, 0,0, 4
+0,3, 0,0, 4
+0,4, 0,0, 4
+0,5, 0,0, 2
+0,6, 0,0, 2
+0,5, 0,0, 2
+0,4, 0,0, 3
+0,3, 0,0, 3
+0,2, 0,0, 3
+0,1, 0,0, 3
+0,0, 0,0, 3
+0,1, 0,0, 3
+0,2, 0,0, 3
+0,3, 0,0, 2
+0,4, 0,0, 2
+0,5, 0,0, 2
+0,4, 0,0, 2
+0,3, 0,0, 3
+0,2, 0,0, 3
+0,1, 0,0, 3
+0,0, 0,0, 2
+0,1, 0,0, 2
+0,2, 0,0, 2
+0,3, 0,0, 2
+0,4, 0,0, 3
+0,3, 0,0, 3
+0,2, 0,0, 3
+0,1, 0,0, 3
+0,0, 0,0, 3
+0,1, 0,0, 3
+0,2, 0,0, 3
+0,1, 0,0, 3
+0,0, 0,0, 3
+0,1, 0,0, 3
+0,2, 0,0, -1
+
+
+
+;Underdog
+[Begin Action 3]
+0,13, 0,0, 90
+
+;Underdog
+[Begin Action 4]
+0,98, 0,0, 90
+
+;Underdog
+[Begin Action 5]
+0,13, 0,0, 90
+
+;Bcakground1
+[Begin Action 6]
+0,193, 0,0, 150
+
+;Shoe-Shine
+[Begin Action 7]
+0,85, 0,0, 3,,A155
+0,86, 0,0, 3,,A155
+0,87, 0,0, 3,,A155
+0,85, 0,0, 3,,A155
+0,86, 0,0, 3,,A155
+0,87, 0,0, 3,,A155
+0,85, 0,0, 3,,A155
+0,86, 0,0, 3,,A155
+0,87, 0,0, 3,,A155
+0,90, 0,0, 3,,A155
+0,101, 0,0, 3,,A155
+0,90, 0,0, 3,,A155
+0,101, 0,0, 3,,A155
+0,90, 0,0, 3,,A155
+0,101, 0,0, 3,,A155
+0,90, 0,0, 3,,A155
+0,101, 0,0, 3,,A155
+0,89, 0,0, 3,,A155
+0,100, 0,0, 3,,A155
+0,89, 0,0, 3,,A155
+0,100, 0,0, 3,,A155
+0,89, 0,0, 3,,A155
+0,100, 0,0, 3,,A155
+0,89, 0,0, 3,,A155
+0,88, 0,0, 3,,A155
+0,102, 0,0, 3,,A155
+0,88, 0,0, 3,,A155
+0,102, 0,0, 3,,A155
+0,88, 0,0, 3,,A155
+0,102, 0,0, 3,,A155
+0,88, 0,0, 3,,A155
+0,102, 0,0, 3,,A155
+0,88, 0,0, 3,,A155
+0,102, 0,0, 3,,A155
+0,91, 0,0, 3,,A155
+0,104, 0,0, 3,,A155
+0,91, 0,0, 3,,A155
+0,104, 0,0, 3,,A155
+0,91, 0,0, 3,,A155
+0,104, 0,0, 3,,A155
+0,91, 0,0, 3,,A155
+0,104, 0,0, 3,,A155
+0,91, 0,0, 3,,A155
+0,104, 0,0, 3,,A155
+0,91, 0,0, 3,,A155
+0,92, 0,0, 3,,A155
+0,103, 0,0, 3,,A155
+0,92, 0,0, 3,,A155
+0,103, 0,0, 3,,A155
+0,92, 0,0, 3,,A155
+0,103, 0,0, 3,,A155
+0,92, 0,0, 3,,A155
+0,103, 0,0, 3,,A155
+0,93, 0,0, 3,,A155
+0,105, 0,0, 3,,A155
+0,93, 0,0, 3,,A155
+0,105, 0,0, 3,,A155
+0,93, 0,0, 3,,A155
+0,105, 0,0, 3,,A155
+0,93, 0,0, 3,,A155
+0,105, 0,0, 3,,A155
+0,93, 0,0, 3,,A155
+0,105, 0,0, 3,,A155
+0,93, 0,0, 3,,A155
+0,105, 0,0, 3,,A155
+0,93, 0,0, 3,,A155
+0,105, 0,0, 3,,A155
+0,93, 0,0, 3,,A155
+0,105, 0,0, 3,,A155
+0,93, 0,0, 3,,A155
+0,105, 0,0, 3,,A155
+0,93, 0,0, 3,,A155
+0,105, 0,0, 3,,A155
+0,93, 0,0, 3,,A155
+0,105, 0,0, 3,,A155
+0,105, 0,0, 3,,A155
+0,93, 0,0, 35,,A155
+0,92, 0,0, 15,,A155
+0,91, 0,0, 10,,A155
+0,94, 0,0, 3,,A155
+0,95, 0,0, -1,,A155
+
+;Duck Dodgers
+[Begin Action 8]
+0,127, 0,0, 3
+0,126, 0,0, 3
+0,106, 0,0, 3
+
+;Duck Dodgers
+[Begin Action 9]
+0,99, 0,0, 55
+
+;Duck Dodgers
+[Begin Action 10]
+0,115, 0,0, 55,,A155
+
+;Duck Dodgers
+[Begin Action 11]
+0,116, 0,0, 10,,A
+;0,117, 0,0, 0,,A155
+;0,118, 0,0, 10,,A155
+;0,119, 0,0, 10,,A155
+;0,120, 0,0, 10,,A155
+
+;Duck Dodgers
+[Begin Action 12]
+0,121, 0,0, 10
+
+;Duck Dodgers
+[Begin Action 13]
+0,123, 0,0, 6;,,A
+0,130, 0,-5, 6;,,A155
+0,131, 0,-8, 6;,,A155
+0,130, 0,-5, 6
+
+;Duck Dodgers
+[Begin Action 14]
+0,122, 0,0, 10,,A
+;0,117, 0,0, 0,,A155
+;0,118, 0,0, 10,,A155
+;0,119, 0,0, 10,,A155
+;0,120, 0,0, 10,,A155
+
+;Marvin BG
+[Begin Action 15]
+0,124, 0,0, 10
+
+;Popeye BG
+[Begin Action 16]
+0,125, 0,0, 10
+
+;Duck Dodgers
+[Begin Action 17]
+0,71, 0,0, 50,,A95
+9999,0, 0,0, -1
+
+;Duck Dodgers
+[Begin Action 18]
+0,72, 0,0, 50,,A95
+9999,0, 0,0, -1
+
+;Duck Dodgers
+[Begin Action 19]
+0,73, 0,0, 50,,A95
+9999,0, 0,0, -1
+
+
+;Duck Dodgers
+[Begin Action 20]
+0,74, 0,0, 50
+
+;Duck Dodgers
+[Begin Action 21]
+0,79, 0,0, 50
+
+;Duck Dodgers
+[Begin Action 22]
+0,77, 0,0, 50
+
+;Duck Dodgers
+[Begin Action 23]
+0,78, 0,0, 50
+
+;Duck Dodgers
+[Begin Action 24]
+0,75, 0,0, 50
+
+
+;Shoe-Shine
+[Begin Action 25]
+0,85, 0,0, 2,,A155
+0,86, 0,0, 2,,A155
+0,87, 0,0, 2,,A155
+0,90, 0,0, 2,,A155
+0,101, 0,0, 2,,A155
+0,89, 0,0, 2,,A155
+0,100, 0,0, 2,,A155
+0,88, 0,0, 2,,A155
+0,102, 0,0, 2,,A155
+0,91, 0,0, 2,,A155
+0,104, 0,0, 2,,A155
+0,103, 0,0, 2,,A155
+0,92, 0,0, 2,,A155
+0,93, 0,0, 2,,A155
+0,105, 0,0, 2,,A155
+0,92, 0,0, 15,,A155
+0,91, 0,0, 10,,A155
+0,94, 0,0, 3,,A155
+0,95, 0,0, -1,,A155
+
+
+;Duck Dodgers
+[Begin Action 126]
+0,107, 0,0, 3
+0,107, 0,0, 3
+0,107, 0,0, 3
+
+;Duck Dodgers
+[Begin Action 127]
+0,132, 0,0, 3
+0,122, 0,0, 3
+0,133, 0,0, 3
+
+;Duck Dodgers
+[Begin Action 128]
+0,137, 0,0, 3
+0,137, 0,0, 3
+0,137, 0,0, 3
+
+
+;Duck Dodgers
+[Begin Action 129]
+0,136, 0,0, 3
+0,136, 0,0, 3
+0,136, 0,0, 3
+
+
+;Duck Dodgers
+[Begin Action 130]
+0,169, 0,0, 3
+0,169, 0,0, 130
+0,171, 0,0, 5
+0,135, 0,0, 350
+
+
+;Shoe-Shine
+[Begin Action 131]
+0,138, 0,0, 3,,A95
+0,139, 0,0, 3,,A95
+0,140, 0,0, 3,,A95
+0,141, 0,0, 3,,A95
+0,142, 0,0, 3,,A95
+0,143, 0,0, 3,,A95
+0,144, 0,0, 3,,A95
+0,145, 0,0, 3,,A95
+0,146, 0,0, 3,,A95
+0,147, 0,0, 3,,A95
+0,148, 0,0, 3,,A95
+0,149, 0,0, 3,,A95
+0,150, 0,0, 3,,A95
+0,151, 0,0, 3,,A95
+0,152, 0,0, 3,,A95
+0,153, 0,0, 3,,A95
+0,154, 0,0, 3,,A95
+0,155, 0,0, 3,,A95
+0,156, 0,0, 3,,A95
+0,157, 0,0, 3,,A95
+0,158, 0,0, 3,,A95
+0,159, 0,0, 3,,A95
+0,160, 0,0, 3,,A95
+0,161, 0,0, 3,,A95
+0,162, 0,0, 3,,A95
+0,163, 0,0, 3,,A95
+0,164, 0,0, 3,,A95
+0,165, 0,0, 3,,A95
+0,166, 0,0, 3,,A95
+0,167, 0,0, 3,,A95
+
+;Duck Dodgers
+[Begin Action 132]
+0,134, 0,0, 3
+0,134, 0,0, 3
+0,134, 0,0, 3
+
+;Martians
+[Begin Action 133]
+0,172, 0,0, 3
+0,172, 0,0, 3
+0,172, 0,0, 3
+
+;Martians
+[Begin Action 134]
+0,173, 0,0, 3
+0,173, 0,0, 3
+0,173, 0,0, 3
+
+ ;Cavey Shine
+[Begin Action 135]
+0,174, 0,0, 3,,A95
+0,175, 0,0, 3,,A95
+0,176, 0,0, 3,,A95
+0,177, 0,0, 3,,A95
+0,178, 0,0, 3,,A95
+0,179, 0,0, 3,,A95
+0,180, 0,0, 3,,A95
+0,181, 0,0, 3,,A95
+loopstart
+0,182, 0,0, 3,,A95
+0,183, 0,0, 3,,A95
+0,184, 0,0, 3,,A95
+0,185, 0,0, 3,,A95
+0,186, 0,0, 3,,A95
+0,187, 0,0, 3,,A95
+0,188, 0,0, 3,,A95
+0,189, 0,0, 3,,A95
+0,190, 0,0, 3,,A95
+
+;Shoe-Shine
+[Begin Action 136]
+9999,0, 0,0, 170
+loopstart
+0,222, 0,0, 3,,A95
+0,223, 0,0, 3,,A95
+0,224, 0,0, 3,,A95
+0,225, 0,0, 3,,A95
+0,226, 0,0, 3,,A95
+0,227, 0,0, 3,,A95
+0,228, 0,0, 3,,A95
+0,229, 0,0, 3,,A95
+0,230, 0,0, 3,,A95
+0,231, 0,0, 3,,A95
+0,232, 0,0, 3,,A95
+0,233, 0,0, 3,,A95
+0,234, 0,0, 3,,A95
+0,235, 0,0, 3,,A95
+0,236, 0,0, 3,,A95
+0,237, 0,0, 3,,A95
+0,238, 0,0, 3,,A95
+0,239, 0,0, 3,,A95
+0,222, 0,0, 3,,A95
+0,223, 0,0, 3,,A95
+0,224, 0,0, 3,,A95
+0,225, 0,0, 3,,A95
+0,226, 0,0, 3,,A95
+0,227, 0,0, 3,,A95
+0,228, 0,0, 3,,A95
+0,229, 0,0, 3,,A95
+0,230, 0,0, 3,,A95
+0,231, 0,0, 3,,A95
+0,232, 0,0, 3,,A95
+0,233, 0,0, 3,,A95
+0,234, 0,0, 3,,A95
+0,235, 0,0, 3,,A95
+0,236, 0,0, 3,,A95
+0,237, 0,0, 3,,A95
+0,238, 0,0, 3,,A95
+0,239, 0,0, 3,,A95
+0,222, 0,0, 3,,A95
+0,223, 0,0, 3,,A95
+0,224, 0,0, 3,,A95
+0,225, 0,0, 3,,A95
+0,226, 0,0, 3,,A95
+0,227, 0,0, 3,,A95
+0,228, 0,0, 3,,A95
+0,229, 0,0, 3,,A95
+0,230, 0,0, 3,,A95
+0,231, 0,0, 3,,A95
+0,232, 0,0, 3,,A95
+0,233, 0,0, 3,,A95
+0,234, 0,0, 3,,A95
+0,235, 0,0, 3,,A95
+0,236, 0,0, 3,,A95
+0,237, 0,0, 3,,A95
+0,238, 0,0, 3,,A95
+0,239, 0,0, 3,,A95
+
+;Martians
+[Begin Action 171]
+0,129, 0,0, 3
+0,129, 0,0, 3
+0,129, 0,0, 3
+
+
+
+
+
+
+
+
+
+
+
+

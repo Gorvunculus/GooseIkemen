@@ -1,0 +1,96 @@
+;Underdog Temp. intro 90%
+
+[SceneDef]
+spr = end.sff
+startscene = 0         ;Starting scene number (for debugging)
+;
+[BG0Def]
+
+[BG0 Mountain]
+type = normal
+spriteno = 0,98
+start = 0,0
+velocity = 2,0
+tile = 1,1
+mask = 1
+;spr = 5
+
+;------------------------------
+
+[BG1Def]
+
+[BG1 Duck]
+id = 2
+type = normal
+spriteno = 0,113
+start = 0,340
+window = 40,-20, 280,300
+mask = 1
+tile = 1,1
+
+[BG1CtrlDef Credits]
+CtrlID = 2
+looptime = -1
+
+[BG1Ctrl Start scrolling]
+type = VelSet
+time = 0
+y = 11
+
+
+;------------------------------------
+;Duck
+[Scene 1]
+; Fade
+fadein.time = 60      ;Time to take for fading in
+fadein.col = 0,0,0     ;Use 255,255,255 for white-fade
+fadeout.time = 50
+fadeout.col = 0,0,0
+; Screen color
+clearcolor = 0,0,0
+; Overlay Anims (from 0 to 9)
+layerall.pos = 160,0   ;Default position for all layers
+layer0.anim =  8 ;Anim action number
+layer0.offset = 0,0   ;Position offset
+layer0.starttime = 0   ;Time to start displa
+layer1.anim =  9 ;Anim action number
+layer1.offset = 0,35   ;Position offset
+layer1.starttime = 150   ;Time to start display
+;layer2.anim =  7
+;layer2.offset = 10,220   ;Position offset
+;layer2.starttime = 0
+end.time = 950
+bgm = yumm4.mid;DDRIntro.mid
+bgm.loop = 1
+; BG
+;bg.name = BG1          ;Name of BG to show (no spaces allowed)
+; Total time
+;end.time = 740
+;BG controller to stop text from scrolling
+
+
+
+
+
+
+
+;Duck Dodgers
+[Begin Action 8]
+0,197, 0,0, 4,,A95
+0,200, 0,0, 4,,A95
+0,203, 0,0, 4,,A95
+0,206, 0,0, 4,,A95
+0,209, 0,0, 4,,A95
+loopstart
+0,212, 0,0, 4,,A95
+0,215, 0,0, 4,,A95
+0,218, 0,0, 4,,A95
+0,221, 0,0, 4,,A95
+
+;Duck Dodgers
+[Begin Action 9]
+0,191, 0,0, 3
+0,191, 0,0, 3
+0,191, 0,0, 3
+
+

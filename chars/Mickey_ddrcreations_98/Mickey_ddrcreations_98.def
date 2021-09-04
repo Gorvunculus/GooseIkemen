@@ -1,0 +1,31 @@
+; Player information
+[Info]
+name ="Mickey Mouse"
+displayname ="MICKEY"
+versiondate =7,7,2007
+mugenversion =14,04,2001
+author ="DDR"
+pal.defaults =1,2,3,4,2,5,6    
+
+; Files for the player
+[Files]
+cmd     =Mickey.cmd
+cns     =Mickey.cns
+st      =Mickey.cns
+stcommon =common1.cns
+sprite  =Mickey.sff
+anim    =Mickey.air
+sound   =Mickey.snd
+pal1=Mickey.act
+pal2=Mickey2.act
+pal3=Mickey3.act
+pal4=Mickey4.act
+pal5=Mickey5.act
+pal6=Mickey6.act
+
+
+
+
+[Arcade]
+intro.storyboard=intro.def
+ending.storyboard=ending.def
