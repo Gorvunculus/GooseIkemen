@@ -44,4 +44,5 @@ kfm.def
 room21.def
 stage0.def
 stage0-720.def
+Botanic_Panic.def
 ]])
