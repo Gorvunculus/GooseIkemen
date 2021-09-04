@@ -1,0 +1,23 @@
+------------------------------------------------
+HOW TO SAVE
+------------------------------------------------
+
+Step (1) - Go to your replay folder
+Step (2) - Find a file named "netplay"
+Step (3) - Rename your file to any other name you want (ex: Fight 1 - 1p vs 2p)
+
+
+------------------------------------------------
+HOW TO VIEW
+------------------------------------------------
+
+Step (1) - Find the replay you want to watch in the replay folder
+Step (2) - Make a copy of that same file
+Step (3) - Rename the copy "netplay"
+Step (4) - Open Ikemen
+Step (5) - Go to "Replay"
+
+
+
+
+NOTES: You can hold the attack buttons to fast foward the match!
