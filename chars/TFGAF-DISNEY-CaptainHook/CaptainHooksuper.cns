@@ -1,0 +1,208 @@
+;=======================================================================================================
+;SUPER_02
+[Statedef 2020]
+type = S
+physics = S
+movetype = A
+ctrl = 0
+velset = 0
+anim = 2020
+juggle = 0
+
+[State 1000, playsnd]
+type = Poweradd
+trigger1 = time = 0
+value = -1000
+
+[State 3020,SuperPause]
+type = SuperPause
+trigger1 = Time = 0
+time = 30
+anim = 100
+sound = S6,1
+pos = 30,-80
+movetime = 0
+darken = 1
+unhittable = 1
+
+[State 3075,AfterImage]
+type = AfterImage
+trigger1 = Time = 0
+time = 80
+length = 16
+palcolor = 256
+palinvertall = 0
+palbright = 30,30,30
+palcontrast = 100,100,220
+palpostbright = 0, 0, 0
+paladd = 10,10,45
+palmul = .65,.65,.85
+timegap = 2
+framegap = 4
+trans = add1
+
+[State 210,2]
+type = velset
+trigger1= time >= 0
+x = 5
+[State 210,2]
+type = velset
+trigger1= time >= 20
+x = 3
+
+[State 210,2]
+type = velset
+trigger1= time >= 50
+x = 0.2
+
+[State 210,2]
+type = NotHitby
+trigger1 = time <= 10
+value = SCA
+
+[State 210,2]
+type = HitDef
+trigger1 = animelem = 4 || animelem = 15 	; || animelem = 28
+priority = 5, Hit			;2 for ??, 3 for M/H att, 4 for L att, 5 for super, 6 fot hyper
+;
+attr = S,SA			;STAND / NORMAL ATTACK
+hitflag = MAF			;MIDDLE ATTACK
+guardflag = M			;GUARD is MIDDLE /L is LOW
+;
+animtype = back	 		;2p ANIM, light", "medium", "hard", "back", "up",    or "diagup"
+air.animtype = up			;2p ANIM
+ground.type = high
+;
+damage = 30,8
+GivePower = 20
+;
+pausetime = 8,8
+guard.pausetime = 12,12
+;
+ground.slidetime = 20
+;
+ground.hittime = 20
+air.hittime = 30
+;
+guard.hittime = 17
+guard.ctrltime =17
+;
+ground.velocity = -8
+air.velocity = -3,-5
+guard.velocity = -15
+airguard.velocity = -4,-5
+;
+ground.cornerpush.veloff = -5
+guard.cornerpush.veloff = -5
+;
+sparkxy = -20,-65
+;
+hitsound = S2,8
+guardsound = S3,1
+sparkno = 11
+guard.sparkno = 40
+;
+fall= 0
+air.fall = 1
+fall.recover = 0
+
+[State 210,2]
+type = HitDef
+trigger1 = animelem = 11 || animelem = 22	; || animelem = 28
+priority = 5, Hit			;2 for ??, 3 for M/H att, 4 for L att, 5 for super, 6 fot hyper
+;
+attr = S,SA			;STAND / NORMAL ATTACK
+hitflag = MAF			;MIDDLE ATTACK
+guardflag = M			;GUARD is MIDDLE /L is LOW
+;
+animtype =medium	 		;2p ANIM, light", "medium", "hard", "back", "up",    or "diagup"
+air.animtype = up			;2p ANIM
+ground.type = low
+;
+damage = 30,8
+GivePower = 20
+;
+pausetime = 8,8
+guard.pausetime = 12,12
+;
+ground.slidetime = 20
+;
+ground.hittime = 20
+air.hittime = 30
+;
+guard.hittime = 17
+guard.ctrltime =17
+;
+ground.velocity = -1
+air.velocity = -3,-5
+guard.velocity = -15
+airguard.velocity = -4,-5
+;
+ground.cornerpush.veloff = -5
+guard.cornerpush.veloff = -5
+;
+sparkxy = -20,-65
+;
+hitsound = S2,8
+guardsound = S3,1
+sparkno = 11
+guard.sparkno = 40
+;
+fall= 0
+air.fall = 1
+fall.recover = 0
+
+[State 210,2]
+type = HitDef
+trigger1 = animelem = 28
+priority = 5, Hit			;2 for ??, 3 for M/H att, 4 for L att, 5 for super, 6 fot hyper
+;
+attr = S,SA			;STAND / NORMAL ATTACK
+hitflag = MAF			;MIDDLE ATTACK
+guardflag = M			;GUARD is MIDDLE /L is LOW
+;
+animtype = back	 		;2p ANIM, light", "medium", "hard", "back", "up",    or "diagup"
+air.animtype = up			;2p ANIM
+ground.type = high
+;
+damage = 100,10
+GivePower = 20
+;
+pausetime = 16,16
+guard.pausetime = 14,14
+;
+ground.slidetime = 20
+;
+ground.hittime = 20
+air.hittime = 30
+;
+guard.hittime = 22
+guard.ctrltime =22
+;
+ground.velocity = -1,-15
+air.velocity = -1,-15
+guard.velocity = -15
+airguard.velocity = -4,-5
+;
+ground.cornerpush.veloff = -5
+guard.cornerpush.veloff = -5
+;
+sparkxy = -20,-65
+;
+hitsound = S2,8
+guardsound = S3,1
+sparkno = 11
+guard.sparkno = 40
+;
+fall= 1
+air.fall = 1
+fall.recover = 0
+;
+yaccel = 0.7
+
+[State 230,3]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
