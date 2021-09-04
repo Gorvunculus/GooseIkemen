@@ -13,7 +13,7 @@ loadLifebar('data/BAR/fight.def')
 loadDebugFont('font/mc2winsmall.fnt')
 setDebugScript('script/debug.lua')
 
-selectColumns = 30
+selectColumns = 10
 
 
 require('script.randomtest')
@@ -82,11 +82,11 @@ p2Cmd = commandNew()
 setCommand(p2Cmd)
 
 ------------------------------------------------------------
-selectRows = math.floor(selectColumns * 10 / 30.0)
+selectRows = math.floor(selectColumns * 7 / 10.0)
 
-setRandomSpr(sysSff, 151, 0, 30.0/selectColumns, 30.0/selectColumns)
+setRandomSpr(sysSff, 151, 0, 10.0/selectColumns, 10.0/selectColumns)
 setSelColRow(selectColumns, selectRows)
-setSelCellSize(10*30.0/selectColumns, 10*30.0/selectColumns)
+setSelCellSize(20*10.0/selectColumns, 20*10.0/selectColumns)
 setSelCellScale(10.0/selectColumns, 10.0/selectColumns)
 
 function init()
@@ -326,7 +326,7 @@ function p1SelSub()
     if p1SelY < 0 then
       p1SelY = 0
     elseif p1SelY >= selectRows then
-      p1SelOffset = p1SelOffset + selectColumns*(p1SelY - (selectRows - 10))
+      p1SelOffset = p1SelOffset + selectColumns*(p1SelY - (selectRows - 7))
       p1SelY = selectRows - 1
     end
     if p1SelX < 0 then
@@ -336,8 +336,8 @@ function p1SelSub()
     end
     animUpdate(p1Cursor)
     animPosDraw(
-      p1Cursor, 10 + 10*p1SelX*30.0/selectColumns,
-      90 + 10*p1SelY*30.0/selectColumns)
+      p1Cursor, 60 + 20*p1SelX*10.0/selectColumns,
+      90 + 20*p1SelY*10.0/selectColumns)
     textImgSetText(p1NameTxt, getCharName(n))
     textImgPosDraw(p1NameTxt, 10, y)
     local selval = selectChar(1, n, btnPalNo(p1Cmd))
@@ -422,7 +422,7 @@ function p2SelSub()
     if p2SelY < 0 then
       p2SelY = 0
     elseif p2SelY >= selectRows then
-      p2SelOffset = p2SelOffset + selectColumns*(p2SelY - (selectRows - 10))
+      p2SelOffset = p2SelOffset + selectColumns*(p2SelY - (selectRows - 7))
       p2SelY = selectRows - 1
     end
     if p2SelX < 0 then
@@ -432,8 +432,8 @@ function p2SelSub()
     end
     animUpdate(p2Cursor)
     animPosDraw(
-      p2Cursor, 10 + 10*p2SelX*30.0/selectColumns,
-      90 + 10*p2SelY*30.0/selectColumns)
+      p2Cursor, 60 + 20*p2SelX*10.0/selectColumns,
+      90 + 20*p2SelY*10.0/selectColumns)
     textImgSetText(p2NameTxt, getCharName(n))
     textImgPosDraw(p2NameTxt, 310, y)
     local selval = selectChar(2, n, btnPalNo(p2Cmd))
@@ -1458,7 +1458,7 @@ function main()
       bgSub()
       if p1Portrait then drawPortrait(p1Portrait, 18, 0, 0.5, 0.5) end
       if p2Portrait then drawPortrait(p2Portrait, 308, 0, -0.5, 0.5) end
-      drawFace(10, 90, p1SelOffset)
+      drawFace(60, 90, p1SelOffset)
       drawFace(999, 999, p2SelOffset)
       if p1SelEnd and p2SelEnd then selStageSub() end
       p2Task()
