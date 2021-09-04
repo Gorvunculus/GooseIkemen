@@ -1,0 +1,54 @@
+[SceneDef]
+spr = madoka_intro.sff
+startscene = 0         
+;------------------------------------
+[Scene 0]
+; Fade
+fadein.time = 0       
+fadein.col = 0,0,0     
+fadeout.time = 0
+; Screen color
+clearcolor = 255,255,255
+; Overlay Anims (from 0 to 9)
+layerall.pos = 160,0     
+; Music
+bgm =
+bgm.loop = 0
+; Total time
+end.time = 900
+
+layer0.anim =  0;”wŒi
+layer0.offset = 0,0
+layer0.starttime = 0
+
+layer1.anim =  1;Šç
+layer1.offset = 0,10
+layer1.starttime = 0
+
+layer2.anim =  2;‰ï˜b”wŒi
+layer2.offset = 0,10 
+layer2.starttime = 0 
+
+layer3.anim =  3;‰ï˜b•¶
+layer3.offset = 0,10 
+layer3.starttime = 0 
+
+;”wŒi
+[Begin Action 0]
+0,0, 0,0, 1500
+
+;Šç
+[Begin Action 1]
+1,0, 0,0, 1500
+
+;‰ï˜b”wŒi
+[Begin Action 2]
+2,0, 0,0, 1500
+
+;‰ï˜b•¶
+[Begin Action 3]
+3,0, 0,0, 600
+3,1, 0,0, 800
+
+
+

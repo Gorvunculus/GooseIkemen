@@ -1,0 +1,154 @@
+Madotsuki's Update Log
+
+01/10/2018
+--------------
+-Fixed infinite from comboing standing light attacks to medium attacks
+-Updated some of her normal attack animations
+-Updated the Standing Medium Punch
+
+01/01/2018
+--------------
+-Updated readme
+-Fixed infinite for the Bicycle special
+-Updated a Nazu special. It will no longer be a soft knockdown
+
+12/25/2017
+--------------
+-Updated readme with fixed typo for the Medamaude Throw
+-Fixed the Air Strong Punch to properly connect her attacks to a hyper move
+-Added landing sound after the Witch special
+-Poniko & Uboa can now be done with D, DB, B, D, DB, B, c
+
+12/24/2017
+--------------
+-Updated readme again. This time, added the Witch special (Air only)
+-The Stoplight special will no longer be an EX move. Instead, it will have an invisible helper that prevents from spamming the same move again
+-Increased Stoplight's stun time by 50%
+-Reduced Spotlight's damage by 20%
+
+12/24/2017
+--------------
+-Updated readme
+-Reduced liedown.time to 25
+-Updated AI to make her more aggresive for Madotsuki.def
+-Updated the running sprites and animation
+-Added new intro, and updated the previous ones
+-Dodge Roll renamed to Dodge Twirl
+-Updated the commands for the Dodge Twirl ability. It can now be activated by pressing F, a+b to dodge forward or B, a+b to dodge backwards
+-Madotsuki can now be thrown out while doing a Dodge Twirl ability
+-Replaced a Witch special into a Bicycle special (Ground Only). The air version of the Witch special will still remain
+-Normal attack tweaks for better comboing as well as adjusted the poweradds and hittimes
+-Added the power up sounds from Statedef -3
+-Assists can now only be used one at a time
+-Fixed debug flood "Warning: Player Madotsuki (56) in State 7001: Changed To Invalid Action 7000"
+
+11/22/2016
+--------------
+-Fixed looping bug for the Tripping animation
+
+11/16/2016
+--------------
+-Updated the normal attacks for the cmd files
+-Added the Combo Condition state to the cmd file for Madotsuki and Madotsuki/Madotsuki_Moderate.def files
+-Updated the Standing Medium Punch
+-Fixed infinite for Standing Medium Kick
+-Madotsuki can now be thrown out while doing a Dodge Roll
+-Recovery Roll's velocity is now 40% faster
+
+10/15/2016
+--------------
+-Jumping sound removed after the air special
+-Ghost special is now blockable
+
+10/12/2016
+--------------
+-Removed HA,NP,SP,HP from HitOvveride for the Cat special so that it can now be weak to projectiles and hypers
+-Changed the hit attribute from N to H from the Hitdef for the Umbrella & Demon hyper
+-The lightning helper will now come right next to the player for the Umbrella & Demon hyper
+
+10/12/2016
+--------------
+-Reversed back to the decreased startup time and the clsn rescale for the Stoplight special
+-The Stoplight special is now an EX-move special. The power will cost 500
+-The lightening helper will now surround the player for the Umbrella & Demon Hyper
+-Reduced guard damage to 0 for the Umbrella & Demon Hyper
+-Fixed a 5160 anim where she falls "under" the ground on every knockdown
+
+10/11/2016
+--------------
+-Fixed velset for the Backwards Dodge Roll
+
+10/11/2016
+--------------
+-Increased a startup time for the Yuki-onna special
+-Reduced the amount of snowflakes for the Yuki-onna special
+-The snowflake's velocity is now slower for the Yuki-onna special
+-Increased a startup time for the Stoplight special
+-Rescaled the red and blue CLSNS a bit smaller for the Stoplight special
+
+10/10/2016
+--------------
+-Reduced damage for the Flute and Umbrella & Demon hyper
+-Removed Second Round Only for the Poniko & Uboa fatal move from the moveset readme
+
+10/10/2016
+--------------
+-Added the update log
+-Updated the moveset readme
+-Some slight changes of the def files for the select.def. It will now be Madotsuki, Madotsuki/Madotsuki_Moderate.def, and Madotsuki/Madotsuki_Easy.def
+-A.I Options now moved to the moveset readme
+-Head.pos and Mid.pos fixed
+-fall.defense_up reduced to 0
+-Removed the debug flood error from all hypers
+-Updated select icon
+-Updated the idle sprites and animation
+-Updated a turn sprites and animation
+-Updated the walk, jump, and run sprites and animation
+-Updated all the guard sprites and animation
+-Updated lose pose
+-Added 2 new win poses
+-Updated a first intro
+-Updated the normal crouch attacks
+-Added Dodge Roll
+-Added Recovery Roll
+-Added Super Jump
+-Added the throw state
+-The Medamaude effect is now moved to a throw state and replaced by the Towel effect for the standing strong punch
+-Updated the Witch special
+-Removed the flashy effects (EnvColor) for the Cat special and the Umbrella & Demon hyper
+-Updated the assist call sprites and animation
+-Updated the Knife Slash hyper as well as the sprites and animation
+-The Flute hyper is now a level 2 hyper
+-The Umbrella & Demon hyper is now a level 3 hyper
+-Updated all the required sprites and the get hit, fall, and liedown animation
+-Updated the dizzy sprites and animation
+-Added the Cheese KO sprites and animation
+-Added the Spinning sprites and animation (Up and Down, and Diagonal)
+-Added the Spiral/Flip Knockout sprites and animation
+-Removed the Squashed sprites and animation
+-Updated the Electrocuted, Burned, and Frozen sprites
+
+04/02/2015
+--------------
+-Fixed Stoplight and Yuki-onna infinite
+
+07/03/2015
+--------------
+-Edited projshadow = 0,0,0 for Nazu for Madotsuki
+
+06/25/2015
+--------------
+-Added Blue CLSNs for projectiles
+-Special Moves can be done in air
+-Updated Moveset
+
+04/02/2015
+--------------
+-Performance Fixtures
+-Removed Roundno = 2 in her fatal move
+-Size Rescaled
+-Removed shadow in her fatal move
+
+12/25/2014
+--------------
+-First Release

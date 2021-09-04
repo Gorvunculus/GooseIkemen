@@ -1,0 +1,46 @@
+==========================================================================================
+How to make a character compatible with Kirby's Copy Abilities
+==========================================================================================
+
+Say for example that you want Kung Fu Man to give Kirby the Ninja Ability. First, you'll need the name that is specified in Kung Fu Man's .def file (name, not displayname). 
+
+If you look in his .def file, you'll see that his name = "Kung Fu Man". Go ahead and copy the name along with the quotation marks.
+
+Now, go into Kirby's folder and open up Copy_Abilities.cns. Search for "Ninja", once you do, you should find something that looks like this:
+
+[State 2121,];Ninja
+type = VarSet
+triggerall = AnimElemtime(14) = 0
+trigger1 = p2name = "Kuroko Shirai"
+trigger2 = p2name = "chipp" || p2name = "Chipp Zanuff" 
+trigger3 = p2name = "Ibuki"
+trigger4 = p2name = "Konoha"
+trigger5 = p2name = "Bang" || p2name = "Bang Shishigami"
+trigger6 = p2name = "Kohaku"
+trigger7 = p2name = "Strider Hiryu"
+trigger8 = p2name = "Yoskue Hanamura"
+trigger9 = p2name = "Segalow"
+trigger10 = p2name = "Sakuya_K" || p2name = "Sakuya_RP" || p2name = "Sakuya_THIZ"
+var(19) = 15
+
+What you'll need to do is add another trigger to the list. Firstly, add another line between the last trigger and var(19). The new trigger MUST be one number up from the last. Since the last trigger is trigger10, the new one will be trigger11, So in that new line, type "trigger11 = p2name =" and paste in the name that you copied from the .def file. Now the block of code should look like this:
+
+[State 2121,];Ninja
+type = VarSet
+triggerall = AnimElemtime(14) = 0
+trigger1 = p2name = "Kuroko Shirai"
+trigger2 = p2name = "chipp" || p2name = "Chipp Zanuff" 
+trigger3 = p2name = "Ibuki"
+trigger4 = p2name = "Konoha"
+trigger5 = p2name = "Bang" || p2name = "Bang Shishigami"
+trigger6 = p2name = "Kohaku"
+trigger7 = p2name = "Strider Hiryu"
+trigger8 = p2name = "Yoskue Hanamura"
+trigger9 = p2name = "Segalow"
+trigger10 = p2name = "Sakuya_K" || p2name = "Sakuya_RP" || p2name = "Sakuya_THIZ"
+trigger11 = p2name = "Kung Fu Man"
+var(19) = 15
+
+Congratulations, you just made a character compatible with Kirby's Copy Abilities. From now on, Kirby will gain the Ninja ability whenever he inhales Kung Fu Man.
+
+Note: Any incompatible character will just give Kirby the fighter ability by default. If there is a character that you want to give the Fighter Ability, then you do not need to worry about that character.

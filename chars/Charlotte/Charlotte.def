@@ -1,0 +1,58 @@
+;
+;--| 基本情報 |---------------------------------------------------------------
+
+[Info]
+Name         = "Charlotte"     ;キャラクターの名前（必要な項目なので省略不可）
+DisplayName  = "Charlotte"      ;M.U.G.E.Nで実際に表示される名前（省略可能）
+VersionDate  = 06,25,2011      ;キャラクターの最終更新日（変えなくてもＯＫ）
+MugenVersion = 04,14,2002      ;キャラクターが動作出来るM.U.G.E.Nの改訂版
+Author       = "MRCLMNDKS" ;キャラクターの作成者（必要な項目なので省略不可）
+Pal.Defaults = 1,2,3,4        ;ＣＰＵで出てきた時のカラーパレットの順番
+
+;--| 必要なファイルの設定 |---------------------------------------------------
+;ステートファイルの登録・最大１１個まで増やせます
+;（St,St0,St1,St2,St3,St4,St5,St6,St7,St8,St9）
+;「St」のみ必要な項目なので省略出来ません
+[Files]
+Cmd      = Charlotte.cmd
+Cns      = Charlotte.cns
+St       = Charlotte.cns
+St0      = Charlotte_OverRide.cns
+St1      = Charlotte_-2.cns
+St2      = Charlotte_-3.cns
+St3      = Charlotte_S.cns
+St4      = Charlotte_H.cns
+St5      = Charlotte_helper.cns
+StCommon = common1.cns
+Sprite   = Charlotte.sff
+Anim     = Charlotte.air
+Sound    = Charlotte.snd
+
+;--| カラーパレットファイル |-------------------------------------------------
+
+Pal1 = Charlotte.act  ;Ａボタンで決定した色が使えます
+Pal2 = Charlotte.act  ;Ｂ
+Pal3 = Charlotte.act  ;Ｃ
+Pal4 = Charlotte.act  ;Ｘ
+Pal5 = Charlotte.act  ;Ｙ
+Pal6 = Charlotte.act  ;Ｚ
+
+Pal7 = Charlotte.act  ;Ｓ押しながらＡボタンで決定した色が使えます
+Pal8 = Charlotte.act  ;Ｓ押しながらＢ
+Pal9 = Charlotte.act  ;Ｓ押しながらＣ
+Pal10= Charlotte.act  ;Ｓ押しながらＸ
+Pal11= Charlotte.act  ;Ｓ押しながらＹ
+Pal12= Charlotte.act  ;Ｓ押しながらＺ
+
+;--| ストーリーボード設定 |---------------------------------------------------
+
+[Arcade]
+Intro.Storyboard  = 
+Ending.Storyboard = 
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+

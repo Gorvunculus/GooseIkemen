@@ -1,0 +1,36 @@
+Q*BERT HOPS ON!
+
+Q*Bert from the Q*Bert series!
+Q*Bert is a Cube-Hopping, Elephant-Nosed, orange creature who always speaks Q*Bert-ese even in the Wreck-It Ralph movie.
+
+Special Moves
+-----------------------------------------------------------
+D, DF, F, a = Hop on Pop (Can be done in air)
+
+D, DF, F, b = Disked (Can be done in air)
+
+D, DF, F, c = Blocked (Can be done in air)
+
+D, DF, F, x = Block Tower (Can be done in air)
+
+D, DF, F, y = Bad Ball (Can be done in air)
+
+D, DF, F, z = Whack-nology (Can be done in air)
+
+
+Assists
+-----------------------------------------------------------
+D, DB, B, a/b/c = Coily
+
+D, DB, B, x/y/z = Ugg & Wrong-Way
+
+
+Hyper Moves
+-----------------------------------------------------------
+D, DF, F, a+b = Blockade (Cost 1000 Power)
+
+D, DF, F, x+y = Bad Balls of Fury (Cost 1000 Power)
+
+D, DB, B, a+b = Combo Hoe (Cost 2000 Power)
+
+D, DB, B, x+y = Disc(o) (Cost 3000 Power)

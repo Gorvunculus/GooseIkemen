@@ -1,0 +1,1659 @@
+
+;______________________________________________________________________________
+;==============================================================================
+;-| ヘルパー |-----------------------------------------------------------------
+;==============================================================================
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+;==============================================================================
+;-| 暗転 |---------------------------------------------------------------------
+[Statedef 8001, Darken]
+movetype = I
+animn = 1
+ctrl = 0
+sprpriority = 7
+
+[State 8001, Explod] ; 柱_l3_l
+type = Explod
+trigger1 = Time = 4
+anim = 6003
+ID = 8001
+pos = -35, 0
+bindtime = -1		; 固定時間 : -1/** : 無限/任意
+scale = 1.00, 2.00
+supermovetime = 200000000
+pausemovetime = 200000000
+sprpriority = 7
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+removeongethit = 1	; MoveType=Hで : 1/0 : 消える/消えない
+
+[State 8001, Explod] ; 柱_l3_r
+type = Explod
+trigger1 = Time = 4
+anim = 6003
+ID = 8001
+pos = 35, 0
+bindtime = -1		; 固定時間 : -1/** : 無限/任意
+scale = 1.00, 2.00
+supermovetime = 200000000
+pausemovetime = 200000000
+sprpriority = 7
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+removeongethit = 1	; MoveType=Hで : 1/0 : 消える/消えない
+
+[State 8001, Explod] ; 波_l3_l
+type = Explod
+trigger1 = Time = 4
+anim = 6002
+ID = 8001
+pos = -35, 0
+bindtime = -1		; 固定時間 : -1/** : 無限/任意
+scale = 1.00, 1.00
+supermovetime = 200000000
+pausemovetime = 200000000
+sprpriority = 8
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+removeongethit = 1	; MoveType=Hで : 1/0 : 消える/消えない
+
+[State 8001, Explod] ; 波_l3_r
+type = Explod
+trigger1 = Time = 4
+anim = 6002
+ID = 8001
+pos = 35, 0
+bindtime = -1		; 固定時間 : -1/** : 無限/任意
+scale = 1.00, 1.00
+supermovetime = 200000000
+pausemovetime = 200000000
+sprpriority = 8
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+removeongethit = 1	; MoveType=Hで : 1/0 : 消える/消えない
+
+[State 8001, Explod] ; 柱_l2_l
+type = Explod
+trigger1 = Time = 2
+anim = 6003
+ID = 8001
+pos = -20, 3
+bindtime = -1		; 固定時間 : -1/** : 無限/任意
+scale = 1.50, 2.00
+supermovetime = 200000000
+pausemovetime = 200000000
+sprpriority = 7
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+removeongethit = 1	; MoveType=Hで : 1/0 : 消える/消えない
+
+[State 8001, Explod] ; 柱_l2_r
+type = Explod
+trigger1 = Time = 2
+anim = 6003
+ID = 8001
+pos = 20, 3
+bindtime = -1		; 固定時間 : -1/** : 無限/任意
+scale = 1.50, 2.00
+supermovetime = 200000000
+pausemovetime = 200000000
+sprpriority = 7
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+removeongethit = 1	; MoveType=Hで : 1/0 : 消える/消えない
+
+[State 8001, Explod] ; 波_l2_l
+type = Explod
+trigger1 = Time = 2
+anim = 6002
+ID = 8001
+pos = -20, 3
+bindtime = -1		; 固定時間 : -1/** : 無限/任意
+scale = 1.50, 1.00
+supermovetime = 200000000
+pausemovetime = 200000000
+sprpriority = 8
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+removeongethit = 1	; MoveType=Hで : 1/0 : 消える/消えない
+
+[State 8001, Explod] ; 波_l2_r
+type = Explod
+trigger1 = Time = 2
+anim = 6002
+ID = 8001
+pos = 20, 3
+bindtime = -1		; 固定時間 : -1/** : 無限/任意
+scale = 1.50, 1.00
+supermovetime = 200000000
+pausemovetime = 200000000
+sprpriority = 8
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+removeongethit = 1	; MoveType=Hで : 1/0 : 消える/消えない
+
+[State 8001, Explod] ; 柱_l1
+type = Explod
+trigger1 = Time = 0
+anim = 6003
+ID = 8001
+pos = 0, 6
+bindtime = -1		; 固定時間 : -1/** : 無限/任意
+scale = 2.00, 2.00
+supermovetime = 200000000
+pausemovetime = 200000000
+sprpriority = 9
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+removeongethit = 1	; MoveType=Hで : 1/0 : 消える/消えない
+
+[State 8001, Explod] ; 波_l1
+type = Explod
+trigger1 = Time = 0
+anim = 6002
+ID = 8001
+pos = 0, 6
+bindtime = -1		; 固定時間 : -1/** : 無限/任意
+scale = 2.00, 1.00
+supermovetime = 200000000
+pausemovetime = 200000000
+sprpriority = 9
+ontop = 1
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+removeongethit = 1	; MoveType=Hで : 1/0 : 消える/消えない
+
+[State -2, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = Invisible
+flag2 = NoShadow
+
+[State 8001, DestroySelf]
+type = DestroySelf
+Trigger1 = !NumExplod(8001)
+Trigger1 = Time > 6
+
+;==============================================================================
+;-| 霊撃 |---------------------------------------------------------------------
+[Statedef 8002, 霊撃]
+movetype = I
+sprpriority = 3+ifelse(IsHelper(1901)||IsHelper(1902), 1, -4)
+
+[State 8002, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State 8002, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+value = -30.00		; angle
+
+[State 8002, ChangeAnim]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 6000+ifelse(IsHelper(1901), 1, ifelse(IsHelper(1902), 2, 3))
+
+[State 8002, VarAdd]
+type = VarAdd
+trigger1 = 1
+var(20) = -2
+
+[State 8002, VarSet]
+type = VarSet
+trigger1 = IsHelper(1902) || IsHelper(1903)
+trigger1 = AnimElemTime(6) < 0
+trigger2 = IsHelper(1901)
+trigger2 = AnimElemTime(2) < 0
+var(20) = 256
+
+[State 8002, VarAdd]
+type = VarAdd
+trigger1 = 1
+var(22) = 5
+
+[State 8002, VarSet]
+type = VarSet
+trigger1 = Time = 0
+var(22) = 100
+
+[State 8002, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+scale = var(22)*0.01, var(22)*0.01	; xscale, yscale
+
+[State 8002, Trans]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = var(20), 256	;airファイルの　AS256D256　と同じ
+
+[State 8002, DestroySelf]
+type = DestroySelf
+trigger1 = AnimTime = 0
+
+;==============================================================================
+;-| やめ |---------------------------------------------------------------------
+;------------------------------------------------------------------------------
+;移動
+[Statedef 8003, やめ]
+type = A
+movetype = A
+physics = N
+velset = (Root,fvar(23)), (Root,fvar(24))
+anim = 1
+sprpriority = 3
+
+[State -2, ChangeState]
+type = ChangeState
+trigger1 = Time > 1
+trigger1 = !(Root,NumProjId(3010))
+value = StateNo +1
+
+[State -2, DestroySelf]
+type = DestroySelf
+trigger1 = Time = 600
+
+[State -2, DisplayToClipboard]
+type     = DisplayToClipboard
+trigger1 = 1
+text     = "fv23:%f, fv24:%f, proj%d"
+params   = (Root,fvar(23)), (Root,fvar(24)), !(Root,NumProjId(3010))
+IgnoreHitPause = 1
+SuperMoveTime = 9999
+PauseMoveTime = 9999
+
+;------------------------------------------------------------------------------
+;撃ち
+[Statedef 8004, やめ]
+type = A
+movetype = A
+physics = N
+velset = 0, 0
+anim = 3017
+sprpriority = 0
+
+[State -2, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State -2, VarSet]
+type = null
+triggerall = Time = 0
+trigger1 = var(20) := 0
+
+[State -2, VarSet2]
+type = null
+triggerall = Time > 0
+trigger1 = var(20) := var(20) +20
+
+[State -2, AngleDraw]
+type = AngleDraw
+trigger1 = var(20) < 100
+scale = var(20)*0.01, var(20)*0.01	; xscale, yscale
+
+[State -2, Trans]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = 256, 128	;airファイルの　AS256D256　と同じ
+
+[State -2, DestroySelf]
+type = DestroySelf
+trigger1 = AnimTime = 0
+trigger2 = Time = 600
+
+[State -2, Projectile]
+type = Projectile
+trigger1 = AnimElemNo(0) = 2
+trigger1 = Time%4 = 1
+projID = 3011
+projanim = 3018
+projscale = 0.50, 2.00
+projremove = 1
+projremovetime = 30
+velocity = 0, 15.00
+projedgebound = 60	; 消え始める距離
+projstagebound = 60	; 存在限界
+offset = -50 +Random%100, 0
+;--------------------------------------HitDef
+attr = A, HP		; S/C/A, NA/NT/NP/SA/ST/SP/HA/HT/HP/AA/AT/AP
+guardflag = HLA		; H/L/M/A
+hitflag = HLAF		; H/L/M/A/F/D
+animtype = Medium	; Light/Medium/Hard/Back/Up/DigUp
+;--------------------------------------攻撃設定_数値関係
+priority = 1, Hit	; 1/2/3/4/5/6/7, Hit/Miss/Dodge
+damage = Ceil(10*Root,fvar(0)*ifelse(P2MoveType=A, 1.25, 1)), 1
+getpower = 0, 0
+givepower = 30, 0
+pausetime = 0, 6
+;--------------------------------------エフェクト、SE
+hitsound = s10, 21
+guardsound = s10, 102
+sparkno = s6040+Random%4
+guard.sparkno = s6100
+sparkxy = 0, 0
+;--------------------------------------対地
+ground.type = Low	; High/Low/Trip/Non
+ground.slidetime = Ceil(20*Root,fvar(1)*ifelse(P2MoveType=A, 1.25, 1))
+ground.hittime = Ceil(20*Root,fvar(1)*ifelse(P2MoveType=A, 1.25, 1))
+ground.velocity = -0.00*Root,fvar(2);, -0.00*Root,fvar(2)
+;--------------------------------------対ガード
+guard.slidetime = 12
+guard.hittime = 12
+guard.ctrltime = 12
+;--------------------------------------対空
+air.hittime = Ceil(20*Root,fvar(1)*ifelse(P2MoveType=A, 1.25, 1))
+air.velocity = -0.00*Root,fvar(2), -0.05*Root,fvar(2)
+airguard.velocity = -0.00
+air.juggle = 0
+;----------------------------------------------------------
+
+;==============================================================================
+;-| 力撃ち |-------------------------------------------------------------------
+;------------------------------------------------------------------------------
+;発生
+[Statedef 8005, 剛弓]
+type = A
+movetype = A
+physics = N
+sprpriority = 3
+
+[State -2, DisplayToClipboard]
+type     = DisplayToClipboard
+trigger1 = 0
+text     = "fv23:%f, fv24:%f, proj%d"
+params   = (Root,fvar(23)), (Root,fvar(24)), !(Root,NumProjId(3010))
+IgnoreHitPause = 1
+SuperMoveTime = 9999
+PauseMoveTime = 9999
+
+;--------------------------------------
+;定義
+[State -2, HitOverride]
+type = HitOverride
+trigger1 = Time = 0
+attr = SCA, AP		; SCA, NA, NT, NP/SA, ST, SP/HA, HT, HP/AA, AT, AP
+slot = 0		; 0-7
+stateno = StateNo +1	; 移動ステート
+time = -1		; 効果時間 : -1/** : 上書きされるまで/任意
+forceair = 0		; 被fall攻撃 : 0/1 : Off/On
+
+[State -2, ChangeAnim]
+type = ChangeAnim
+trigger1 = Root,Anim = 13010
+trigger1 = Root,AnimElemTime(3) < 0
+value = 13019
+
+;--------------------------------------
+;常時操作
+[State -2, NotHitBy]
+type = NotHitBy
+trigger1 = 1
+value = SCA, NA, SA, HA, NP, SP, HP, NT, ST, HT
+time = 1
+
+[State -2, HitBy]
+type = HitBy
+trigger1 = 1
+value = SCA, NP, SP, HP
+time = 1
+
+[State -2, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State -2, BindToRoot]
+type = BindToRoot
+trigger1 = 1
+pos = 30, -57
+
+[State -2, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+value = -20
+
+[State -2, Trans]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = 256, 56 ;var(21), 256 -(AnimElemNo(0)<3)*128
+
+[State -2, VarSet]
+type = null
+triggerall = 0
+trigger1 = Time = 0
+trigger1 = var(21) := 256
+trigger2 = AnimElemTime(3) = 0
+trigger2 = var(21) := 128
+trigger3 = AnimElemTime(4) = 0
+trigger3 = var(21) := 64
+trigger4 = AnimElemTime(5) = 0
+trigger4 = var(21) := 32
+trigger5 = AnimElemTime(6) = 0
+trigger5 = var(21) := 16
+trigger6 = AnimElemTime(7) = 0
+trigger6 = var(21) := 8
+trigger7 = AnimElemTime(8) = 0
+trigger7 = var(21) := 4
+
+[State -2, DestroySelf]
+type = DestroySelf
+triggerall = !NumExplod
+triggerall = !NumTarget
+trigger1 = AnimTime = 0
+trigger2 = Time >= 20
+trigger3 = Root,MoveType = H
+
+[State -2, HitDef]
+type = HitDef
+trigger1 = Time = 0
+attr = S, HP		; S/C/A, NA/NT/NP/SA/ST/SP/HA/HT/HP/AA/AT/AP
+guardflag = HLA		; H/L/M/A
+hitflag = HLAFD		; H/L/M/A/F/D
+animtype = DigUp	; Light/Medium/Hard/Back/Up/DigUp
+;--------------------------------------攻撃設定_数値関係
+priority = 5, Hit	; 1/2/3/4/5/6/7, Hit/Miss/Dodge
+damage = Ceil(200*Root,fvar(0)*ifelse(P2MoveType=A, 1.25, 1)), 10
+getpower = 0, 0
+givepower = 30, 0
+pausetime = 0, 6
+;--------------------------------------エフェクト、SE
+hitsound = s10, 24
+guardsound = s10, 102
+sparkno = -1;s6060+Random%4
+guard.sparkno = s6100
+sparkxy = 0, 0
+;--------------------------------------対地
+ground.type = High	; High/Low/Trip/Non
+ground.slidetime = Ceil(6*Root,fvar(1)*ifelse(P2MoveType=A, 1.25, 1))
+ground.hittime = Ceil(42*Root,fvar(1)*ifelse(P2MoveType=A, 1.25, 1))
+ground.velocity = -25.00*Root,fvar(2), -5.00*Root,fvar(2)
+;--------------------------------------対ガード
+guard.slidetime = 12
+guard.hittime = 12
+guard.ctrltime = 12
+;--------------------------------------対空
+air.hittime = Ceil(42*Root,fvar(1)*ifelse(P2MoveType=A, 1.25, 1))
+air.velocity = -25.00*Root,fvar(2), -5.00*Root,fvar(2)
+airguard.velocity = -6.00*Root,fvar(2)
+air.juggle = 3
+;--------------------------------------ダウン追撃
+down.hittime = Ceil(42*Root,fvar(1))
+down.velocity = -25.00*Root,fvar(2), -0.00*Root,fvar(2)
+;--------------------------------------落下と受身
+fall = 1
+air.fall = 1
+fall.recover = 0
+;----------------------------------------------------------
+;--------------------------------------攻撃設定_補助
+guard.dist = 1200
+forcestand = 1		; 強制立たせ
+sprpriority = 1		; ヒット時は相手の : -1/1 : 後/前
+yaccel = 0.40		; 重力
+;--------------------------------------HitDefId、攻撃が繋がるId、繋がらないId
+id = 13010
+;--------------------------------------向き
+p2facing = 1		; -1/1 : 後向き/前向き
+;--------------------------------------ヒット後のステート移行
+p2stateno = 7000	; TargetStateの代わり
+
+[State -2, Explod]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 6060+Random%4
+ID = 16060
+pos = 0, (Target,Const(Size.Mid.Pos.Y))
+postype = P2		; 基準座標 : P1/P2/Front/Back/Left/Right
+bindtime = 1		; 固定時間 : -1/** : 無限/任意
+scale = 1.00, 1.00
+sprpriority = 5		; -3で一番下
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+removeongethit = 0	; MoveType=Hで : 1/0 : 消える/消えない
+ignorehitpause = 1	; ヒット硬直を : 0/1 : 無視しない/無視
+
+;------------------------------------------------------------------------------
+;被ダメ
+[Statedef 8006, 被ダメ]
+type = U
+movetype = H
+physics = U
+sprpriority = 3
+
+[State -2, ChangeState]
+type = ChangeState
+trigger1 = 1
+value = StateNo -1
+
+;--------------------------------------
+;常時操作
+[State -2, NotHitBy]
+type = NotHitBy
+trigger1 = 1
+value = SCA, NA, SA, HA, NP, SP, HP, NT, ST, HT
+time = 1
+
+[State -2, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State -2, BindToRoot]
+type = BindToRoot
+trigger1 = 1
+pos = 30, -57
+
+[State -2, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+value = -20
+
+[State -2, Trans]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = 256, 56 ;var(21), 256 -(AnimElemNo(0)<3)*128
+
+;==============================================================================
+;-| 顔面セーフ |---------------------------------------------------------------
+;------------------------------------------------------------------------------
+;判定null;
+[Statedef 8007, safe]
+type = A
+movetype = I
+physics = N
+anim = Root,StateNo +3
+sprpriority = 3
+
+;--------------------------------------
+;常時操作
+[State -2, NotHitBy]
+type = NotHitBy
+trigger1 = 1
+value = SCA, AA, AP, AT
+time = 1
+
+[State -2, HitBy]
+type = HitBy
+trigger1 = 1
+value = SCA, AA
+time = 1
+
+[State -2, BindToRoot]
+type = BindToRoot
+trigger1 = 1
+pos = 0, 0
+
+[State -2, HitOverride] ; safe
+type = HitOverride
+trigger1 = 1
+attr = SCA, AA		; SCA, NA, NT, NP/SA, ST, SP/HA, HT, HP/AA, AT, AP
+slot = 1		; 0-7
+stateno = StateNo +1	; 移動ステート
+time = 1		; 効果時間 : -1/** : 上書きされるまで/任意
+
+[State -2, DestroySelf]
+type = DestroySelf
+trigger1 = Root,Anim != 11040
+trigger2 = Root,AnimElemNo(0) != [3, 4]
+trigger3 = Root,MoveType = H
+
+;------------------------------------------------------------------------------
+;痛いものは
+[Statedef 8008, 痛い]
+type = U
+movetype = H
+physics = U
+sprpriority = 3
+
+[State -2, ParentVarSet]
+type = ParentVarSet
+trigger1 = time = 0
+v = 21
+value = 1
+
+[State -2, DestroySelf]
+type = DestroySelf
+trigger1 = 1
+
+[State -2, NotHitBy]
+type = NotHitBy
+trigger1 = 1
+value = SCA, AA, AP, AT
+time = 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;==============================================================================
+;-| 座り防御 |-----------------------------------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 8012, 座り防御]
+movetype = I
+anim = 10130
+sprpriority = 7
+;--------------------------------------init
+[State -2, VarSet]
+type = VarSet
+trigger1 = Time = 0
+v = 20
+value = 0
+;--------------------------------------
+
+[State -2, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+scale = 0.5, 1.0
+
+[State 8012, BindToRoot]
+type = BindToRoot
+trigger1 = 1
+pos = 25, -50
+
+[State -2, VarAdd]
+type = VarAdd
+trigger1 = var(20) < 256
+v = 20
+value = 40
+
+[State -2, VarSet]
+type = VarSet
+trigger1 = var(20) > 256
+v = 20
+value = 256
+
+[State -2, Trans]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = var(20), 256	; airファイルの　AS256D256　と同じ
+
+[State 8012, ChangeState]
+type = ChangeState
+trigger1 = Root,StateNo != [120,155]
+trigger2 = Root,StateType != C
+value = StateNo+2
+
+[State 8012, ChangeState]
+type = ChangeState
+trigger1 = var(20) > 255
+value = StateNo+1
+
+;------------------------------------------------------------------------------
+[Statedef 8013, 座り防御]
+movetype = I
+sprpriority = 7
+
+[State -2, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+scale = 0.5, 1.0
+
+[State 8013, BindToRoot]
+type = BindToRoot
+trigger1 = 1
+pos = 25, -50
+
+[State -2, Trans]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = 256, 256	; airファイルの　AS256D256　と同じ
+
+[State 8013, ChangeState]
+type = ChangeState
+trigger1 = Root,StateNo != [120,155]
+trigger2 = Root,StateType != C
+value = StateNo+1
+
+;------------------------------------------------------------------------------
+[Statedef 8014, 座り防御]
+movetype = I
+sprpriority = 7
+
+[State -2, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+scale = 0.5, 1.0
+
+[State 8014, BindToRoot]
+type = BindToRoot
+trigger1 = 1
+pos = 25, -50
+
+[State -2, VarAdd]
+type = VarAdd
+trigger1 = var(20) > 0
+v = 20
+value = -10
+
+[State -2, VarSet]
+type = VarSet
+trigger1 = var(20) < 0
+v = 20
+value = 0
+
+[State -2, Trans]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = var(20), 256	; airファイルの　AS256D256　と同じ
+
+[State 8014, ChangeState]
+type = ChangeState
+trigger1 = Root,StateNo = [120,155]
+trigger1 = Root,StateType = C
+value = StateNo-2
+
+[State 8014, DestroySelf]
+type = DestroySelf
+trigger1 = var(20) < 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;==============================================================================
+;-| AI用攻撃指令 |-------------------------------------------------------------
+;------------------------------------------------------------------------------
+;cmd定義順
+[Statedef 9001, 定義順]
+movetype = I
+sprpriority = 7
+anim = 1
+
+[State -2, VarSet]
+type = Null
+trigger1 = Time = 0
+trigger1 = var(16) := StateNo%10
+
+[State -2, BindToRoot]
+type = BindToRoot
+trigger1 = 1
+pos = Const(Size.Mid.Pos.X), Const(Size.Mid.Pos.Y)
+
+[State -2, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+flag2 = NoAutoTurn
+
+[State -2, DestroySelf]
+type = DestroySelf
+trigger1 = Parent,var(16) != 1
+
+;--------------------------------------
+; 下の方が優先
+; 空中>地上
+; a<b<c<s<h
+
+[State -2, ParentVarSet] ; a
+type = ParentVarSet
+triggerall = Root,StateType = S
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 8
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 57 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -79 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0001
+
+[State -2, ParentVarSet] ; b
+type = ParentVarSet
+triggerall = Root,StateType = S
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 10
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 56 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -87 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0002
+
+[State -2, ParentVarSet] ; c
+type = ParentVarSet
+triggerall = Root,StateType = S
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 12
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 66 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -82 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0003
+
+[State -2, ParentVarSet] ; 2a
+type = ParentVarSet
+triggerall = Root,StateType = C
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 4
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 56 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -34 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0011
+
+[State -2, ParentVarSet] ; 2b
+type = ParentVarSet
+triggerall = Root,StateType = C
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 6
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 67 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -13 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0012
+
+[State -2, ParentVarSet] ; 2c
+type = ParentVarSet
+triggerall = Root,StateType = C
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 10
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 57 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -108 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0013
+
+[State -2, ParentVarSet] ; d
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 11
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 71 +5 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -88 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0051
+
+[State -2, ParentVarSet] ; 2d
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 11
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 67 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -13 -5 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0052
+
+[State -2, ParentVarSet] ; 236d
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 27
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 49 +30 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -89 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0104
+
+[State -2, ParentVarSet] ; 426c
+type = ParentVarSet
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 26 +3
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 1 +15 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -27 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0103
+
+[State -2, ParentVarSet] ; 236a
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 14
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 53 +30 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -92 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0101
+
+[State -2, ParentVarSet] ; 1239c
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > 999
+triggerall = var(55) := 15
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 8 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -82 -30 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 1001
+
+[State -2, ParentVarSet] ; 2626d
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > 999
+triggerall = var(55) := 27
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 297 +30 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -92 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 1002
+
+[State -2, ParentVarSet] ; 214b
+type = ParentVarSet
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 18 -6
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 8 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -38 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0102
+
+[State -2, ParentVarSet] ; ja
+type = ParentVarSet
+triggerall = Root,StateType = A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 4
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 37 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -74 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0021
+
+[State -2, ParentVarSet] ; jb
+type = ParentVarSet
+triggerall = Root,StateType = A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 8
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 39 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -70 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0022
+
+[State -2, ParentVarSet] ; jc
+type = ParentVarSet
+triggerall = Root,StateType = A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 12
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 37 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -90 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0023
+
+[State -2, ParentVarSet] ; jd
+type = ParentVarSet
+triggerall = Root,StateType = A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 11
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 61 +3 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -53 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0053
+
+;------------------------------------------------------------------------------
+;Attack順
+[Statedef 9002, Attack順]
+movetype = I
+sprpriority = 7
+anim = 1
+
+[State -2, VarSet]
+type = Null
+trigger1 = Time = 0
+trigger1 = var(16) := StateNo%10
+
+[State -2, BindToRoot]
+type = BindToRoot
+trigger1 = 1
+pos = Const(Size.Mid.Pos.X), Const(Size.Mid.Pos.Y)
+
+[State -2, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+flag2 = NoAutoTurn
+
+[State -2, DestroySelf]
+type = DestroySelf
+trigger1 = Parent,var(16) != 2
+
+;--------------------------------------
+; 下の方が優先
+; 空中>地上
+; a<b<c<s<h
+
+[State -2, ParentVarSet] ; 2a
+type = ParentVarSet
+triggerall = Root,StateType = C
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 4
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 56 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -34 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0011
+
+[State -2, ParentVarSet] ; a
+type = ParentVarSet
+triggerall = Root,StateType = S
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 8
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 57 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -79 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0001
+
+[State -2, ParentVarSet] ; 2b
+type = ParentVarSet
+triggerall = Root,StateType = C
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 6
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 67 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -13 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0012
+
+[State -2, ParentVarSet] ; d
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 11
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 71 +5 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -88 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0051
+
+[State -2, ParentVarSet] ; 2d
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 11
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 67 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -13 -5 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0052
+
+[State -2, ParentVarSet] ; b
+type = ParentVarSet
+triggerall = Root,StateType = S
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 10
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 56 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -87 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0002
+
+[State -2, ParentVarSet] ; 426c
+type = ParentVarSet
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 26
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 1 +15 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -27 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0103
+
+[State -2, ParentVarSet] ; 2c
+type = ParentVarSet
+triggerall = Root,StateType = C
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 10
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 57 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -108 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0013
+
+[State -2, ParentVarSet] ; c
+type = ParentVarSet
+triggerall = Root,StateType = S
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 12
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 66 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -82 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0003
+
+[State -2, ParentVarSet] ; 214b
+type = ParentVarSet
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 18 +3
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 8 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -38 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0102
+
+[State -2, ParentVarSet] ; 236d
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 27
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 49 +30 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -89 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0104
+
+[State -2, ParentVarSet] ; 1239c
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > 999
+triggerall = var(55) := 15
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 8 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -82 -30 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 1001
+
+[State -2, ParentVarSet] ; 236a
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 14 -5
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 53 +30 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -92 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0101
+
+[State -2, ParentVarSet] ; 2626d
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > 999
+triggerall = var(55) := 27 -9
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 297 +30 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -92 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 1002
+
+[State -2, ParentVarSet] ; ja
+type = ParentVarSet
+triggerall = Root,StateType = A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 4
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 37 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -74 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0021
+
+[State -2, ParentVarSet] ; jd
+type = ParentVarSet
+triggerall = Root,StateType = A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 11
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 61 +3 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -53 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0053
+
+[State -2, ParentVarSet] ; jb
+type = ParentVarSet
+triggerall = Root,StateType = A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 8
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 39 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -70 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0022
+
+[State -2, ParentVarSet] ; jc
+type = ParentVarSet
+triggerall = Root,StateType = A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 12
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 37 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -90 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0023
+
+;------------------------------------------------------------------------------
+;遅い順
+[Statedef 9003, 遅い順]
+movetype = I
+sprpriority = 7
+anim = 1
+
+[State -2, VarSet]
+type = Null
+trigger1 = Time = 0
+trigger1 = var(16) := StateNo%10
+
+[State -2, BindToRoot]
+type = BindToRoot
+trigger1 = 1
+pos = Const(Size.Mid.Pos.X), Const(Size.Mid.Pos.Y)
+
+[State -2, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+flag2 = NoAutoTurn
+
+[State -2, DestroySelf]
+type = DestroySelf
+trigger1 = Parent,var(16) != 3
+
+;--------------------------------------
+; 下の方が優先
+; 空中>地上
+; a<b<c<s<h
+
+[State -2, ParentVarSet] ; 2a
+type = ParentVarSet
+triggerall = Root,StateType = C
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 4
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 56 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -34 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0011
+
+[State -2, ParentVarSet] ; 2b
+type = ParentVarSet
+triggerall = Root,StateType = C
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 6
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 67 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -13 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0012
+
+[State -2, ParentVarSet] ; a
+type = ParentVarSet
+triggerall = Root,StateType = S
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 8
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 57 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -79 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0001
+
+[State -2, ParentVarSet] ; b
+type = ParentVarSet
+triggerall = Root,StateType = S
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 10
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 56 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -87 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0002
+
+[State -2, ParentVarSet] ; 2c
+type = ParentVarSet
+triggerall = Root,StateType = C
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 10
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 57 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -108 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0013
+
+[State -2, ParentVarSet] ; d
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 11
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 71 +5 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -88 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0051
+
+[State -2, ParentVarSet] ; 2d
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 11
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 67 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -13 -5 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0052
+
+[State -2, ParentVarSet] ; c
+type = ParentVarSet
+triggerall = Root,StateType = S
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 12
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 66 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -82 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0003
+
+[State -2, ParentVarSet] ; 236a
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 14 +3
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 53 +30 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -92 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0101
+
+[State -2, ParentVarSet] ; 214b
+type = ParentVarSet
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 18
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 8 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -38 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0102
+
+[State -2, ParentVarSet] ; 236d
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 27
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 49 +30 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -89 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0104
+
+[State -2, ParentVarSet] ; 2626d
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > 999
+triggerall = var(55) := 27
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 297 +30 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -92 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 1002
+
+[State -2, ParentVarSet] ; 1239c
+type = ParentVarSet
+triggerall = Root,StateType != A
+triggerall = P2StateType != L
+triggerall = Root,Power > 999
+triggerall = var(55) := 15 -5
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 8 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -82 -30 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 1001
+
+[State -2, ParentVarSet] ; 426c
+type = ParentVarSet
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 26 -8
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 1 +15 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -27 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0103
+
+[State -2, ParentVarSet] ; ja
+type = ParentVarSet
+triggerall = Root,StateType = A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 4
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 37 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -74 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0021
+
+[State -2, ParentVarSet] ; jb
+type = ParentVarSet
+triggerall = Root,StateType = A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 8
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 39 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -70 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0022
+
+[State -2, ParentVarSet] ; jd
+type = ParentVarSet
+triggerall = Root,StateType = A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 11
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 61 +3 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -53 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0053
+
+[State -2, ParentVarSet] ; jc
+type = ParentVarSet
+triggerall = Root,StateType = A
+triggerall = P2StateType != L
+triggerall = Root,Power > -1
+triggerall = var(55) := 12
+triggerall = 1 || fvar(37) := EnemyNear,Vel Y*var(55) +fvar(39)*(floor(0.5*(var(55)**2)+0.5)+var(55)/2)
+triggerall = Root,P2BodyDist X < 37 +EnemyNear,Vel X *var(55)
+triggerall = Root,P2BodyDist Y > -90 -fvar(37)
+trigger1 = Root,var(57) >= var(55)
+v = 51
+value = 0023
+
+;------------------------------------------------------------------------------
+;Random
+[Statedef 9004, Random]
+movetype = I
+sprpriority = 7
+anim = 1
+
+[State -2, VarSet]
+type = Null
+trigger1 = Time = 0
+trigger1 = var(16) := 1
+
+[State -2, BindToRoot]
+type = BindToRoot
+trigger1 = 1
+pos = Const(Size.Mid.Pos.X), Const(Size.Mid.Pos.Y)
+
+[State -2, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+flag2 = NoAutoTurn
+
+[State -2, DestroySelf]
+type = DestroySelf
+trigger1 = Parent,var(16) != 4
+
+;--------------------------------------
+;行動重視
+[State -2, Helper_AI_Move]
+type = Helper
+trigger1 = EnemyNear,MoveType != H
+trigger1 = var(15) = 1
+trigger1 = var(16) := Random%3+1
+trigger1 = !NumHelper(9000+var(16))
+helpertype = Normal
+name = "AI_Move"
+ID = 9000+var(16)
+stateno = 9000+var(16)
+pos = 0, 0
+postype = P1		; P1/P2/Front/Back/Left/Right
+facing = 1
+keyctrl = 0
+ownpal = 1
+supermovetime = 2000000
+pausemovetime = 2000000
+IgnoreHitPause = 1
+
+[State -2, ParentVarSet]
+type = ParentVarSet
+trigger1 = 1
+v = 51
+value = var(51)
+
+[State -2, VarSet]
+type = Null
+trigger1 = EnemyNear,MoveType != H
+trigger1 = 1 || var(15) := 0
+trigger2 = EnemyNear,MoveType = H
+trigger2 = 1 || var(15) := 1
+
+
+
+
+

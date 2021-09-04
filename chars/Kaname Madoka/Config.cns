@@ -1,0 +1,599 @@
+
+;------------------------------------------------------------------------------
+;Config
+[Statedef 8000, Config]
+;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+;--------------------------------------
+[State 8000]
+type = ParentVarSet
+trigger1 = time = 0
+v = 10
+value = 100
+
+; 根性値
+; value = ABC
+;  A : 0/1 : 特になし/体力減少で防御力上昇(最大約25％減)
+;  B : 0/1 : 特になし/体力減少で攻撃力上昇(最大約25％増)
+;  C : 0/1 : 特になし/体力半分以下で被ダメと同量のゲージ回復
+
+;--------------------------------------
+[State 8000]
+type = ParentVarSet
+trigger1 = time = 0
+v = 11
+value = 0
+
+; 特殊カラー設定
+; value = A
+;  A : 1-12 : 特殊効果を適用するキャラ選択時の色
+;             (0で特殊効果不使用)
+
+;--------------------------------------
+[State 8000]
+type = ParentVarSet
+trigger1 = time = 0
+v = 12
+value = 00000
+
+; 特殊効果設定
+; value = ABCDE
+;  A : 0/1 : 特になし/常に防御力2倍
+;  B : 0/1 : 特になし/常に攻撃力2倍
+;  C : 0/1 : 特になし/体力ゲージ自動回復
+;  D : 0/1 : 特になし/パワーゲージ自動回復
+;  E : 0/1 : 特になし/無補正
+
+
+
+
+
+
+;----------------------------------------------------------
+;AI
+;--------------------------------------
+[State 8000, AI]
+type = ParentVarSet
+trigger1 = time = 0
+v = 15
+value = 0
+
+; AI起動速度
+; value = *
+;  * : 0/1 : mugenの気分に依存/速いがP操作に支障有
+
+;--------------------------------------
+[State 8000, AI]
+type = ParentVarSet
+trigger1 = time = 0
+v = 16
+value = 5
+
+; AI種類
+; value = *
+;  * : 1->5 : 
+
+;--------------------------------------
+[State 8000, AI]
+type = ParentVarSet
+trigger1 = time = 0
+v = 17
+value = 10
+
+; ガードレベル
+; value = *
+;  * : 0->20 : 軟い->硬い
+
+;--------------------------------------
+[State 8000, AI]
+type = ParentVarSet
+trigger1 = time = 0
+v = 18
+value = 0
+
+; ラウンド終了時のAILv.(↓の攻撃頻度)変更
+; value = *
+;  * : 0/1 : 特になし/負け+1、勝ち-1
+
+;--------------------------------------
+[State 8000, AI]
+type = ParentVarSet
+trigger1 = time = 0
+v = 19
+value = 8
+
+; 攻撃頻度
+; value = *
+;  * : 1->10 : 少ない->多い
+
+;--------------------------------------
+
+
+
+
+
+
+
+
+
+
+; 以下変更しないで下さい
+
+
+
+
+
+
+;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[State 8000, ParentVarSet]
+type = ParentVarSet
+trigger1 = time = 0
+v = 17
+value = Parent,var(17)*100
+
+[State 8000, DestroySelf]
+type = DestroySelf
+trigger1 = Time > 0
+;trigger1 = Root,StateNo != 5900
+;trigger1 = RoundState = 2
+
+
+
+
+;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+;汎用ヘルパーのステート
+;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+;[StateDef 8000]　ゲージ周りと一部のエフェクト処理
+;[StateDef 8100]　ヒットスパークの処理
+;[StateDef 8500]　カットインの処理
+
+;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+;	カード枚数およびパワーゲージ(兼汎用ヘルパー)
+;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+;	[ヘルパー]カットイン
+;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[StateDef 8500]
+Type    = A
+movetype= I
+physics = N
+ctrl	= 0
+velset	= 0, 0
+anim	= 8700
+sprpriority = 5
+
+[State 8500, 位置を固定] ;通常カットイン用
+Type = BindtoParent
+trigger1 = parent,stateno != 3200
+time = 1
+facing = 1
+pos = 0, -50
+
+[State 8500, 位置を固定] ;ICBM
+Type = BindtoParent
+trigger1 = parent,stateno = 3200
+time = 1
+facing = 1
+pos = 40, -20
+
+[State 8500, 変数設定] ;透過率
+Type = VarSet
+trigger1 = time = 0
+var(0) = 0
+
+[State 8500, 変数増減] ;透過率
+Type = VarAdd
+trigger1 = time >= 13
+trigger1 = var(0) <= 256
+var(0) = 32
+
+[State 8500, 透過]
+Type = Trans
+trigger1 = time < 13
+trans = add
+
+[State 8500, 透過]
+Type = Trans
+trigger1 = time >= 13
+trans = addalpha
+alpha = 256 - var(0), 256
+
+[State 8500, ランダム変数] ;初期回転角
+Type = VarRandom
+trigger1 = time = 0
+v = 1
+range = 0,359
+ignorehitpause = 1
+
+[State 8500, 回転角]
+Type = AngleSet
+trigger1 = time < 12
+value = var(1) + time*14
+
+[State 8500, 回転]
+Type = AngleDraw
+trigger1 = ishelper(8500)
+scale = .3 + time*0.05, .3 + time*0.05
+
+[State 8500, 変数設定] ;リング1拡大率リセット
+Type = VarSet
+trigger1 = time = 0
+fvar(11) = 0
+
+[State 8500, 変数設定] ;リング1拡大率
+Type = VarSet
+trigger1 = time >= 1
+fvar(11) = .3 + time*0.2
+
+[State 8500, 変数設定] ;リング2拡大率リセット
+Type = VarSet
+trigger1 = time = 0
+fvar(12) = 0
+
+[State 8500, 変数設定] ;リング2拡大率
+Type = VarSet
+trigger1 = time >= 7
+fvar(12) = .3 + (time - 7)*0.2
+
+[State 8500, エフェクト表示] ;リング1
+Type = Explod
+trigger1 = time = 0
+anim = 8701
+ID = 8701
+scale = .3, .3
+pos = 0, 0
+postype = p1
+sprpriority = 5
+removetime = 35
+pausemovetime = 9999
+supermovetime = 9999
+ignorehitpause = 1
+persistent = 0
+
+[State 8500, エフェクト変更] ;リング1拡大
+Type = ModifyExplod
+trigger1 = 1
+ID = 8701
+scale = fvar(11), fvar(11)
+ignorehitpause = 1
+
+[State 8500, エフェクト表示] ;リング2
+Type = Explod
+trigger1 = time = 0
+anim = 8702
+ID = 8702
+scale = .3, .3
+pos = 0, 0
+postype = p1
+sprpriority = 5
+removetime = 35
+pausemovetime = 9999
+supermovetime = 9999
+ignorehitpause = 1
+persistent = 0
+
+[State 8500, エフェクト変更] ;リング2拡大
+Type = ModifyExplod
+trigger1 = 1
+ID = 8702
+scale = fvar(12), fvar(12)
+ignorehitpause = 1
+
+[State 8500, 変数増減] ;カットインA拡大率
+Type = VarAdd
+trigger1 = time >= 26
+fvar(0) = 0.0175
+
+[State 8500, エフェクト表示] ;カットインA
+Type = Explod
+trigger1 = root,stateno = 3600
+trigger1 = ishelper(8500)
+trigger1 = time = 0
+anim = 8500
+ID = 8500
+scale = 0.50 + fvar(0), 0.50 + fvar(0)
+pos = 0, 240
+postype = back
+sprpriority = -5
+removetime = 50
+removeongethit = 1
+pausemovetime = 9999
+supermovetime = 9999
+ignorehitpause = 1
+persistent = 0
+
+[State 8500, エフェクト表示] ;カットインB炎
+Type = Explod
+trigger1 = root,stateno != 3600
+trigger1 = ishelper(8500)
+trigger1 = time = 0
+anim = 8600
+ID = 8500
+scale = 0.50 + fvar(0), 0.50 + fvar(0)
+pos = 0, 240
+postype = back
+sprpriority = -5
+removetime = 50
+removeongethit = 1
+pausemovetime = 9999
+supermovetime = 9999
+ignorehitpause = 1
+persistent = 0
+
+[State 8500, エフェクト表示] ;カットインB
+Type = Explod
+trigger1 = root,stateno != 3600
+trigger1 = ishelper(8500)
+trigger1 = time = 0
+anim = 8500
+ID = 8500
+scale = 0.50 + fvar(0), 0.50 + fvar(0)
+pos = 0, 240
+postype = back
+sprpriority = -5
+removetime = 50
+removeongethit = 1
+pausemovetime = 9999
+supermovetime = 9999
+ignorehitpause = 1
+persistent = 0
+
+[State 8500, エフェクト変更] ;カットイン拡大
+Type = ModifyExplod
+trigger1 = 1
+ID = 8500
+scale = 0.50+fvar(0), 0.50+fvar(0)
+ignorehitpause = 1
+
+[State 8500, 変数増減]
+Type = VarAdd
+trigger1 = time = [0, 10]
+trigger2 = time >= 33
+var(6) = 26
+
+[State 8500, 背景色変更]
+Type = BGPalFX
+trigger1 = time = [1, 32]
+add = 0-var(6), 0-var(6), 0-var(6)
+time = 1
+
+[State 8500, 特殊効果]
+Type = AssertSpecial
+trigger1 = time < 30
+flag = noshadow
+
+[State 8500, 特殊効果]
+Type = AssertSpecial
+trigger1 = time >= 30
+flag = noshadow
+flag2 = invisible
+
+[State 8500, ヘルパーを消去]
+Type = DestroySelf
+trigger1 = time = 50
+
+;-------------------------------------------------------------------------------
+[StateDef 9500]
+Type    = A
+movetype= I
+physics = N
+ctrl	= 0
+velset	= 0, 0
+anim	= 8700
+sprpriority = 5
+
+[State 8500, 位置を固定] ;通常カットイン用
+Type = BindtoParent
+trigger1 = parent,stateno != 3200
+time = 1
+facing = 1
+pos = 0, -50
+
+[State 8500, 位置を固定] ;ICBM
+Type = BindtoParent
+trigger1 = parent,stateno = 3200
+time = 1
+facing = 1
+pos = 40, -20
+
+[State 8500, 変数設定] ;透過率
+Type = VarSet
+trigger1 = time = 0
+var(0) = 0
+
+[State 8500, 変数増減] ;透過率
+Type = VarAdd
+trigger1 = time >= 13
+trigger1 = var(0) <= 256
+var(0) = 32
+
+[State 8500, 透過]
+Type = Trans
+trigger1 = time < 13
+trans = add
+
+[State 8500, 透過]
+Type = Trans
+trigger1 = time >= 13
+trans = addalpha
+alpha = 256 - var(0), 256
+
+[State 8500, ランダム変数] ;初期回転角
+Type = VarRandom
+trigger1 = time = 0
+v = 1
+range = 0,359
+ignorehitpause = 1
+
+[State 8500, 回転角]
+Type = AngleSet
+trigger1 = time < 12
+value = var(1) + time*14
+
+[State 8500, 回転]
+Type = AngleDraw
+trigger1 = ishelper(9500)
+scale = .3 + time*0.05, .3 + time*0.05
+
+[State 8500, 変数設定] ;リング1拡大率リセット
+Type = VarSet
+trigger1 = time = 0
+fvar(11) = 0
+
+[State 8500, 変数設定] ;リング1拡大率
+Type = VarSet
+trigger1 = time >= 1
+fvar(11) = .3 + time*0.2
+
+[State 8500, 変数設定] ;リング2拡大率リセット
+Type = VarSet
+trigger1 = time = 0
+fvar(12) = 0
+
+[State 8500, 変数設定] ;リング2拡大率
+Type = VarSet
+trigger1 = time >= 7
+fvar(12) = .3 + (time - 7)*0.2
+
+[State 8500, エフェクト表示] ;リング1
+Type = Explod
+trigger1 = time = 0
+anim = 8701
+ID = 8701
+scale = .3, .3
+pos = 0, 0
+postype = p1
+sprpriority = 5
+removetime = 35
+pausemovetime = 9999
+supermovetime = 9999
+ignorehitpause = 1
+persistent = 0
+
+[State 8500, エフェクト変更] ;リング1拡大
+Type = ModifyExplod
+trigger1 = 1
+ID = 8701
+scale = fvar(11), fvar(11)
+ignorehitpause = 1
+
+[State 8500, エフェクト表示] ;リング2
+Type = Explod
+trigger1 = time = 0
+anim = 8702
+ID = 8702
+scale = .3, .3
+pos = 0, 0
+postype = p1
+sprpriority = 5
+removetime = 35
+pausemovetime = 9999
+supermovetime = 9999
+ignorehitpause = 1
+persistent = 0
+
+[State 8500, エフェクト変更] ;リング2拡大
+Type = ModifyExplod
+trigger1 = 1
+ID = 8702
+scale = fvar(12), fvar(12)
+ignorehitpause = 1
+
+[State 8500, 変数増減] ;カットインA拡大率
+Type = VarAdd
+trigger1 = time >= 26
+fvar(0) = 0.0175
+
+[State 8500, エフェクト表示] ;カットインA
+Type = Explod
+trigger1 = root,stateno = 3600
+trigger1 = ishelper(9500)
+trigger1 = time = 0
+anim = 8501
+ID = 9500
+scale = 0.50 + fvar(0), 0.50 + fvar(0)
+pos = 0, 240
+postype = back
+sprpriority = -5
+removetime = 50
+removeongethit = 1
+pausemovetime = 9999
+supermovetime = 9999
+ignorehitpause = 1
+persistent = 0
+
+[State 8500, エフェクト表示] ;カットインB炎
+Type = Explod
+trigger1 = root,stateno != 3600
+trigger1 = ishelper(9500)
+trigger1 = time = 0
+anim = 8600
+ID = 9500
+scale = 0.50 + fvar(0), 0.50 + fvar(0)
+pos = 0, 240
+postype = back
+sprpriority = -5
+removetime = 50
+removeongethit = 1
+pausemovetime = 9999
+supermovetime = 9999
+ignorehitpause = 1
+persistent = 0
+
+[State 8500, エフェクト表示] ;カットインB
+Type = Explod
+trigger1 = root,stateno != 3600
+trigger1 = ishelper(9500)
+trigger1 = time = 0
+anim = 9500
+ID = 9500
+scale = 0.50 + fvar(0), 0.50 + fvar(0)
+pos = 0, 240
+postype = back
+sprpriority = -5
+removetime = 50
+removeongethit = 1
+pausemovetime = 9999
+supermovetime = 9999
+ignorehitpause = 1
+persistent = 0
+
+[State 8500, エフェクト変更] ;カットイン拡大
+Type = ModifyExplod
+trigger1 = 1
+ID = 9500
+scale = 0.50+fvar(0), 0.50+fvar(0)
+ignorehitpause = 1
+
+[State 8500, 変数増減]
+Type = VarAdd
+trigger1 = time = [0, 10]
+trigger2 = time >= 33
+var(6) = 26
+
+[State 8500, 背景色変更]
+Type = BGPalFX
+trigger1 = time = [1, 32]
+add = 0-var(6), 0-var(6), 0-var(6)
+time = 1
+
+[State 8500, 特殊効果]
+Type = AssertSpecial
+trigger1 = time < 30
+flag = noshadow
+
+[State 8500, 特殊効果]
+Type = AssertSpecial
+trigger1 = time >= 30
+flag = noshadow
+flag2 = invisible
+
+[State 8500, ヘルパーを消去]
+Type = DestroySelf
+trigger1 = time = 50
+
+
+

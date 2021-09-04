@@ -1,0 +1,23 @@
+[Info]
+name="Ashley"
+displayname="Ashley"
+versiondate=9/7/2016
+mugenversion=1.0
+author="Diamondswag 12"
+pal.defaults=1,2,3,4,5
+[Files]
+sprite=Ashley.sff
+sound=Ashley.snd
+anim=Ashley.air
+cmd=Ashley.cmd
+cns=Ashley.cns
+st=Ashley.cns
+stcommon=common1.cns
+pal1=Ashley.act
+pal2=Purple.act
+pal3=Blue.act
+pal4=Green.act
+pal5=Yellow.act
+[Arcade]
+intro.storyboard=
+ending.storyboard=

@@ -1,0 +1,5 @@
+Q*Bert's AI Options
+-------------------------------------------------------------------------------------
+QBert = Normal AI
+QBert/QBert_Easy.def = Easy AI
+QBert/QBert10.def = Stronger AI

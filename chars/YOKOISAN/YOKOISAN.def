@@ -1,0 +1,40 @@
+;====================================================
+; Definition file for Ralf
+;====================================================
+
+; Player information
+[Info]
+name = "YOKOISAN"
+displayname = "YOKUISAN"
+versiondate = 04,14,2001
+mugenversion = 04,14,2001
+author = "Sankiti"
+pal.defaults =
+
+; Files for the player
+[Files]
+cmd      = YOKOI.cmd
+cns      = YOKOI.cns
+st       = YOKOI.cns
+st1      = common.cns
+stcommon = common1.cns
+sprite   = YOKOI.sff
+anim     = YOKOI.air
+sound    = YOKOI.snd
+pal1     = YOKOI1.act
+pal2     = YOKOI2.act
+pal3     = YOKOI3.act
+pal4     = YOKOI4.act
+pal5     = YOKOI5.act
+pal6     = YOKOI6.act
+pal7     = YOKOI1.act
+pal8     = YOKOI1.act
+pal9     = YOKOI1.act
+pal10     = YOKOI1.act
+pal11     = YOKOI1.act
+pal12     = YOKOI1.act
+
+; Arcade mode
+[Arcade]
+intro.storyboard =
+ending.storyboard =

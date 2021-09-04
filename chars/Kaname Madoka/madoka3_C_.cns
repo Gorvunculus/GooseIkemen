@@ -1,0 +1,733 @@
+
+;______________________________________________________________________________
+;==============================================================================
+;-| 超必殺技 |-----------------------------------------------------------------
+;==============================================================================
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+;==============================================================================
+;-| 内緒 |---------------------------------------------------------------------
+;------------------------------------------------------------------------------
+;内緒
+[Statedef 3000, 内緒]
+type = S
+movetype = A
+physics = S
+juggle = 1
+;velset = 0, 0
+ctrl = 0
+anim = StateNo
+poweradd = -1000
+sprpriority = 2
+
+[State 3000, 時間停止]
+Type = SuperPause
+trigger1 = animelem = 1
+anim = -1
+time = 35
+movetime = 0
+p2defmul = 1
+darken = 0
+sound = s8500, 0
+
+[State 200, 1]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 3000, 0
+
+[State 3000, ヘルパー] ;カットイン
+Type = Helper
+trigger1 = animelem = 1
+ID = 8500
+name = "CutIn"
+sprpriority = -5
+pos = -20, 240
+postype = back
+stateno = 8500
+helpertype = normal
+keyctrl = 0
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+ignorehitpause = 1
+persistent = 0
+;--------------------------------------
+;移動処理
+[State -2, PosAdd]
+type = PosAdd
+trigger1 = AnimElemTime(2) = 0
+trigger2 = AnimElemTime(4) = 0
+trigger3 = AnimElemTime(5) = 0
+x = -10
+
+[State -2, PosAdd]
+type = PosAdd
+trigger1 = AnimElemTime(3) = 0
+trigger2 = AnimElemTime(6) = 0
+x = -18 -(AnimElemTime(6) = 0)*14
+
+;--------------------------------------
+;エフェクト状態変更
+[State -2, ModifyExplod] ; 弓消去
+type = ModifyExplod
+trigger1 = AnimElemNo(0) = [6, 7]
+ID = StateNo
+removetime = 0		; 消える時間 : -2/-1/** : アニメ終了時/消えない/任意
+
+[State -2, ModifyExplod] ; 弓移動
+type = ModifyExplod
+trigger1 = AnimElemTime(5) = 0
+ID = StateNo
+pos = -35, 0
+
+;--------------------------------------
+;エフェクト呼び込み
+[State -2, Explod] ; 弓発生
+type = Explod
+trigger1 = AnimElemTime(1) = 0
+anim = StateNo +1
+ID = StateNo
+pos = 0, 0
+bindtime = 15		; 固定時間 : -1/** : 無限/任意
+sprpriority = 3		; -3で一番下
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+;removeongethit = 1	; MoveType=Hで : 1/0 : 消える/消えない
+;shadow = 7, 7, 7
+
+[State -2, Explod] ; befor
+type = Explod
+trigger1 = AnimElemNo(0) = 6
+anim = StateNo +2
+ID = StateNo
+bindtime = 1		; 固定時間 : -1/** : 無限/任意
+sprpriority = 3		; -3で一番下
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+;removeongethit = 1	; MoveType=Hで : 1/0 : 消える/消えない
+;shadow = 7, 7, 7
+
+[State -2, Explod] ; after
+type = Explod
+trigger1 = AnimElemNo(0) = 7
+anim = StateNo +3
+ID = StateNo
+bindtime = 1		; 固定時間 : -1/** : 無限/任意
+sprpriority = 3		; -3で一番下
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+;removeongethit = 1	; MoveType=Hで : 1/0 : 消える/消えない
+;shadow = 7, 7, 7
+
+[State -2, Explod] ; 衝撃1発生
+type = Explod
+trigger1 = AnimElemTime(7) = 0
+anim = StateNo +4
+ID = StateNo +1
+pos = 0, 0
+vfacing = 1		; 垂直向き : -1/1 : 反転/正面
+bindtime = 1		; 固定時間 : -1/** : 無限/任意
+scale = 1.50, 1.50
+sprpriority = 4		; -3で一番下
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+removeongethit = 0	; MoveType=Hで : 1/0 : 消える/消えない
+
+[State -2, Explod] ; 衝撃2発生
+type = Explod
+trigger1 = AnimElemTime(7) = 0
+anim = StateNo +5
+ID = StateNo +1
+pos = 0, 0
+vfacing = 1		; 垂直向き : -1/1 : 反転/正面
+bindtime = 1		; 固定時間 : -1/** : 無限/任意
+scale = 1.50, 1.50
+sprpriority = 4		; -3で一番下
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+removeongethit = 0	; MoveType=Hで : 1/0 : 消える/消えない
+
+;--------------------------------------
+;その他効果
+[State -2, EnvShake] ; 地震
+type = EnvShake
+trigger1 = AnimElemTime(7) = 0
+time = 21			; 実効時間
+freq = 90.0			; 振動数　 : 0-180 : 最低-最高
+ampl = -5			; 振幅　　 : 負の数は下揺れから開始
+phase = 0.0			; 振動零点 : 90超えると90に丸められる?
+ignorehitpause = 1
+
+[State -2, ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[State -2, Projectile]
+type = Projectile
+trigger1 = AnimElemTime(7) = 0
+projID = StateNo
+projanim = StateNo +6
+projscale = 2.00, 2.00
+projremove = 0
+projremovetime = 30
+;velocity = 11.00, 0
+projedgebound = 60	; 消え始める距離
+projstagebound = 60	; 存在限界
+offset = 7, -78
+;--------------------------------------HitDef
+attr = S, HP		; S/C/A, NA/NT/NP/SA/ST/SP/HA/HT/HP/AA/AT/AP
+guardflag = HLA		; H/L/M/A
+hitflag = HLAF		; H/L/M/A/F/D
+animtype = DigUp	; Light/Medium/Hard/Back/Up/DigUp
+;--------------------------------------攻撃設定_数値関係
+priority = 5, Hit	; 1/2/3/4/5/6/7, Hit/Miss/Dodge
+damage = Ceil(200*fvar(0)*ifelse(P2MoveType=A, 1.25, 1)), 10
+getpower = 0, 0
+givepower = 30, 0
+pausetime = 0, 6
+;--------------------------------------エフェクト、SE
+hitsound = s10, 24
+guardsound = s10, 102
+sparkno = -1;s6060+Random%4
+guard.sparkno = s6100
+sparkxy = 0, 0
+;--------------------------------------対地
+ground.type = High	; High/Low/Trip/Non
+ground.slidetime = Ceil(6*fvar(1)*ifelse(P2MoveType=A, 1.25, 1))
+ground.hittime = Ceil(9*fvar(1)*ifelse(P2MoveType=A, 1.25, 1))
+ground.velocity = -25.00*fvar(2), -3.50*fvar(2)
+;--------------------------------------対ガード
+guard.slidetime = 12
+guard.hittime = 12
+guard.ctrltime = 12
+;--------------------------------------対空
+air.hittime = Ceil(9*fvar(1)*ifelse(P2MoveType=A, 1.25, 1))
+air.velocity = -25.00*fvar(2), -3.50*fvar(2)
+airguard.velocity = -2.00
+air.juggle = 3
+;----------------------------------------------------------
+;--------------------------------------攻撃設定_補助
+guard.dist = 1200
+;--------------------------------------向き
+p2facing = 1		; -1/1 : 後向き/前向き
+;--------------------------------------ヒット後のステート移行
+p2stateno = 7000	; TargetStateの代わり
+
+
+;==============================================================================
+;-| やめ |---------------------------------------------------------------------
+;------------------------------------------------------------------------------
+;やめ
+[Statedef 3010, やめ]
+type = C
+movetype = A
+physics = C
+juggle = 1
+;velset = 0, 0
+ctrl = 0
+anim = StateNo
+poweradd = -1000
+sprpriority = 2
+
+[State 3000, 時間停止]
+Type = SuperPause
+trigger1 = animelem = 1
+anim = -1
+time = 35
+movetime = 0
+p2defmul = 1
+darken = 0
+sound = s8500, 0
+
+[State 3000, ヘルパー] ;カットイン
+Type = Helper
+trigger1 = animelem = 1
+ID = 8500
+name = "CutIn"
+sprpriority = -5
+pos = -20, 240
+postype = back
+stateno = 8500
+helpertype = normal
+keyctrl = 0
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+ignorehitpause = 1
+persistent = 0
+
+[State 200, 1]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 3000, 1
+;--------------------------------------
+;位置固定
+[State -2, PosSet]
+type = PosSet
+trigger1 = Time = 0
+y = 0
+
+[State -2, VelSet]
+type = VelSet
+trigger1 = Time = 0
+y = 0
+
+;--------------------------------------
+;エフェクト状態変更
+[State -2, ModifyExplod] ; 弓消去
+type = ModifyExplod
+trigger1 = AnimElemNo(0) = [3, 4]
+ID = StateNo
+removetime = 0		; 消える時間 : -2/-1/** : アニメ終了時/消えない/任意
+
+;--------------------------------------
+;エフェクト呼び込み
+[State -2, Explod] ; 弓発生
+type = Explod
+trigger1 = AnimElemTime(1) = 0
+anim = StateNo +1
+ID = StateNo
+pos = 0, 0
+bindtime = 15		; 固定時間 : -1/** : 無限/任意
+sprpriority = 3		; -3で一番下
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+;removeongethit = 1	; MoveType=Hで : 1/0 : 消える/消えない
+;shadow = 7, 7, 7
+
+[State -2, Explod] ; befor
+type = Explod
+trigger1 = AnimElemNo(0) = 3
+anim = StateNo +2
+ID = StateNo
+bindtime = 1		; 固定時間 : -1/** : 無限/任意
+sprpriority = 3		; -3で一番下
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+;removeongethit = 1	; MoveType=Hで : 1/0 : 消える/消えない
+;shadow = 7, 7, 7
+
+[State -2, Explod] ; after
+type = Explod
+trigger1 = AnimElemNo(0) = 4
+anim = StateNo +3
+ID = StateNo
+bindtime = 1		; 固定時間 : -1/** : 無限/任意
+sprpriority = 3		; -3で一番下
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+;removeongethit = 1	; MoveType=Hで : 1/0 : 消える/消えない
+;shadow = 7, 7, 7
+
+[State -2, Explod] ; 衝撃1発生
+type = Explod
+trigger1 = AnimElemTime(4) = 0
+anim = StateNo +4
+ID = StateNo +1
+pos = 0, 0
+vfacing = 1		; 垂直向き : -1/1 : 反転/正面
+bindtime = 1		; 固定時間 : -1/** : 無限/任意
+scale = 1.50, 1.50
+sprpriority = 4		; -3で一番下
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+removeongethit = 0	; MoveType=Hで : 1/0 : 消える/消えない
+
+[State -2, Explod] ; 衝撃2発生
+type = Explod
+trigger1 = AnimElemTime(4)%6 = 0
+trigger1 = AnimElemTime(4) < 12
+anim = StateNo +5
+ID = StateNo +1
+pos = 0, 0
+vfacing = 1		; 垂直向き : -1/1 : 反転/正面
+bindtime = 1		; 固定時間 : -1/** : 無限/任意
+scale = 1.50, 1.50
+sprpriority = 4		; -3で一番下
+ownpal = 1		; パレット操作 : 0/1 : 受ける/受けない
+removeongethit = 0	; MoveType=Hで : 1/0 : 消える/消えない
+
+;--------------------------------------
+;その他効果
+[State -2, EnvShake] ; 地震
+type = EnvShake
+trigger1 = AnimElemTime(4) = 0
+time = 21			; 実効時間
+freq = 90.0			; 振動数　 : 0-180 : 最低-最高
+ampl = -5			; 振幅　　 : 負の数は下揺れから開始
+phase = 0.0			; 振動零点 : 90超えると90に丸められる?
+ignorehitpause = 1
+
+[State -2, ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[State -2, VarSet]
+type = null
+trigger1 = fvar(23) := 20.00*Cos(PI/180 *70)
+trigger1 = fvar(24) := -20.00*Sin(PI/180 *70)
+
+[State -2, Helper_shoot_]
+type = Helper
+trigger1 = AnimElemTime(4) = 0
+helpertype = Normal
+name = "shoot"
+ID = 3010
+stateno = 8003
+pos = 4, -74
+ownpal = 1
+size.yscale = 0.25
+
+[State -2, Projectile]
+type = Projectile
+trigger1 = AnimElemTime(4) = 0
+projID = StateNo
+projanim = StateNo +6
+projscale = 1.00, 1.00
+projremove = 0
+projremovetime = 30
+velocity = fvar(23), fvar(24)
+projedgebound = 100	; 消え始める距離
+projstagebound = 100	; 存在限界
+offset = 4, -74
+;--------------------------------------HitDef
+attr = A, HP		; S/C/A, NA/NT/NP/SA/ST/SP/HA/HT/HP/AA/AT/AP
+guardflag = HL		; H/L/M/A
+hitflag = HLAF		; H/L/M/A/F/D
+animtype = DigUp	; Light/Medium/Hard/Back/Up/DigUp
+;--------------------------------------攻撃設定_数値関係
+priority = 5, Hit	; 1/2/3/4/5/6/7, Hit/Miss/Dodge
+damage = Ceil(100), 10
+getpower = 0, 0
+givepower = 30, 0
+pausetime = 0, 6
+;--------------------------------------エフェクト、SE
+hitsound = s10, 23
+guardsound = s10, 102
+sparkno = s6060+Random%4
+guard.sparkno = s6100
+sparkxy = 0, 0
+;--------------------------------------対地
+ground.type = High	; High/Low/Trip/Non
+ground.slidetime = Ceil(30*fvar(1)*ifelse(P2MoveType=A, 1.25, 1))
+ground.hittime = Ceil(30*fvar(1)*ifelse(P2MoveType=A, 1.25, 1))
+ground.velocity = -0.50*fvar(2), -8.00*fvar(2)
+;--------------------------------------対ガード
+guard.slidetime = 12
+guard.hittime = 12
+guard.ctrltime = 12
+;--------------------------------------対空
+air.hittime = Ceil(30*fvar(1)*ifelse(P2MoveType=A, 1.25, 1))
+air.velocity = -0.50*fvar(2), -8.00*fvar(2)
+airguard.velocity = -3.00, -2.00
+air.juggle = 3
+;--------------------------------------落下と受身
+fall = 1
+air.fall = 1
+fall.recover = 1
+fall.recovertime = Ceil(30*fvar(2)*ifelse(P2MoveType=A, 1.50, 1))
+;----------------------------------------------------------
+;--------------------------------------攻撃設定_補助
+yaccel = 0.32		; 重力
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;---------------------------------------------------------------------------
+;ドラゴンライダーキック
+[Statedef 3300]
+type    = S
+movetype= I
+physics = N
+juggle  = 4
+velset = 0,0
+anim = 3300
+ctrl = 0
+
+[State 3000, 時間停止]
+Type = SuperPause
+trigger1 = animelem = 1
+anim = -1
+time = 35
+movetime = 0
+p2defmul = 1
+darken = 0
+sound = s8500, 0
+
+[State 3000, 時間停止]
+Type = SuperPause
+trigger1 = animelem = 1
+anim = -1
+time = 35
+movetime = 0
+p2defmul = 1
+darken = 0
+sound = s180, 0
+
+[State 3000, ヘルパー] ;カットイン
+Type = Helper
+trigger1 = animelem = 1
+ID = 9500
+name = "CutIn"
+sprpriority = -5
+pos = -20, 240
+postype = back
+stateno = 9500
+helpertype = normal
+keyctrl = 0
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+ignorehitpause = 1
+persistent = 0
+
+[State 2100,1];←ヘルパーを呼び出す
+type = Helper
+trigger1 = time = 1
+name = "Ryuki"
+sprpriority = 1
+pos = 0,0
+ID = 3400
+postype = p1
+;facing = -1
+stateno = 3400;←呼び出されたヘルパーはこのステートから始まる
+helpertype = normal
+keyctrl = 0
+ownpal = 0
+supermovetime = 100
+
+[State 1100 , 2]
+type = ChangeState
+trigger1 = animtime = 0
+value = 3301
+
+[Statedef 3301]
+type    = A
+movetype= I
+physics = N
+juggle  = 5
+velset = 1.9,-6
+anim = 3301
+ctrl = 0
+
+[State 3050, 1]
+type = PlaySnd
+trigger1 = Time = 0
+value = 3300, 0
+volume = 400
+
+[State 3050, 1]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0, 0
+
+[State 1101 , 3]
+type = ChangeState
+trigger1 = Pos Y <= -100
+value = 3302
+
+[Statedef 3302]
+type = A
+physics = N
+juggle = 0
+velset = 0,0
+anim = 3302
+ctrl = 0
+
+[State 3302 , 2]
+type = ChangeState
+trigger1 = animtime = 0
+value = 3303
+
+[Statedef 3303]
+type = A
+physics = N
+movetype= A
+juggle = 7
+velset = 4.9,8.6
+anim = 3303
+ctrl = 0
+
+[State 3303 , 2]
+type = PlaySnd
+Trigger1 = AnimElem = 1
+value = 901,3
+
+[State 3003 , 1]
+type = HitDef
+trigger1 = AnimElem = 1
+hitflag = MA
+attr = A, SA
+damage    = 400,45
+getpower  = 30,30
+givepower = 50,50
+guardflag = HA
+priority = 6
+animtype = Heavy
+sparkno = 2
+pausetime = 8,12
+sparkxy = -10,60
+hitsound   = s3300,1
+guardsound = 6,0
+guard.pausetime = 8,18
+ground.type = High
+ground.slidetime = 9
+ground.hittime  = 9
+ground.velocity = -1,-2
+air.velocity = -1.3,-3
+fall = 1
+palfx.time = 65
+palfx.mul = 240,192,128
+palfx.sinadd = 96,128,160,16
+palfx.add = 224,128,64
+p2stateno = 3305
+
+[State 1052, 1]
+type = Projectile
+trigger1 = movehit = 1
+projanim = 3350
+projremovetime = 40
+postype = p2
+pos = 0,0
+
+[State 2100, Hurt]
+type = powerAdd
+trigger1 = animelem = 1
+value = -2000
+
+[State 1103 , 3]
+type = ChangeState
+Trigger1 = Pos Y >= 0
+value = 0
+ctrl = 1
+
+;---------------------
+;ライダーキック ヒット時相手動作１
+;---------------------
+[Statedef 3305]
+type = A
+movetype = H
+physics = N
+
+[State 1010, 1]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+z = 0
+
+[State 3005, 2]
+type = ChangeAnim2
+Trigger1 = Time >= 0
+value = 3305
+
+[State 3005, 9]
+type = ChangeState
+trigger1 = HitShakeOver = 1
+value = 3306
+
+;---------------------
+; ライダーキック ヒット時相手動作２
+;---------------------
+[Statedef 3306]
+type = A
+movetype = H
+physics = N
+velset = -2.2,-15.3
+
+[State 1105, 1]
+type = VelAdd
+trigger1 = Time > 0
+y = .6
+
+[State 1106, 2]
+type = EnvShake
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+time = 16
+ampl = 10
+freq = 90
+phase = 90
+ignorehitpause = 1
+
+[State 1106, 9]
+type = SelfState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 5100
+
+
+;-------------------------------------------------------------------------------
+[Statedef 3400]
+type    = S
+movetype= I
+physics = N
+juggle  = 4
+velset = 0,0
+anim = 3400
+ctrl = 0
+
+[State 1100 , 2]
+type = ChangeState
+trigger1 = animtime = 0
+value = 3401
+
+[Statedef 3401]
+type    = A
+movetype= I
+physics = N
+juggle  = 5
+velset = 1.9,-6
+anim = 3401
+ctrl = 0
+
+[State 3050, 1]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0, 0
+
+[State 1101 , 3]
+type = ChangeState
+trigger1 = Pos Y <= -100
+value = 3402
+
+[Statedef 3402]
+type = A
+physics = N
+juggle = 0
+velset = 0,0
+anim = 3402
+ctrl = 0
+
+[State 3402 , 2]
+type = ChangeState
+trigger1 = animtime = 0
+value = 3403
+
+[Statedef 3403]
+type = A
+physics = N
+movetype= A
+juggle = 7
+velset = 4.9,8.6
+anim = 3403
+ctrl = 0
+
+[State 1103 , 3]
+type = ChangeState
+Trigger1 = Pos Y >= 0
+value = 0
+ctrl = 1
+
+

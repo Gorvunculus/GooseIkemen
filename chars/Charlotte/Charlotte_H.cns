@@ -1,0 +1,2394 @@
+;
+;===========================================================================
+; 超必殺技ステート
+;===========================================================================
+;---------------------------------------------------------------------------
+;===========================================================================
+; MAGICA技(超必殺技)
+;===========================================================================
+;---------------------------------------------------------------------------
+;1ゲージ
+;===========================================================================
+;---------------------------------------------------------------------------
+;＜CHEESE!＞
+[Statedef 3000]
+type     = S
+movetype = A
+physics  = S
+velset   = 0,0
+ctrl     = 0
+anim     = 3000
+poweradd = 0
+sprpriority = 2
+facep2   = 1
+
+[State 3000, コンボ1-1-1-1CHEESE!ループ記憶];※AI用記述
+type = varadd
+triggerall = var(59) >= 1
+triggerall = fvar(30) = 1
+triggerall = fvar(31) = 111
+triggerall = fvar(32) = 0
+trigger1   = var(7) = 3000
+fvar(34)   = 1
+persistent = 0
+
+[State 3000, コンボ補正set]
+type = varset
+trigger1 = time = 0
+var(4) = 1
+
+[State 3000, コンボ補正加算]
+type = varadd
+trigger1 = time = 0
+trigger1 = prevstateno <=120
+var(5) = 1
+
+[State 3000, コンボ補正加算]
+type = varadd
+trigger1 = time = 0
+trigger1 = prevstateno >120
+var(5) = ifelse(prevstateno <=120,1,35)
+
+[State 3000, 無敵]
+type = NotHitBy
+trigger1 = time = [0,20]
+value = SCA
+
+[state 3000, 必殺背景持続timeset]
+type = varset
+Trigger1 = Time = 0
+var(1) = 150
+
+[State 3000, 超必殺技暗転時間停止]
+type = SuperPause
+trigger1 = Time = 1
+anim = -1
+pos = 0,0
+sound = s150,1
+time = 50
+;movetime = 0
+darken = 1
+poweradd = -1000
+
+[State 3000, 扉出現]
+type = helper
+trigger1 = time = 1
+id = 3004
+pos = -30,0
+postype = p1
+stateno = 3004
+size.xscale = 0.5
+size.yscale = 0.5
+ownpal = 1
+
+[State 3000, ヘルパーを出す];超必エフェクト
+type = Helper
+triggerall = NumHelper(16100) = 0
+trigger1 = Time = 1
+name = "SuperArts"
+stateno = 16100
+ID = 16100
+pos = 0,-60
+keyctrl = 0
+postype = p1
+supermovetime = 99999999
+pausemovetime = 99999999
+ownpal = 0
+IgnoreHitPause = 1
+Persistent = 0
+size.xscale = 0.1
+size.yscale = 0.1
+
+[state 3000, ヘルパーを出す];カットイン
+type = Helper
+;triggerall = NumHelper(16110) = 0
+trigger1 = time = 1
+id = 16110
+pos = 9999,9999
+postype = p1
+stateno = 16110
+ignorehitpause = 1
+facing = 0
+keyctrl = 0
+ownpal = 1
+supermovetime = 999999
+pausemovetime = 999999
+size.xscale = 0.5
+size.yscale = 0.5
+
+
+[State 3000, ステート変更]
+type = Changeanim
+trigger1 = anim = 3000
+trigger1 = Time = 100
+value = 3001
+
+[State 3000, ステート変更]
+type = ChangeState
+trigger1 = anim = 3001
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;----------------------------------------------------------------------------
+;＜CHEESE!＞エフェクト扉
+[Statedef 3004]
+type = A
+ctrl = 0
+anim = 3004
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = -1
+
+[state 3004]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+
+[state 3004, 命中判定中継]
+type = parentvaradd
+trigger1 = var(7) > 0
+var(7) = var(7)
+persistent = 0
+ignorehitpause=1
+
+[state 3004];台車フラグ
+type = varset
+trigger1 = time = 0
+trigger1 = Random <= 99
+var(3) = 1
+
+[state 3004];台車タイミング
+type = varset
+trigger1 = time = 0
+var(4) = (30+random%69)
+
+[State 3004, GSゲージ取得]
+type = parentvaradd
+trigger1 = var(9) = 1
+var(36) = 1
+persistent = 0
+
+[State 3004, GSゲージ取得(カウンターヒット)]
+type = parentvaradd
+trigger1 = var(8) = 1
+var(36) = 1
+persistent = 0
+
+[state 3004]
+type = playsnd
+trigger1 = animelem = 2
+value = s1,6
+
+[state 3004]
+type = varset
+trigger1 = parent,movetype = H
+var(1) = 1
+
+[state 3004]
+type = varadd
+trigger1 = time > 100 || var(1) = 1
+trigger1 = var(2) < 256
+var(2) = 8
+
+[state 3004]
+type = varset
+trigger1 = var(2) > 256
+var(2) = 256
+
+[state 3004]
+type = Trans
+trigger1 = var(2) = 0
+trans = addalpha
+alpha = 256,0
+
+[state 3004]
+type = Trans
+trigger1 = !var(2) = 0
+trans = addalpha
+alpha = 256-var(2),0+var(2)
+
+[State 3004, pyotr出現]
+type = helper
+trigger1 = time >= 2 && var(2) = 0
+trigger1 = time%4=0
+id = 3005
+pos = 7,0
+postype = p1
+stateno = 3005
+size.xscale = 0.5
+size.yscale = 0.5
+ownpal = 1
+
+[State 3004, 台車出現]
+type = helper
+trigger1 = var(3) = 1
+trigger1 = time = var(4)
+id = 3008
+pos = 17,0
+postype = p1
+stateno = 3008
+size.xscale = 0.5
+size.yscale = 0.5
+ownpal = 1
+persistent=0
+
+[state 3004, コンボ補正中継]
+type = ParentVarAdd
+trigger1 = var(10) != 0
+var(5) = var(10)
+
+[state 3004]
+type = varset
+trigger1 = var(10) != 0
+var(10) = 0
+
+[state 3004]
+type = destroyself
+triggerall = var(2) = 256
+trigger1 = numhelper(3005) = 0
+
+;----------------------------------------------------------------------------
+;＜CHEESE!＞PYOTR
+[Statedef 3005]
+type = A
+movetype = A
+ctrl = 0
+anim = 3005+(random%3)
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 5
+
+[state 3005, 無敵]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[state 3005, 命中判定]
+type = parentvaradd
+trigger1 = movecontact
+var(7) = -(root,var(7))+3000
+persistent = 0
+ignorehitpause=1
+
+[State 3005, GSゲージ取得]
+type = parentvaradd
+trigger1 = movehit = 1
+trigger1 = parent,var(9) = 0
+var(9) = 1
+
+[State 3005, GSゲージ取得(カウンターヒット)]
+type = parentvaradd
+trigger1 = movehit = 1
+trigger1 = root,fvar(5) > 1.0
+trigger1 = parent,var(8) = 0
+var(8) = 1
+
+;コンボ補正------------------------
+[state 3005, 確認音]
+type = null;playsnd
+trigger1 = var(5)=15
+value = s220,0
+persistent=0
+
+[state 3005, コンボ補正中継]
+type = varset
+trigger1 = 1
+var(5) = root,var(5)
+
+[State 3005, AttackMulSet];通常
+Type = AttackMulSet
+TriggerAll = NumEnemy
+TriggerAll = Alive
+Trigger1 = var(5) < 51
+value = 0.50+(0.50-((var(5)-1)*0.01))
+
+[State 3005, AttackMulSet]
+Type = AttackMulSet
+TriggerAll = NumEnemy
+TriggerAll = Alive
+Trigger1 = var(5) >= 51
+value = 0.50
+;---------------------------------------
+
+[state 3005, 足音]
+type = playsnd
+trigger1 = animelem = 1
+;trigger2 = animelem = 3
+value = s1,10
+
+[state 3005, 移動速度セット]
+type = velset
+trigger1 = time = 0
+x = 9;ifelse(anim=3005,9,ifelse(anim=3006,6,3))
+
+[State 3005, ヒット定義]
+type = HitDef
+trigger1 = 1
+attr              = S, HP
+damage            = ceil(8*ifelse((root,fvar(5))>1.0,(root,fvar(5)-(0.05+root,var(36)*0.02)),1)),1+ceil(0.5*(root,var(36)))
+animtype          = back
+getpower          = 0,0
+givepower         = 10,4
+guardflag         = MA
+hitflag           = MAFD
+priority          = 5,Hit
+pausetime         = 0,13
+sparkno           = -1
+sparkxy           = -2,-35
+guard.sparkno     = s10100
+hitsound          = s100,0
+guardsound        = s100,10
+ground.type       = low
+ground.slidetime  = 16
+ground.hittime    = 16
+ground.velocity   = -5,0
+airguard.velocity = -1.4,-0.5
+down.velocity     = 0,0
+down.hittime      = 20
+air.type          = high
+air.velocity      = -1.2,0
+air.hittime       = 12
+fall              = 1
+fall.recover      = 0
+;fall.recovertime  = 45
+persistent=0
+
+[state 3005, コンボ補正中継]
+type = null;ParentVarAdd
+trigger1 = movehit = 1
+var(10) = 1
+
+[State 3005, ヒットエフェクト]
+type = helper
+trigger1 = movehit = 1
+pos = 15,-35
+postype = p1
+stateno = 10010
+size.xscale = 0.5
+size.yscale = 0.5
+ownpal = 1
+
+[state 3005, 消滅]
+type = destroyself
+trigger1 = FrontEdgeDist <= -70
+
+;----------------------------------------------------------------------------
+;＜CHEESE!＞台車
+[Statedef 3008]
+type = A
+movetype = A
+ctrl = 0
+anim = 3008
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 5
+
+[state 3008, 無敵]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[state 3008, 命中判定]
+type = parentvaradd
+trigger1 = movecontact
+var(7) = -(root,var(7))+3000
+persistent = 0
+ignorehitpause=1
+
+;コンボ補正------------------------
+[state 3008, コンボ補正中継]
+type = varset
+trigger1 = 1
+var(5) = root,var(5)
+
+[State 3008, AttackMulSet];通常
+Type = AttackMulSet
+TriggerAll = NumEnemy
+TriggerAll = Alive
+Trigger1 = var(5) < 51
+value = 0.50+(0.50-((var(5)-1)*0.01))
+
+[State 3008, AttackMulSet]
+Type = AttackMulSet
+TriggerAll = NumEnemy
+TriggerAll = Alive
+Trigger1 = var(5) >= 51
+value = 0.50
+;---------------------------------------
+
+[state 3008, 移動速度セット]
+type = velset
+trigger1 = time = 0
+x = 16+random%8
+
+[state 3008, 振動]
+type = EnvShake
+trigger1 = movehit = 1
+time = 5
+freq = 120
+ampl = -3
+
+[State 3008, ヒット定義]
+type = HitDef
+trigger1 = 1
+attr              = S, HP
+damage            = 40*(root,fvar(5)),8+((root,var(36))*3)
+animtype          = back
+getpower          = 0,0
+givepower         = 10,4
+guardflag         = MA
+hitflag           = MAFD
+priority          = 5,Hit
+pausetime         = 5,0
+sparkno           = -1
+sparkxy           = -2,-50
+guard.sparkno     = s10100
+hitsound          = s100,2
+guardsound        = s100,10
+ground.type       = low
+ground.slidetime  = 16
+ground.hittime    = 16
+ground.velocity   = -15,0
+airguard.velocity = -1.4,-0.5
+down.velocity     = 0,0
+down.hittime      = 20
+air.type          = high
+air.velocity      = -13.2,2
+air.hittime       = 12
+fall              = 1
+fall.recover      = 0
+;fall.recovertime  = 45
+persistent=0
+
+[state 3008, コンボ補正中継]
+type = null;ParentVarAdd
+trigger1 = movehit = 1
+var(10) = 1
+
+[State 3008, ヒットエフェクト]
+type = helper
+trigger1 = movehit = 1
+pos = 50,-55
+postype = p1
+stateno = 10020
+size.xscale = 0.5
+size.yscale = 0.5
+ownpal = 1
+ignorehitpause=1
+persistent=0
+
+[state 3008, 消滅]
+type = destroyself
+trigger1 = FrontEdgeDist <= -70
+
+;===========================================================================
+;---------------------------------------------------------------------------
+;＜CANDY!＞
+[Statedef 3400]
+type     = A
+movetype = A
+physics  = N
+velset   = 0,0
+ctrl     = 0
+anim     = 3400
+poweradd = -1000
+sprpriority = 2
+facep2   = 1
+
+[State 3400, コンボ補正set]
+type = varset
+trigger1 = time = 0
+var(4) = 1
+
+[State 3400, コンボ補正加算]
+type = varadd
+trigger1 = time = 0
+var(5) = ifelse(var(5)=0,1,35)
+
+[State 3400, 無敵]
+type = NotHitBy
+trigger1 = time < 50
+value = SCA
+
+[State 3200, ガード認識距離]
+type = AttackDist
+trigger1 = 1
+value = 200
+
+[state 3400, 必殺背景持続timeset]
+type = varset
+Trigger1 = Time = 0
+var(1) = 150
+
+[State 3400, 超必殺技暗転時間停止]
+type = SuperPause
+trigger1 = time = 0
+anim = -1
+pos = 0,0
+sound = s150,1
+time = 50
+movetime = 50
+darken = 1
+
+[State 3400, ヘルパーを出す];超必エフェクト
+type = Helper
+triggerall = NumHelper(16100) = 0
+trigger1 = time = 0
+name = "SuperArts"
+stateno = 16100
+ID = 16100
+pos = 0,-60
+keyctrl = 0
+postype = p1
+supermovetime = 99999999
+pausemovetime = 99999999
+ownpal = 0
+IgnoreHitPause = 1
+Persistent = 0
+size.xscale = 0.1
+size.yscale = 0.1
+
+[state 3400, ヘルパーを出す];カットイン
+type = Helper
+;triggerall = NumHelper(16110) = 0
+trigger1 = time = 0
+id = 16110
+pos = 9999,9999
+postype = p1
+stateno = 16110
+ignorehitpause = 1
+facing = 0
+keyctrl = 0
+ownpal = 1
+supermovetime = 999999
+pausemovetime = 999999
+size.xscale = 0.5
+size.yscale = 0.5
+
+[state 3400, エフェクト];ボール
+type = Helper
+trigger1 = time = 0
+id = 3401
+pos = -14,-113
+postype = p1
+stateno = 3401
+ownpal = 1
+size.xscale = 0.2
+size.yscale = 0.2
+supermovetime = 999999
+pausemovetime = 999999
+
+[state 3400, 飴主砲]
+type = Helper
+trigger1 = time%5=0
+trigger1 = Anim = 3401
+trigger1 = AnimElemTime(2) >= 0
+pos = 20,-45
+postype = p1
+stateno = 3404
+ownpal = 1
+size.xscale = 0.5
+size.yscale = 0.5
+
+[state 3400, 飴副砲1]
+type = Helper
+trigger1 = time%6=0
+trigger1 = Anim = 3401
+trigger1 = AnimElemTime(2) >= 0
+pos = 20,-45
+postype = p1
+stateno = 3405
+ownpal = 1
+size.xscale = 0.5
+size.yscale = 0.5
+
+[state 3400, 飴副砲2]
+type = Helper
+trigger1 = time%6=0
+trigger1 = Anim = 3401
+trigger1 = AnimElemTime(2) >= 0
+pos = 20,-45
+postype = p1
+stateno = 3406
+ownpal = 1
+size.xscale = 0.5
+size.yscale = 0.5
+
+[state 1420, 音を鳴らす]
+type = playsnd
+trigger1 = Anim = 3401
+trigger1 = AnimElemTime(2) = 0
+value = s230,3
+volume = 255
+
+[state 3400, 発射音]
+type = playsnd
+trigger1 = time%11=0
+trigger1 = Anim = 3401
+trigger1 = AnimElemTime(2) >= 0
+value = s230,2
+freqmul = 1.5
+volume = 220
+
+[State 3400, 後退]
+type = velset
+trigger1 = Anim = 3401
+trigger1 = AnimElemTime(2) >= 0
+x = -0.2
+y = -0.09
+
+[State 3400, 後退]
+type = veladd
+trigger1 = Anim = 3402
+trigger1 = AnimElemTime(2) = 0
+x = -2.25
+y = -1.75
+
+[State 3400, ステート変更]
+type = Changeanim
+trigger1 = anim = 3400
+trigger1 = Time = 50
+value = 3401
+
+[State 3400, ステート変更]
+type = Changeanim
+trigger1 = anim = 3401
+trigger1 = Time = 150
+value = 3402
+
+[State 3400, ステート変更]
+type = StateTypeSet
+trigger1 = anim = 3402
+trigger1 = AnimElem = 2
+physics = A
+
+;----------------------------------------------------------------------------
+;var(15) 0=玉出現(拡大) 1=飴発射開始(拡大)、発射中 2=消滅パート 
+;＜CANDY!＞ボール部分
+[Statedef 3401]
+type = A
+movetype = I
+ctrl = 0
+anim = 1401
+velset = 0,0
+physics = N
+sprpriority = 5
+
+[state 3401, 影消し]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+
+[state 3401, 無敵]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[state 3401, 位置固定]
+type = BindToParent
+trigger1 = var(15) = 0
+time = 1
+pos = -5,-59
+
+[state 3401, 位置固定]
+type = BindToParent
+trigger1 = parent,anim = 3401
+trigger1 = parent,animelemtime(1) >= 0
+trigger1 = parent,animelemtime(2) < 0 
+time = 1
+pos = 7,-54
+
+[state 3401, 位置固定]
+type = BindToParent
+trigger1 = parent,anim = 3401
+trigger1 = parent,animelemtime(2) >= 0
+trigger1 = var(15) < 2
+time = 1
+pos = 20,-45
+
+[state 3401, 命中判定]
+type = parentvaradd
+trigger1 = movecontact
+var(7) = -(parent,var(7))+3400
+persistent = 0
+ignorehitpause=1
+
+[state 3401, 段階推移]
+type = varset
+trigger1 = var(15) = 0
+trigger1 = parent,anim = 3401
+trigger1 = parent,animelemtime(2) = 0
+var(15) = 1
+
+[state 3401, 段階推移]
+type = varset
+triggerall = var(15) = 1
+trigger1 = parent,anim = 3402
+trigger2 = parent,movetype = H
+var(15) = 2
+
+[state 3401, 透過1]
+type = varadd
+trigger1 = var(15) = 0
+trigger1 = var(1) < 256
+var(1) = 256
+
+[state 3401, 透過1]
+type = varset
+trigger1 = var(1) > 256
+var(1) = 256
+
+[state 3401, 透過1]
+type = Trans
+trigger1 = var(15) = 0
+trigger1 = var(1) = 0
+trans = addalpha
+alpha = 0,256
+
+[state 3401, 透過1]
+type = Trans
+trigger1 = var(15) = 0
+trigger1 = !var(1) = 0
+trans = addalpha
+alpha = 256-(256-var(1)),256
+
+[state 3401, 透過2]
+type = varadd
+trigger1 = var(15) = 2
+trigger1 = var(2) < 256
+var(2) = 16
+
+[state 3401, 透過2]
+type = varset
+trigger1 = var(2) > 256
+var(2) = 256
+
+[state 3401, 透過2]
+type = Trans
+trigger1 = var(15) > 0
+trigger1 = var(2) = 0
+trans = addalpha
+alpha = 256,256
+
+[state 3401, 透過2]
+type = Trans
+trigger1 = var(15) > 0
+trigger1 = !var(2) = 0
+trans = addalpha
+alpha = 256-var(2),256
+
+[State 3401, サイズ制御1]
+type = varset
+trigger1 = time = 0
+fvar(1) = 0.1
+
+[State 3401, サイズ制御1]
+type = varadd
+trigger1 = var(15) = 0
+trigger1 = fvar(1) < 0.5
+fvar(1) = 0.1
+
+[State 3401, サイズ制御2]
+type = varadd
+trigger1 = var(15) = 1
+trigger1 = fvar(1) < 1.5
+fvar(1) = 0.25
+
+[State 3401, サイズ制御2]
+type = varadd
+trigger1 = var(15) = 2
+fvar(1) = -0.08
+
+[state 3401, 玉エフェクト1]
+type = Helper
+trigger1 = time = 1
+trigger1 = numhelper(3402) = 0
+id = 3402
+name = "3402"
+pos = 0,0
+postype = p1
+stateno = 3402
+ownpal = 1
+size.xscale = 0.17
+size.yscale = 0.17
+supermovetime = 999999
+pausemovetime = 999999
+
+[state 3401, 玉エフェクト2]
+type = Helper
+trigger1 = time = 1
+trigger1 = numhelper(3403) = 0
+id = 3403
+name = "3403"
+pos = 0,0
+postype = p1
+stateno = 3403
+ownpal = 1
+size.xscale = 0.17
+size.yscale = 0.17
+supermovetime = 999999
+pausemovetime = 999999
+
+[state 3401, 生成リング]
+type = Helper
+trigger1 = var(15) = 0
+name = "d_ling"
+pos = 0,0
+postype = p1
+stateno = 1406
+ownpal = 1
+size.xscale = 0.3
+size.yscale = 0.3
+persistent = 0
+supermovetime = 999999
+pausemovetime = 999999
+
+[state 3401, 巨大化リング]
+type = Helper
+trigger1 = var(15) = 1
+name = "d_ling"
+pos = 0,0
+postype = p1
+stateno = 1406
+ownpal = 1
+size.xscale = 0.5
+size.yscale = 0.5
+persistent = 0
+
+[state 3401, 消滅リング]
+type = Helper
+trigger1 = var(15) = 2
+name = "d_ling"
+pos = 0,0
+postype = p1
+stateno = 1406
+ownpal = 1
+size.xscale = 0.5
+size.yscale = 0.5
+persistent = 0
+
+[state 3401, サイズ制御]
+type = angledraw
+trigger1 = 1
+scale = fvar(1),fvar(1)
+
+[state 3401, 消滅]
+type = destroyself
+trigger1 = var(15) = 2
+trigger1 = var(2) = 256
+
+;---------------------------------------------------------------------------
+;CANDY!玉エフェクト１
+[Statedef 3402]
+type = A
+ctrl = 0
+anim = 11500
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 7
+
+[State 3402, 間違いで本体が来たら立ちへ移行]
+type=selfstate
+trigger1=!ishelper
+value=0
+
+[state 3402, 影消し]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+
+[state 3402, 位置固定]
+type = BindToParent
+trigger1 = 1
+time = 1
+
+[state 3402, 角度制御]
+type = angleset
+trigger1 = time = 0
+value = 0
+
+[state 3402, 角度変化]
+type = angleadd
+trigger1 = 1
+value = 50
+[state 3402, 角度変化]
+type = AngleDraw
+trigger1 = 1
+
+[state 3402, 透過1]
+type = varadd
+trigger1 = parent,var(15) = 0
+trigger1 = var(1) < 256
+var(1) = 64
+
+[state 3402, 透過1]
+type = varset
+trigger1 = var(1) > 256
+var(1) = 256
+
+[state 3402, 透過1]
+type = Trans
+trigger1 = parent,var(15) = 0
+trigger1 = var(1) = 0
+trans = addalpha
+alpha = 0,256
+
+[state 3402, 透過1]
+type = Trans
+trigger1 = parent,var(15) = 0
+trigger1 = !var(1) = 0
+trans = addalpha
+alpha = 256-(256-var(1)),256
+
+[state 3402, 透過2]
+type = varset
+trigger1 = parent,var(15) = 1
+var(15) = 1
+
+[state 3402, 透過2]
+type = varset
+trigger1 = parent,var(15) = 2
+var(15) = 2
+
+[state 3402, 透過2]
+type = varadd
+trigger1 = var(15) = 2
+trigger1 = var(5) < 256
+var(5) = 16
+
+[state 3402, 透過2]
+type = varset
+trigger1 = var(5) > 256
+var(5) = 256
+
+[state 3402, 透過2]
+type = Trans
+trigger1 = var(15) > 0
+trigger1 = var(5) = 0
+trans = addalpha
+alpha = 256,256
+
+[state 3402, 透過2]
+type = Trans
+trigger1 = var(15) > 0
+trigger1 = !var(5) = 0
+trans = addalpha
+alpha = 256-var(5),256
+
+[state 3402, 拡大縮小1]
+type = varset
+trigger1 = time = 0
+fvar(2) = 1.0
+
+[state 3402, 拡大縮小切り替え初期]
+type = varset
+trigger1 = time = 0
+var(2) = 1
+
+[state 3402, 拡大縮小判定1]
+type = varset
+trigger1 = fvar(2) > 1.1
+var(2) = 1
+
+[state 3402, 拡大縮小判定2]
+type = varset
+trigger1 = fvar(2) < 0.9
+var(2) = 0
+
+[state 3402, 拡大縮小1]
+type = varadd
+trigger1 = var(2) = 1
+fvar(2) = -0.1
+
+[state 3402, 拡大縮小2]
+type = varadd
+trigger1 = var(2) = 0
+fvar(2) = 0.1
+
+[state 3402, サイズ制御]
+type = angledraw
+trigger1 = 1
+scale = ((parent,fvar(1))*fvar(2)),((parent,fvar(1))*fvar(2))
+
+[state 3402, 消滅]
+type = destroyself
+trigger1 = var(5) = 256
+
+;---------------------------------------------------------------------------
+;CANDY!玉エフェクト2
+[Statedef 3403]
+type = A
+ctrl = 0
+anim = 11500
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 7
+
+[State 3403, 間違いで本体が来たら立ちへ移行]
+type=selfstate
+trigger1=!ishelper
+value=0
+
+[state 3403, 影消し]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+
+[state 3403, 位置固定]
+type = BindToParent
+trigger1 = 1
+time = 1
+
+[state 3403, 角度制御]
+type = angleset
+trigger1 = time = 0
+value = 180
+
+[state 3403, 角度変化]
+type = angleadd
+trigger1 = 1
+value = -41
+[state 3403, 角度変化]
+type = AngleDraw
+trigger1 = 1
+
+[state 3403, 透過1]
+type = varadd
+trigger1 = parent,var(15) = 0
+trigger1 = var(1) < 256
+var(1) = 64
+
+[state 3403, 透過1]
+type = varset
+trigger1 = var(1) > 256
+var(1) = 256
+
+[state 3403, 透過1]
+type = Trans
+trigger1 = parent,var(15) = 0
+trigger1 = var(1) = 0
+trans = addalpha
+alpha = 0,256
+
+[state 3403, 透過1]
+type = Trans
+trigger1 = parent,var(15) = 0
+trigger1 = !var(1) = 0
+trans = addalpha
+alpha = 256-(256-var(1)),256
+
+[state 3403, 透過2]
+type = varset
+trigger1 = parent,var(15) = 1
+var(15) = 1
+
+[state 3403, 透過2]
+type = varset
+trigger1 = parent,var(15) = 2
+var(15) = 2
+
+[state 3403, 透過2]
+type = varadd
+trigger1 = var(15) = 2
+trigger1 = var(5) < 256
+var(5) = 16
+
+[state 3403, 透過2]
+type = varset
+trigger1 = var(5) > 256
+var(5) = 256
+
+[state 3403, 透過2]
+type = Trans
+trigger1 = var(15) > 0
+trigger1 = var(5) = 0
+trans = addalpha
+alpha = 256,256
+
+[state 3403, 透過2]
+type = Trans
+trigger1 = var(15) > 0
+trigger1 = !var(5) = 0
+trans = addalpha
+alpha = 256-var(5),256
+
+[state 3403, 拡大縮小1]
+type = varset
+trigger1 = time = 0
+fvar(2) = 1.0
+
+[state 3403, 拡大縮小切り替え初期]
+type = varset
+trigger1 = time = 0
+var(2) = 0
+
+[state 3403, 拡大縮小判定1]
+type = varset
+trigger1 = fvar(2) > 1.1
+var(2) = 1
+
+[state 3403, 拡大縮小判定2]
+type = varset
+trigger1 = fvar(2) < 0.9
+var(2) = 0
+
+[state 3403, 拡大縮小1]
+type = varadd
+trigger1 = var(2) = 1
+fvar(2) = -0.1
+
+[state 3403, 拡大縮小2]
+type = varadd
+trigger1 = var(2) = 0
+fvar(2) = 0.1
+
+[state 3403, サイズ制御]
+type = angledraw
+trigger1 = 1
+scale = ((parent,fvar(1))*fvar(2)),((parent,fvar(1))*fvar(2))
+
+[state 3403, 消滅]
+type = destroyself
+trigger1 = var(5) = 256
+
+;----------------------------------------------------------------------------
+;＜CANDY!＞飴(攻撃判定)主砲1
+[Statedef 3404]
+type = A
+movetype = A
+ctrl = 0
+anim = 3403+(random%3)
+velset = 0,0
+physics = N
+sprpriority = 7
+
+[state 3404, 影消し]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+
+[state 3404, 無敵]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[state 3404, 命中判定]
+type = parentvaradd
+trigger1 = movecontact
+var(7) = -(parent,var(7))+3400
+persistent = 0
+ignorehitpause=1
+
+[State 3404, GSゲージ取得]
+type = parentvaradd
+trigger1 = movehit = 1
+trigger1 = parent,fvar(7) = 0
+var(36) = 1
+persistent = 0
+
+[State 3404, GSゲージ取得(カウンターヒット)]
+type = parentvaradd
+trigger1 = movehit = 1
+trigger1 = parent,fvar(5) > 1.0
+trigger1 = parent,fvar(7) = 0
+var(36) = 1
+persistent = 0
+
+[State 3404, GSゲージ連続取得防止機構]
+type = parentvaradd
+trigger1 = movehit = 1
+fvar(7) = 1
+persistent = 0
+
+;コンボ補正------------------------
+[state 3404, コンボ補正中継]
+type = varset
+trigger1 = 1
+var(5) = parent,var(5)
+
+[State 3404, AttackMulSet];通常
+Type = AttackMulSet
+TriggerAll = NumEnemy
+TriggerAll = Alive
+Trigger1 = var(5) < 51
+value = 0.50+(0.50-((var(5)-1)*0.01))
+
+[State 3404, AttackMulSet]
+Type = AttackMulSet
+TriggerAll = NumEnemy
+TriggerAll = Alive
+Trigger1 = var(5) >= 51
+value = 0.50
+;---------------------------------------
+
+[state 3404, 移動速度セット]
+type = velset
+trigger1 = time = 0
+x = 9+(0.1*(random%19))
+y = 7+(0.1*(random%19))
+
+[state 3404, 初期角度セット]
+type = varset
+trigger1 = time = 0
+v = 1
+value = random%359
+
+[state 3404, 角度実行]
+type = angleset
+trigger1 = time = 0
+value = var(1)
+
+[state 3404, 回転速度セット]
+type = varset
+trigger1 = time = 0
+fvar(19) = -8.5+(1*random%17)
+
+[state 3404, 回転実行]
+type = angleadd
+trigger1 = 1
+value = fvar(19)
+
+[state 3404, 回転実行]
+type = AngleDraw
+trigger1 = 1
+
+[State 3404, ヒット定義]
+type = HitDef
+trigger1 = 1
+attr              = S, HP
+damage            = ceil(5*ifelse((root,fvar(5))>1.0,(root,fvar(5)-(0.05+root,var(36)*0.02)),1)),1+ceil(0.25*(root,var(36)))
+animtype          = back
+getpower          = 0,0
+givepower         = 10,4
+guardflag         = MA
+hitflag           = MAFD
+priority          = 5,Hit
+pausetime         = 0,10
+sparkno           = -1
+sparkxy           = -5,0
+guard.sparkno     = s10100
+hitsound          = s100,0
+guardsound        = s100,10
+ground.type       = low
+ground.slidetime  = 16
+ground.hittime    = 20
+ground.velocity   = -5,0
+airguard.velocity = -1.4,-0.5
+down.velocity     = 0,0
+down.hittime      = 20
+air.type          = high
+air.velocity      = -1.2,0
+air.hittime       = 20
+fall              = 1
+fall.recover      = 1
+fall.recovertime  = 45
+persistent=0
+
+[State 3404, ヒットエフェクト]
+type = helper
+trigger1 = movehit = 1
+pos = 5,0
+postype = p1
+stateno = 10010
+size.xscale = 0.5
+size.yscale = 0.5
+ownpal = 1
+
+[state 3404, 消滅]
+type = destroyself
+trigger1 = FrontEdgeDist <= -20
+trigger2 = Pos Y >= 70
+
+;----------------------------------------------------------------------------
+;＜CANDY!＞飴(攻撃判定)副砲2
+[Statedef 3406]
+type = A
+movetype = A
+ctrl = 0
+anim = 3403+(random%3)
+velset = 0,0
+physics = N
+sprpriority = 7
+
+[state 3404, 影消し]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+
+[state 3404, 無敵]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[state 3404, 命中判定]
+type = parentvaradd
+trigger1 = movecontact
+var(7) = -(parent,var(7))+3400
+persistent = 0
+ignorehitpause=1
+
+[State 3404, GSゲージ取得]
+type = parentvaradd
+trigger1 = movehit = 1
+trigger1 = parent,fvar(7) = 0
+var(36) = 1
+persistent = 0
+
+[State 3404, GSゲージ取得(カウンターヒット)]
+type = parentvaradd
+trigger1 = movehit = 1
+trigger1 = parent,fvar(5) > 1.0
+trigger1 = parent,fvar(7) = 0
+var(36) = 1
+persistent = 0
+
+[State 3404, GSゲージ連続取得防止機構]
+type = parentvaradd
+trigger1 = movehit = 1
+fvar(7) = 1
+persistent = 0
+
+;コンボ補正------------------------
+[state 3404, コンボ補正中継]
+type = varset
+trigger1 = 1
+var(5) = parent,var(5)
+
+[State 3404, AttackMulSet];通常
+Type = AttackMulSet
+TriggerAll = NumEnemy
+TriggerAll = Alive
+Trigger1 = var(5) < 51
+value = 0.50+(0.50-((var(5)-1)*0.01))
+
+[State 3404, AttackMulSet]
+Type = AttackMulSet
+TriggerAll = NumEnemy
+TriggerAll = Alive
+Trigger1 = var(5) >= 51
+value = 0.50
+;---------------------------------------
+
+[state 3404, 移動速度セット]
+type = velset
+trigger1 = time = 0
+x = 5+(0.1*(random%49))
+y = 1+(0.1*(random%59))
+
+[state 3404, 初期角度セット]
+type = varset
+trigger1 = time = 0
+v = 1
+value = random%359
+
+[state 3404, 角度実行]
+type = angleset
+trigger1 = time = 0
+value = var(1)
+
+[state 3404, 回転速度セット]
+type = varset
+trigger1 = time = 0
+fvar(19) = -8.5+(1*random%17)
+
+[state 3404, 回転実行]
+type = angleadd
+trigger1 = 1
+value = fvar(19)
+
+[state 3404, 回転実行]
+type = AngleDraw
+trigger1 = 1
+
+[State 3404, ヒット定義]
+type = HitDef
+trigger1 = 1
+attr              = S, HP
+damage            = ceil(3*ifelse((root,fvar(5))>1.0,(root,fvar(5)-(0.05+root,var(36)*0.02)),1)),1+ceil(0.25*(root,var(36)))
+animtype          = back
+getpower          = 0,0
+givepower         = 5,2
+guardflag         = MA
+hitflag           = MAFD
+priority          = 5,Hit
+pausetime         = 0,10
+sparkno           = -1
+sparkxy           = -5,0
+guard.sparkno     = s10100
+hitsound          = s100,0
+guardsound        = s100,10
+ground.type       = low
+ground.slidetime  = 16
+ground.hittime    = 20
+ground.velocity   = -5,0
+airguard.velocity = -1.4,-0.5
+down.velocity     = 0,0
+down.hittime      = 20
+air.type          = high
+air.velocity      = -1.2,0
+air.hittime       = 20
+fall              = 1
+fall.recover      = 1
+fall.recovertime  = 45
+persistent=0
+
+[State 3404, ヒットエフェクト]
+type = helper
+trigger1 = movehit = 1
+pos = 5,0
+postype = p1
+stateno = 10010
+size.xscale = 0.5
+size.yscale = 0.5
+ownpal = 1
+
+[state 3404, 消滅]
+type = destroyself
+trigger1 = FrontEdgeDist <= -20
+trigger2 = Pos Y >= 70
+
+;----------------------------------------------------------------------------
+;＜CANDY!＞飴(攻撃判定)副砲
+[Statedef 3405]
+type = A
+movetype = A
+ctrl = 0
+anim = 3403+(random%3)
+velset = 0,0
+physics = N
+sprpriority = 5
+
+[state 3404, 影消し]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+
+[state 3404, 無敵]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[state 3404, 命中判定]
+type = parentvaradd
+trigger1 = movecontact
+var(7) = -(parent,var(7))+3400
+persistent = 0
+ignorehitpause=1
+
+[State 3404, GSゲージ取得]
+type = parentvaradd
+trigger1 = movehit = 1
+trigger1 = parent,fvar(7) = 0
+var(36) = 1
+persistent = 0
+
+[State 3404, GSゲージ取得(カウンターヒット)]
+type = parentvaradd
+trigger1 = movehit = 1
+trigger1 = parent,fvar(5) > 1.0
+trigger1 = parent,fvar(7) = 0
+var(36) = 1
+persistent = 0
+
+[State 3404, GSゲージ連続取得防止機構]
+type = parentvaradd
+trigger1 = movehit = 1
+fvar(7) = 1
+persistent = 0
+
+;コンボ補正------------------------
+[state 3404, コンボ補正中継]
+type = varset
+trigger1 = 1
+var(5) = parent,var(5)
+
+[State 3404, AttackMulSet];通常
+Type = AttackMulSet
+TriggerAll = NumEnemy
+TriggerAll = Alive
+Trigger1 = var(5) < 51
+value = 0.50+(0.50-((var(5)-1)*0.01))
+
+[State 3404, AttackMulSet]
+Type = AttackMulSet
+TriggerAll = NumEnemy
+TriggerAll = Alive
+Trigger1 = var(5) >= 51
+value = 0.50
+;---------------------------------------
+
+[state 3404, 移動速度セット]
+type = velset
+trigger1 = time = 0
+x = 5+(0.1*(random%49))
+y = 9+(0.1*(random%59))
+
+[state 3404, 初期角度セット]
+type = varset
+trigger1 = time = 0
+v = 1
+value = random%359
+
+[state 3404, 角度実行]
+type = angleset
+trigger1 = time = 0
+value = var(1)
+
+[state 3404, 回転速度セット]
+type = varset
+trigger1 = time = 0
+fvar(19) = -8.5+(1*random%17)
+
+[state 3404, 回転実行]
+type = angleadd
+trigger1 = 1
+value = fvar(19)
+
+[state 3404, 回転実行]
+type = AngleDraw
+trigger1 = 1
+
+[State 3404, ヒット定義]
+type = HitDef
+trigger1 = 1
+attr              = S, HP
+damage            = ceil(3*ifelse((root,fvar(5))>1.0,(root,fvar(5)-(0.05+root,var(36)*0.02)),1)),1+ceil(0.25*(root,var(36)))
+animtype          = back
+getpower          = 0,0
+givepower         = 5,2
+guardflag         = MA
+hitflag           = MAFD
+priority          = 5,Hit
+pausetime         = 0,10
+sparkno           = -1
+sparkxy           = -5,0
+guard.sparkno     = s10100
+hitsound          = s100,0
+guardsound        = s100,10
+ground.type       = low
+ground.slidetime  = 16
+ground.hittime    = 20
+ground.velocity   = -5,0
+airguard.velocity = -1.4,-0.5
+down.velocity     = 0,0
+down.hittime      = 20
+air.type          = high
+air.velocity      = -1.2,0
+air.hittime       = 20
+fall              = 1
+fall.recover      = 1
+fall.recovertime  = 45
+persistent=0
+
+[State 3404, ヒットエフェクト]
+type = helper
+trigger1 = movehit = 1
+pos = 5,0
+postype = p1
+stateno = 10010
+size.xscale = 0.5
+size.yscale = 0.5
+ownpal = 1
+
+[state 3404, 消滅]
+type = destroyself
+trigger1 = FrontEdgeDist <= -20
+trigger2 = Pos Y >= 70
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;===========================================================================
+;---------------------------------------------------------------------------
+;2ゲージ
+;===========================================================================
+;---------------------------------------------------------------------------
+;＜ONE WHOLE!＞
+[Statedef 3100]
+type     = S
+movetype = A
+physics  = S
+velset   = 0,0
+ctrl     = 0
+anim     = 3100
+poweradd = -2000
+sprpriority = 2
+facep2   = 1
+
+[State 3100, コンボ補正set]
+type = varset
+trigger1 = time = 0
+var(4) = 2
+
+[State 3100, コンボ補正加算]
+type = varadd
+trigger1 = time = 0
+var(5) = ifelse(var(5)=0,1,35)
+
+[State 3100, 無敵]
+type = NotHitBy
+trigger1 = time > 5
+value = SCA
+
+[State 3100, ガード認識距離]
+type = AttackDist
+trigger1 = 1
+value = 200
+
+[state 3100, 必殺背景持続timeset]
+type = varset
+Trigger1 = Time = 0
+var(1) = 188;150
+
+[State 3100, 超必殺技暗転時間停止]
+type = SuperPause
+trigger1 = time = 6
+anim = -1
+pos = 0,0
+sound = s150,1
+time = 50
+movetime = 50
+darken = 1
+
+[State 3100, ヘルパーを出す];超必エフェクト
+type = Helper
+triggerall = NumHelper(16100) = 0
+trigger1 = time = 6
+name = "SuperArts"
+stateno = 16100
+ID = 16100
+pos = 0,-60
+keyctrl = 0
+postype = p1
+supermovetime = 99999999
+pausemovetime = 99999999
+ownpal = 0
+IgnoreHitPause = 1
+Persistent = 0
+size.xscale = 0.1
+size.yscale = 0.1
+
+[state 3100, ヘルパーを出す];カットイン
+type = Helper
+;triggerall = NumHelper(16110) = 0
+trigger1 = time = 6
+id = 16110
+pos = 9999,9999
+postype = p1
+stateno = 16110
+ignorehitpause = 1
+facing = 0
+keyctrl = 0
+ownpal = 1
+supermovetime = 999999
+pausemovetime = 999999
+size.xscale = 0.5
+size.yscale = 0.5
+
+[state 3100, エフェクト]
+type = Helper
+trigger1 = time >= 13+42
+trigger1 = time%8=0
+trigger1 = anim = 3100
+id = 1201
+;name = "ring"
+pos = 20,2
+postype = p1
+stateno = 1201
+ownpal = 1
+size.xscale = 0.5
+size.yscale = 0.5
+
+[state 3100, 攻撃エフェクト]
+type = Helper
+trigger1 = Animelem = 6
+id = 3102
+name = "3102"
+pos = 100,0
+postype = p1
+stateno = 3102
+ownpal = 1
+size.xscale = 0.5
+size.yscale = 0.5
+
+[state 3100, 音を鳴らす]
+type = playsnd
+trigger1 = animelem = 4
+trigger1 = anim = 3100
+value = s110,2
+
+[state 3100, 音を鳴らす]
+type = playsnd
+trigger1 = animelem = 6
+value = s5,0
+volume = -50
+freqmul = 0.8
+
+[state 3100, 音を鳴らす]
+type = playsnd
+trigger1 = animelem = 6
+value = s17,1
+freqmul = 1.5
+
+[state 3100, 音を鳴らす]
+type = playsnd
+trigger1 = animelem = 6
+value = s17,1
+freqmul = 0.5
+
+[state 3100, 音を鳴らす]
+type = playsnd
+trigger1 = animelem = 6
+value = s230,5
+volume = 255
+
+[state 3100, 音を鳴らす]
+type = playsnd
+trigger1 = animelem = 6
+value = s230,5
+volume = 255
+
+[state 3100, 振動]
+type = EnvShake
+trigger1 = animelem = 6
+time = 15
+freq = 120
+ampl = -8
+
+[State 3100, ステート変更]
+type = Changeanim
+trigger1 = anim = 3100
+trigger1 = Time = 188;150
+value = 3101
+
+[State 3100, ステート変更]
+type = ChangeState
+trigger1 = anim = 3101
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;----------------------------------------------------------------------------
+;＜ONE WHOLE!＞攻撃判定
+[Statedef 3102]
+type = A
+movetype = A
+ctrl = 0
+anim = 3102
+velset = 0,0
+physics = N
+sprpriority = 5
+
+[state 3102, 影消し]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+
+[state 3102, 無敵]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[state 3102, 命中判定]
+type = parentvaradd
+trigger1 = movecontact
+var(7) = -(parent,var(7))+3100
+persistent = 0
+ignorehitpause=1
+
+[State 3102, GSゲージ取得]
+type = parentvaradd
+trigger1 = movehit = 1
+var(36) = 1
+persistent = 0
+
+[State 3102, GSゲージ取得(カウンターヒット)]
+type = parentvaradd
+trigger1 = movehit = 1
+trigger1 = parent,fvar(5) > 1.0
+var(36) = 1
+persistent = 0
+
+;コンボ補正------------------------
+[state 3102, コンボ補正中継]
+type = varset
+trigger1 = 1
+var(5) = parent,var(5)
+
+[State 3102, AttackMulSet];通常
+Type = AttackMulSet
+TriggerAll = NumEnemy
+TriggerAll = Alive
+Trigger1 = var(5) < 51
+value = 0.75+(0.25-((var(5)-1)*0.005))
+
+[State 3102, AttackMulSet]
+Type = AttackMulSet
+TriggerAll = NumEnemy
+TriggerAll = Alive
+Trigger1 = var(5) >= 51
+value = 0.75
+;---------------------------------------
+
+[state 3102, でかケーキ]
+type = Helper
+trigger1 = time = 0
+id = 3103
+name = "bigkake"
+pos = 0,0
+postype = p1
+stateno = 3103
+ownpal = 1
+size.xscale = 0.5
+size.yscale = 0.5
+
+[state 3102, エフェクト1]
+type = Helper
+trigger1 = time = 0
+id = 3104
+name = "fire1"
+pos = 0,0
+postype = p1
+stateno = 3104
+ownpal = 1
+size.xscale = 0.4
+size.yscale = 0.5
+
+[state 3102, エフェクト2]
+type = Helper
+trigger1 = time = 0
+id = 3105
+name = "fire2"
+pos = 0,0
+postype = p1
+stateno = 3105
+ownpal = 1
+size.xscale = 0.35
+size.yscale = 0.5
+
+[State 3102, ヒット定義]
+type = HitDef
+trigger1 = animelem = 1
+trigger2 = animelem = 2
+trigger3 = animelem = 3
+trigger4 = animelem = 4
+trigger5 = animelem = 5
+trigger6 = animelem = 6
+trigger7 = animelem = 7
+trigger8 = animelem = 8
+attr              = S, HA
+damage            = ceil((55*(1.0-(0.1*hitcount)))*ifelse((parent,fvar(5))>1.0,(parent,fvar(5)-(0.05+parent,var(36)*0.02)),1)),8+ceil(parent,var(36)*1.5)
+animtype          = diagup
+getpower          = 0,0
+givepower         = 20,10
+guardflag         = MA
+hitflag           = MAFD
+priority          = 3,Hit
+pausetime         = 0,20
+sparkno           = -1
+sparkxy           = -2,-50
+guard.sparkno     = s10100
+hitsound          = s100,2
+guardsound        = s100,10
+ground.type       = High
+ground.slidetime  = 20
+ground.hittime    = 20
+ground.velocity   = -1,-6
+airguard.velocity = -1.4,-0.5
+air.type          = High
+air.velocity      = -1,-3
+air.hittime       = 20
+fall = 1
+fall.recover = 0
+ground.cornerpush.veloff = 0
+
+[State 3102, ヒットエフェクト]
+type = helper
+triggerall = movehit = 1
+trigger1 = hitcount = 1
+pos = -2,-35
+postype = p2
+stateno = 10074;20
+size.xscale = 0.5
+size.yscale = 0.5
+supermovetime = 999999
+pausemovetime = 999999
+ignorehitpause=1
+persistent=0
+ownpal = 1
+
+[State 3102, ヒットエフェクト]
+type = helper
+triggerall = movehit = 1
+trigger1 = hitcount = 2
+pos = -2,-35
+postype = p2
+stateno = 10074;20
+size.xscale = 0.5
+size.yscale = 0.5
+supermovetime = 999999
+pausemovetime = 999999
+ignorehitpause=1
+persistent=0
+ownpal = 1
+
+[State 3102, ヒットエフェクト]
+type = helper
+triggerall = movehit = 1
+trigger1 = hitcount = 3
+pos = -2,-35
+postype = p2
+stateno = 10074;20
+size.xscale = 0.5
+size.yscale = 0.5
+supermovetime = 999999
+pausemovetime = 999999
+ignorehitpause=1
+persistent=0
+ownpal = 1
+
+[State 3102, ヒットエフェクト]
+type = helper
+triggerall = movehit = 1
+trigger1 = hitcount = 4
+pos = -2,-35
+postype = p2
+stateno = 10074;20
+size.xscale = 0.5
+size.yscale = 0.5
+supermovetime = 999999
+pausemovetime = 999999
+ignorehitpause=1
+persistent=0
+ownpal = 1
+
+[State 3102, ヒットエフェクト]
+type = helper
+triggerall = movehit = 1
+trigger1 = hitcount = 5
+pos = -2,-35
+postype = p2
+stateno = 10074;20
+size.xscale = 0.5
+size.yscale = 0.5
+supermovetime = 999999
+pausemovetime = 999999
+ignorehitpause=1
+persistent=0
+ownpal = 1
+
+[State 3102, ヒットエフェクト]
+type = helper
+triggerall = movehit = 1
+trigger1 = hitcount = 6
+pos = -2,-35
+postype = p2
+stateno = 10074;20
+size.xscale = 0.5
+size.yscale = 0.5
+supermovetime = 999999
+pausemovetime = 999999
+ignorehitpause=1
+persistent=0
+ownpal = 1
+
+[State 3102, ヒットエフェクト]
+type = helper
+triggerall = movehit = 1
+trigger1 = hitcount = 7
+pos = -2,-35
+postype = p2
+stateno = 10074;20
+size.xscale = 0.5
+size.yscale = 0.5
+supermovetime = 999999
+pausemovetime = 999999
+ignorehitpause=1
+persistent=0
+ownpal = 1
+
+[State 3102, ヒットエフェクト]
+type = helper
+triggerall = movehit = 1
+trigger1 = hitcount = 8
+pos = -2,-35
+postype = p2
+stateno = 10074;20
+size.xscale = 0.5
+size.yscale = 0.5
+supermovetime = 999999
+pausemovetime = 999999
+ignorehitpause=1
+persistent=0
+ownpal = 1
+
+[state 3102, 消滅]
+type = destroyself
+trigger1 = animtime = 0
+
+;----------------------------------------------------------------------------
+;＜ONE WHOLE!!＞エフェクトケーキ
+[Statedef 3103]
+type = A
+ctrl = 0
+anim = 3103
+velset = 0,-10
+movetype = I
+physics = N
+sprpriority = 6
+
+[state 3103, 影消し]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+
+[state 3103, 角度制御]
+type = angleset
+trigger1 = time = 0
+value = fvar(1)
+
+[state 3103, 角度変化]
+type = varset
+trigger1 = time = 0
+fvar(1) = -0.10+(0.02*(random%9))
+
+[state 3103, 角度変化]
+type = angleadd
+trigger1 = 1
+value = fvar(1)
+[state a]
+type = AngleDraw
+trigger1 = 1
+
+[state 3103, 急減速]
+type = velmul
+trigger1 = time = 1
+y = 0.6
+
+[state 3103, 減速]
+type = veladd
+trigger1 = time > 1
+trigger1 = vel Y > -0.1
+y = -0.1
+
+[state 3103, 速度固定]
+type = velset
+trigger1 = time > 1
+trigger1 = vel Y < -0.1
+y = -0.1
+
+[state 3103, 透過]
+type = varadd
+trigger1 = time > 116;68
+trigger1 = var(2) < 256
+var(2) = 6
+
+[state 3103, 透過]
+type = varset
+trigger1 = var(2) > 256
+var(2) = 256
+
+[state 3103, 透過]
+type = Trans
+trigger1 = var(2) = 0
+trans = addalpha
+alpha = 256,0
+
+[state 3103, 透過]
+type = Trans
+trigger1 = !var(2) = 0
+trans = addalpha
+alpha = 256-var(2),0+var(2)
+
+[state 3103, 透過消滅]
+type = destroyself
+trigger1 = var(2) = 256
+
+;----------------------------------------------------------------------------
+;＜ONE WHOLE!!＞エフェクト↓
+[Statedef 3104]
+type = A
+ctrl = 0
+anim = 1210
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 6
+
+[state 3104, 影消し]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+
+[state 3104, エフェクト]
+type = Helper
+trigger1 = time%8=0
+id = 1201
+;name = "ring"
+pos = 0,2
+postype = p1
+stateno = 1201
+ownpal = 1
+size.xscale = 1.0
+size.yscale = 1.0
+
+[state 3104, 透過1]
+type = varadd
+trigger1 = time > 138;90
+trigger1 = var(2) < 256
+var(2) = 8
+
+[state 3104, 透過2]
+type = varset
+trigger1 = var(2) > 265
+var(2) = 256
+
+[state 3104, 透過3]
+type = Trans
+trigger1 = var(2) = 0
+trans = addalpha
+alpha = 256,256
+
+[state 3104, 透過4]
+type = Trans
+trigger1 = !var(2) = 0
+trans = addalpha
+alpha = 256-var(2),256
+
+[state 3104, 段階1]
+type = varset
+trigger1 = time = 0
+var(1) = 0
+
+[state 3104, 初期サイズx]
+type = varset
+trigger1 = time = 0
+fvar(1) = 6.2
+;x
+[state 3104, サイズ変動x]
+type = varadd
+trigger1 = fvar(1) > 0
+trigger1 = var(1) = 0
+fvar(1) = -0.3
+;x
+[state 3104, 初期サイズy]
+type = varset
+trigger1 = time = 0
+fvar(2) = 0.1
+;y
+[state 3104, サイズ変動y]
+type = varadd
+trigger1 = var(1) = 0
+fvar(2) = 0.1
+;y
+
+[state 3104, 段階2]
+type = varset
+trigger1 = time = 10
+var(1) = 1
+
+[state 3104, サイズ変動x2]
+type = varset
+trigger1 = var(1) = 1
+fvar(1) = ifelse(fvar(1)=3.2,3.4,3.2)
+;x
+[state 3104, サイズ変動y2]
+type = varset
+trigger1 = var(1) = 1
+fvar(2) = ifelse(fvar(2)=1.1,1.2,1.1)
+;x
+
+[state 3104, 段階3]
+type = varset
+trigger1 = time = 138;90
+var(1) = 2
+
+[state 3104, サイズ変動x]
+type = varadd
+trigger1 = fvar(1) > 0
+trigger1 = var(1) = 2
+fvar(1) = -0.2
+;x
+[state 3104, サイズ変動y]
+type = varadd
+trigger1 = var(1) = 2
+fvar(2) = 0.1
+;y
+
+[state 3104, サイズ固定x]
+type = varset
+trigger1 = fvar(1) < 0
+fvar(1) = 0
+;x
+
+[state 3104, サイズ制御]
+type = angledraw
+trigger1 = 1
+scale = fvar(1),fvar(2)
+
+[state 3104, 消滅]
+type = destroyself
+trigger1 = fvar(1) = 0
+
+;----------------------------------------------------------------------------
+;＜ONE WHOLE!!＞エフェクト↑
+[Statedef 3105]
+type = A
+ctrl = 0
+anim = 1211
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 6
+
+[state 3105, 影消し]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+
+[state 3105, 透過1]
+type = varadd
+trigger1 = time > 138;90
+trigger1 = var(2) < 256
+var(2) = 8
+
+[state 3105, 透過2]
+type = varset
+trigger1 = var(2) > 256
+var(2) = 256
+
+[state 3105, 透過3]
+type = Trans
+trigger1 = var(2) = 0
+trans = addalpha
+alpha = 256,256
+
+[state 3105, 透過4]
+type = Trans
+trigger1 = !var(2) = 0
+trans = addalpha
+alpha = 256-var(2),256
+
+[state 3105, 段階1]
+type = varset
+trigger1 = time = 0
+var(1) = 0
+
+[state 3105, 初期サイズx]
+type = varset
+trigger1 = time = 0
+fvar(1) = 6.2
+;x
+[state 3105, サイズ変動x]
+type = varadd
+trigger1 = fvar(1) > 0
+trigger1 = var(1) = 0
+fvar(1) = -0.2
+;x
+[state 3105, 初期サイズy]
+type = varset
+trigger1 = time = 0
+fvar(2) = 0.1
+;y
+[state 3105, サイズ変動y]
+type = varadd
+trigger1 = var(1) = 0
+fvar(2) = 0.35
+;y
+
+[state 3105, 段階2]
+type = varset
+trigger1 = time = 10
+var(1) = 1
+
+[state 3105, サイズ変動x2]
+type = varset
+trigger1 = var(1) = 1
+fvar(1) = ifelse(fvar(1)=4.2,4.4,4.2)
+;x
+[state 3105, サイズ変動y2]
+type = varset
+trigger1 = var(1) = 1
+fvar(2) = ifelse(fvar(2)=3.6,4.95,3.6)
+;x
+
+[state 3105, 段階3]
+type = varset
+trigger1 = time = 138;90
+var(1) = 2
+
+[state 3105, サイズ変動x]
+type = varadd
+trigger1 = fvar(1) > 0
+trigger1 = var(1) = 2
+fvar(1) = -0.3
+;x
+[state 3105, サイズ変動y]
+type = varadd
+trigger1 = var(1) = 2
+fvar(2) = 0.35
+;y
+
+[state 3105, サイズ固定x]
+type = varset
+trigger1 = fvar(1) < 0
+fvar(1) = 0
+;x
+
+[state 3105, サイズ制御]
+type = angledraw
+trigger1 = 1
+scale = fvar(1),fvar(2)
+
+[state 3105, 消滅]
+type = destroyself
+trigger1 = fvar(1) = 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

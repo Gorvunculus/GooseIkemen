@@ -1,0 +1,485 @@
+;---------------------------------------------------------------------------
+;Yomika
+[StateDef 2000]
+type = S
+movetype = A
+physics = S
+juggle = 0
+anim = 2000
+poweradd = 60
+velset = 0,0
+ctrl = 0
+
+[State 2000, PlaySnd]
+type = PlaySnd
+trigger1 = animelem = 4
+value = S2000,0
+
+[State 2000, Helper]
+type = Helper
+trigger1 = animelem = 5
+ID = 2001
+pos = -55,0
+postype = p1
+stateno = 2001
+helpertype = normal
+name = "Yomika"
+keyctrl = 0
+ownpal = 1
+
+[State 2000, End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+;Yomika's Appearance
+[Statedef 2001]
+type    = A
+movetype= A
+physics = N
+velset = 0,0
+ctrl = 0
+sprpriority = 2
+anim = 2001
+
+[State 2001, Cloud]
+type = Explod
+trigger1 = animelem = 1
+trigger2 = animtime = 0
+anim = 1901
+postype = p1
+pos = 0, -20
+sprpriority = 4
+scale = 2,2
+
+[State 2001, PlaySnd]
+type = PlaySnd
+trigger1 = animelem = 1
+value = S190,1
+
+[State 2000, Helper]
+type = Helper
+trigger1 = animelem = 2
+ID = 2002
+pos = -100,-150
+postype = back
+stateno =  2002
+helpertype = normal
+name = "Storm Cloud"
+keyctrl = 0
+ownpal = 1
+
+[State 2001, 3]
+type = Destroyself
+trigger1 = time = 300
+
+;---------------------------------------------------------------------------
+;Storm Cloud
+[Statedef 2002]
+type    = A
+movetype= A
+physics = N
+velset = 15,0
+ctrl = 0
+sprpriority = 2
+anim = 2002
+
+[State 2002, 3]
+type = ChangeState
+trigger1 = p2dist x < 0
+value = 2003
+ctrl = 0
+
+;---------------------------------------------------------------------------
+;Rain
+[Statedef 2003]
+type    = A
+movetype= A
+physics = N
+velset = 0,0
+ctrl = 0
+sprpriority = 2
+
+[State 2003, PlaySnd]
+type = PlaySnd
+trigger1 = time = 0
+value = S2001,0
+
+[State 2003, VelSet]
+type = VelSet
+trigger1 = time = 0
+x = 4
+y = 0
+
+[State 2003, VelSet]
+type = VelSet
+trigger1 = time = 20
+x = 20
+y = 0
+
+[State 2003, 1]
+type = helper
+trigger1 = time = 0
+ID = 2004
+pos = 0,0
+postype = p1
+stateno = 2004
+helpertype = normal
+name = "Rain"
+keyctrl = 0
+ownpal = 1
+size.xscale = 2.5
+size.yscale = 2.5
+
+[State 2004, 3]
+type = destroyself
+trigger1 = time = 100
+
+;---------------------------------------------------------------------------
+;Rain
+[Statedef 2004]
+type    = A
+movetype= A
+physics = N
+velset = 0,10
+ctrl = 0
+sprpriority = 2
+anim = 2003
+
+[State 2004, 1]
+type = VelAdd
+Trigger1 = 1
+y = 1
+
+[State 2004, 1]
+type = HitDef
+trigger1 = time = 0
+attr = S, NA
+damage = 65, 0
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 3, Hit
+pausetime = 10, 10
+sparkno = s11111
+guard.sparkno = s11111
+sparkxy = -20, 0
+ground.type = High
+ground.slidetime = 5
+ground.hittime  = 12
+ground.velocity = -4
+airguard.velocity = -1.9,-.8
+air.type = High
+air.velocity = -1.4,0
+air.hittime = 12
+palfx.add = 0,50,240
+palfx.mul = 120,224,256
+palfx.sinadd = 85,55,110,10
+palfx.time = 10
+
+[State 2004, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+
+[State 2004, 3]
+type = destroyself
+trigger1 = time = 50
+trigger2 = movehit
+trigger3 = moveguarded
+ignorehitpause = 1
+
+;---------------------------------------------------------------------------
+;IB
+[StateDef 2100]
+type = S
+movetype = A
+physics = S
+juggle = 0
+anim = 2000
+poweradd = 60
+velset = 0,0
+ctrl = 0
+
+[State 2000, PlaySnd]
+type = PlaySnd
+trigger1 = animelem = 4
+value = S2000,0
+
+[State 2200, Helper]
+type = Helper
+trigger1 = animelem = 4
+ID = 2001
+pos = 160,253
+postype = back
+stateno = 2101
+helpertype = normal
+name = "IB"
+keyctrl = 0
+ownpal = 1
+size.xscale = 5
+size.yscale = 5
+
+[State 2100, End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+;IB
+[Statedef 2101]
+type = S
+movetype= A
+physics = N
+velset = 0,-25
+ctrl = 0
+sprpriority = 2
+anim = 2101
+
+[State 2101, VelAdd]
+type = VelAdd
+trigger1 = 1
+y = 1.5
+
+[State 2101, IB]
+type = explod
+trigger1 = Animelem = 1
+anim = 2101
+pos = 0,10
+id = 2101
+postype = p1
+scale = 6,6
+bindtime = -1
+persistent = 1
+sprpriority = 5
+ontop = 1
+removetime = 100
+
+[State 2101, Picture Frame]
+type = explod
+trigger1 = Animelem = 1
+anim = 2102
+pos = 0,20
+id = 2102
+postype = p1
+scale = 2.5,2.5
+bindtime = -1
+persistent = 1
+sprpriority = 6
+ontop = 1
+
+[State 2101, PlaySnd]
+type = PlaySnd
+trigger1 = animelem = 3
+value = S1,2
+
+[State 2101, Helper]
+type = Helper
+trigger1 = animelem = 3
+helpertype = normal ;player
+name = "Picture Frame"
+ID = 2103
+stateno = 2102
+pos = 50,-100
+postype = p1    ;p2,front,back,left,right
+facing = 1
+keyctrl = 0
+size.xscale = 4.5
+size.yscale = 4.5
+ownpal = 1
+
+[State 2101, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+flag2 = invisible
+
+[State 2101, 3]
+type = destroyself
+trigger1 = time = 300
+
+;---------------------------------------------------------------------------
+;Picture Frame
+[Statedef 2102]
+type    = A
+movetype= A
+physics = N
+velset = 2,-25
+ctrl = 0
+anim = 2103
+sprpriority = 2
+
+[State 2102, 2]
+type = VelAdd
+trigger1 = 1
+y = 2
+
+[State 2102, AngleDraw]
+type = AngleDraw
+trigger1 = time < 35
+scale = -0.01*(time-52),-0.01*(time-52)
+
+[State 2102, Angle Draw]
+type = Angledraw
+trigger1 = time < 35
+
+[State 2102, Angle Add]
+type = AngleAdd
+trigger1 = 1
+value = -40
+
+[State 2102, 3]
+type = HitDef
+trigger1 = Time = [0,50]
+attr = S, SA
+damage = 65,0
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 3, Hit
+pausetime = 0, 0
+sparkno = S10000
+guard.sparkno = S10002
+sparkxy = -20, 10
+hitsound = S20, 4
+guardsound = s8500, 0
+ground.type = High
+ground.slidetime = 5
+ground.hittime  = 12
+ground.velocity = -2,-5
+airguard.velocity = -1.9,-.8
+air.type = High
+air.velocity = -2,-5
+air.hittime = 12
+fall = 1
+fall.kill = 1
+envshake.time = 20
+envshake.ampl = 10
+
+[State 2102, 3]
+type = changestate
+trigger1 = movehit
+trigger2 = moveguarded
+trigger3 = pos y >= -35 && vel y >= -35
+value = 2103
+ignorehitpause = 1
+
+;---------------------------------------------------------------------------
+[Statedef 2103]
+type    = U
+movetype= I
+physics = N
+velset = 0,0
+ctrl = 0
+sprpriority = 2
+anim = 11111
+
+[State 2103, PlaySnd]
+type = PlaySnd
+trigger1 = animelem = 1
+value = S2100,0
+
+[State 2103, Helper]
+type = Helper
+trigger1 = time = 0
+helpertype = normal ;player
+name = "Picture Frame"
+ID = 2103
+stateno = 2104
+pos = -15,0
+postype = p1    ;p2,front,back,left,right
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = 1.25
+size.yscale = 1.25
+
+[State 2103, Helper]
+type = Helper
+trigger1 = time = 0
+helpertype = normal ;player
+name = "Picture Frame"
+ID = 2103
+stateno = 2105
+pos = 15,0
+postype = p1    ;p2,front,back,left,right
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = 1.25
+size.yscale = 1.25
+
+[State 2103, DestroySelf]
+type = DestroySelf
+trigger1 = time = 0
+
+;---------------------------------------------------------------------------
+;Picture Frame
+[Statedef 2104]
+type    = A
+movetype= I
+physics = N
+velset = -3,-12
+ctrl = 0
+sprpriority = 2
+anim = 2104
+
+[State 2104, 2]
+type = VelAdd
+trigger1 = 1
+y = 1
+
+[State 2104, Angle Draw]
+type = Angledraw
+trigger1 = 10
+
+[State 2104, Angle Add]
+type = AngleAdd
+trigger1 = 1
+value = 40
+
+[State 2104, AssertSpecial]
+type = AssertSpecial
+trigger1 = time > 20
+flag = noshadow
+
+[State 2104, 3]
+type = destroyself
+trigger1 = time = 60
+
+;---------------------------------------------------------------------------
+;Picture Frame
+[Statedef 2105]
+type    = A
+movetype= I
+physics = N
+velset = 3,-12
+ctrl = 0
+sprpriority = 2
+anim = 2105
+
+[State 2105, 2]
+type = VelAdd
+trigger1 = 1
+y = 1
+
+[State 2105, Angle Draw]
+type = Angledraw
+trigger1 = 10
+
+[State 2105, Angle Add]
+type = AngleAdd
+trigger1 = 1
+value = -40
+
+[State 2105, AssertSpecial]
+type = AssertSpecial
+trigger1 = time > 20
+flag = noshadow
+
+[State 2105, 3]
+type = destroyself
+trigger1 = time = 60
