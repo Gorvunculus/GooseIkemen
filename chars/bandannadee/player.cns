@@ -1198,14 +1198,13 @@ y = const(velocity.run.fwd.y)
 
 [State 1001, 1]
 type = HitDef
-trigger1 = AnimElem = 1
-trigger2 = AnimElem = 2
-trigger3 = AnimElem = 3
-trigger4 = AnimElem = 4
-trigger5 = AnimElem = 5
-trigger6 = AnimElem = 6
-trigger7 = AnimElem = 7
-trigger8 = AnimElem = 8
+trigger1 = AnimElem = 2
+trigger2 = AnimElem = 3
+trigger3 = AnimElem = 4
+trigger4 = AnimElem = 5
+trigger5 = AnimElem = 6
+trigger6 = AnimElem = 7
+trigger7 = AnimElem = 8
 attr = S, SA
 damage = 25,10
 animtype = Light
