@@ -1220,13 +1220,13 @@ guardsound = 6, 0
 ground.type = Low
 ground.slidetime = 2
 ground.hittime  = 12
-ground.velocity = -2
+ground.velocity = -3
 airguard.velocity = -1.2,-.8
 air.type = Low
 air.velocity = -.8,-3
 air.hittime = 12
 air.fall = 0
-Fall = 0
+Fall = 1
 fall.recover = 0
 kill       = (Var(9) = 0)
 fall.kill  = (Var(9) = 0)
