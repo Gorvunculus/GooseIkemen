@@ -1,4 +1,4 @@
-; Animation data
+s; Animation data
 ; see docs/air.txt for more information
 ; Note: Putting -1,0 for the sprite means it does not draw anything
 
@@ -478,7 +478,7 @@ Clsn1: 1
 ; Spear Copter
 [Begin Action 1002]
 Clsn1: 1
-  Clsn1[0] = -39, -71, 24, -24
+  Clsn1[0] = -39, -71, -6, -24
 Clsn2: 1
   Clsn2[0] = -17, -49, 38, 0
 1005,0, 0,0, 5
@@ -513,7 +513,7 @@ Clsn2: 1
   Clsn2[0] = -14, -53, 33, 0
 1011,0, 0,0, 5
 Clsn1: 1
-  Clsn1[0] = -37, -69, 26, -22
+  Clsn1[0] = -36, -69, 26, -22
 Clsn2: 1
   Clsn2[0] = -15, -51, 36, 0
 1012,0, 0,0, 5
