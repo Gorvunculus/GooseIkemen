@@ -37,7 +37,7 @@ TFGAF-DISNEY-CaptainHook
 pingu
 Candyman
 Falco_Lombardi
-Spooky
+AI-Spooky
 ]])
 
 addStage([[
